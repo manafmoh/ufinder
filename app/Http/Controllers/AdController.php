@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\Ad;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class AdController extends Controller
 {
@@ -14,7 +15,7 @@ class AdController extends Controller
      */
     public function index()
     {
-        //
+        return Ad::latest()->get();
     }
 
     /**
@@ -35,7 +36,10 @@ class AdController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        /*$ad =  new Ad;
+        $ad->save(); */
+        Ad::create($request->all());
+        return response('Created', Response::HTTP_CREATED);
     }
 
     /**
@@ -46,7 +50,7 @@ class AdController extends Controller
      */
     public function show(Ad $ad)
     {
-        //
+        return $ad;
     }
 
     /**
@@ -80,6 +84,7 @@ class AdController extends Controller
      */
     public function destroy(Ad $ad)
     {
-        //
+        $ad->delete();
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }
