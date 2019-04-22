@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Model\Ad;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use App\Http\Resources\AdResource;
 
 class AdController extends Controller
 {
@@ -15,7 +16,7 @@ class AdController extends Controller
      */
     public function index()
     {
-        return Ad::latest()->get();
+        return AdResource::collection(Ad::latest()->get());
     }
 
     /**
@@ -50,7 +51,7 @@ class AdController extends Controller
      */
     public function show(Ad $ad)
     {
-        return $ad;
+        return new AdResource($ad);
     }
 
     /**
@@ -73,7 +74,9 @@ class AdController extends Controller
      */
     public function update(Request $request, Ad $ad)
     {
-        //
+        $request->merge(['slug' => str_slug($request->title)]);
+        $ad->update($request->all());
+        return response('Updated', Response::HTTP_ACCEPTED);
     }
 
     /**

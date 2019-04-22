@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Ad;
 use App\Model\Message;
 use Illuminate\Http\Request;
+use App\Http\Resources\MessageResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class MessageController extends Controller
 {
@@ -12,9 +15,10 @@ class MessageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Ad $ad)
     {
-        //
+        return MessageResource::collection($ad->message);
+       // return Message::latest()->get();
     }
 
     /**
@@ -33,9 +37,11 @@ class MessageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Ad $ad, Request $request)
     {
-        //
+        //$message = $ad->message()->create($request->all());
+        $message = Message::create($request->all());
+        return  response(['message' => $message], Response::HTTP_CREATED);
     }
 
     /**
@@ -44,9 +50,9 @@ class MessageController extends Controller
      * @param  \App\Model\Message  $message
      * @return \Illuminate\Http\Response
      */
-    public function show(Message $message)
+    public function show(Ad $ad, Message $message)
     {
-        //
+        return new MessageResource($message);
     }
 
     /**
