@@ -10,6 +10,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 class MessageController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('JWT', ['except' => ['index', 'show']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -21,15 +25,7 @@ class MessageController extends Controller
        // return Message::latest()->get();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -55,16 +51,6 @@ class MessageController extends Controller
         return new MessageResource($message);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Model\Message  $message
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Message $message)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -73,9 +59,13 @@ class MessageController extends Controller
      * @param  \App\Model\Message  $message
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Message $message)
+    public function update(Ad $ad, Request $request, Message $message)
     {
-        //
+        $message->update([
+            'body' => $request->body
+        ]);
+
+        return response('Updated', Response::HTTP_ACCEPTED);
     }
 
     /**
@@ -86,6 +76,7 @@ class MessageController extends Controller
      */
     public function destroy(Message $message)
     {
-        //
+        $message->delete();
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }
