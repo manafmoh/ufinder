@@ -2,8 +2,14 @@
     <v-container>
         <v-form
             ref="form"
-            @submit.prevent="login"
+            @submit.prevent="signup"
         >
+            <v-text-field
+            v-model="form.name"
+            label="Name"
+            required
+            ></v-text-field>
+
             <v-text-field
             v-model="form.email"
             label="Email"
@@ -16,14 +22,21 @@
             type="password"
             required
             ></v-text-field>
+
+            <v-text-field
+            v-model="form.password_confirm"
+            label="Confirm Password"
+            type="password"
+            required
+            ></v-text-field>
             <v-btn
             color="success"
             type="submit"
             >
-            Login
+            Sign Up
             </v-btn>
-            <router-link to="signup">
-                <v-btn color="blue" flat>Sign Up</v-btn>
+            <router-link to="login">
+                <v-btn color="blue" flat>Login</v-btn>
             </router-link>
         </v-form>
     </v-container>
@@ -31,17 +44,19 @@
 
 <script>
 export default {
-    data() {
+     data() {
         return {
             form: {
+                name: null,
                 email: null,
-                password: null
+                password: null,
+                password_confirm: null,
             }
         }
     },
     methods: {
-        login() {
-           User.login(this.form);
+        signup() {
+           User.signup(this.form);
         }
     }
 }
