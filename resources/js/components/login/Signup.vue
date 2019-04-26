@@ -9,19 +9,20 @@
             label="Name"
             required
             ></v-text-field>
-
+            <span class="red--text" v-if="errors.name">{{errors.name[0]}}error</span>
             <v-text-field
             v-model="form.email"
             label="Email"
             required
             ></v-text-field>
-
+            <span class="red--text" v-if="errors.email">{{errors.email[0]}}</span>
             <v-text-field
             v-model="form.password"
             label="Password"
             type="password"
             required
             ></v-text-field>
+            <span class="red--text" v-if="errors.password">{{errors.password[0]}}</span>
 
             <v-text-field
             v-model="form.password_confirm"
@@ -29,6 +30,7 @@
             type="password"
             required
             ></v-text-field>
+            <span class="red--text" v-if="errors.password_confirm">{{errors.password_confirm[0]}}</span>
             <v-btn
             color="success"
             type="submit"
@@ -51,12 +53,20 @@ export default {
                 email: null,
                 password: null,
                 password_confirm: null,
+            },
+            errors: {
+
             }
         }
     },
     methods: {
         signup() {
-           User.signup(this.form);
+           //User.signup(this.form);
+            axios.post('/api/auth/signup', this.form)
+                .then(res => User.responseAfterLogin(res))
+                //.catch(error => console.log(error.response.data));
+                .catch(error => this.errors =  error.response.data.errors);
+
         }
     }
 }
