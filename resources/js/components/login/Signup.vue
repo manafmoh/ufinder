@@ -59,11 +59,19 @@ export default {
             }
         }
     },
+     created() {
+        if(User.loggedIn()) {
+            this.$router.push({name: 'ads'});
+        }
+    },
     methods: {
         signup() {
            //User.signup(this.form);
             axios.post('/api/auth/signup', this.form)
-                .then(res => User.responseAfterLogin(res))
+                .then(res => {
+                    User.responseAfterLogin(res)
+                    this.$router.push({name: 'ads'})
+                })
                 //.catch(error => console.log(error.response.data));
                 .catch(error => this.errors =  error.response.data.errors);
         }

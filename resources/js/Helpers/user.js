@@ -27,6 +27,7 @@ class User {
 
     loggedOut() {
         AppStorage.clear();
+        window.location = "/";
     }
 
     name() {
