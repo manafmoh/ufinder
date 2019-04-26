@@ -9,7 +9,7 @@
             label="Name"
             required
             ></v-text-field>
-            <span class="red--text" v-if="errors.name">{{errors.name[0]}}error</span>
+            <span class="red--text" v-if="errors.name">{{errors.name[0]}}</span>
             <v-text-field
             v-model="form.email"
             label="Email"
@@ -25,12 +25,12 @@
             <span class="red--text" v-if="errors.password">{{errors.password[0]}}</span>
 
             <v-text-field
-            v-model="form.password_confirm"
+            v-model="form.password_confirmation"
             label="Confirm Password"
             type="password"
             required
             ></v-text-field>
-            <span class="red--text" v-if="errors.password_confirm">{{errors.password_confirm[0]}}</span>
+            <span class="red--text" v-if="errors.password_confirm">{{errors.password_confirmation[0]}}</span>
             <v-btn
             color="success"
             type="submit"
@@ -52,7 +52,7 @@ export default {
                 name: null,
                 email: null,
                 password: null,
-                password_confirm: null,
+                password_confirmation: null,
             },
             errors: {
 
@@ -66,7 +66,6 @@ export default {
                 .then(res => User.responseAfterLogin(res))
                 //.catch(error => console.log(error.response.data));
                 .catch(error => this.errors =  error.response.data.errors);
-
         }
     }
 }
