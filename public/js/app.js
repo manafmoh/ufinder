@@ -1834,7 +1834,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -37438,20 +37437,23 @@ var render = function() {
       _c(
         "div",
         { staticClass: "hidden-sm-and-down" },
-        _vm._l(_vm.items, function(item) {
-          return item.show
-            ? _c(
-                "router-link",
-                { key: item.title, attrs: { to: item.to } },
-                [
-                  _c("v-btn", { attrs: { flat: "" } }, [
-                    _vm._v(_vm._s(item.title))
-                  ])
-                ],
-                1
-              )
-            : _vm._e()
-        }),
+        _vm._l(
+          _vm.items.filter(function(item) {
+            return item.show
+          }),
+          function(item) {
+            return _c(
+              "router-link",
+              { key: item.title, attrs: { to: item.to } },
+              [
+                _c("v-btn", { attrs: { flat: "" } }, [
+                  _vm._v(_vm._s(item.title))
+                ])
+              ],
+              1
+            )
+          }
+        ),
         1
       )
     ],
@@ -78684,13 +78686,18 @@ function () {
 
       if (_Token__WEBPACK_IMPORTED_MODULE_0__["default"].isValid(access_token)) {
         _AppStorage__WEBPACK_IMPORTED_MODULE_1__["default"].store(access_token, user);
+        window.location = "/";
       }
     }
   }, {
     key: "hasToken",
     value: function hasToken() {
       var storedToken = _AppStorage__WEBPACK_IMPORTED_MODULE_1__["default"].getToken();
-      return _Token__WEBPACK_IMPORTED_MODULE_0__["default"].isValid(storedToken) ? true : false;
+
+      if (storedToken) {
+        return _Token__WEBPACK_IMPORTED_MODULE_0__["default"].isValid(storedToken) ? true : this.logout();
+      }
+
       return false;
     }
   }, {

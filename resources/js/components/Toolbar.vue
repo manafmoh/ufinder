@@ -5,10 +5,9 @@
     <v-spacer></v-spacer>
     <div class="hidden-sm-and-down">
     <router-link
-        v-for="item in items"
+        v-for="item in items.filter(item => item.show)"
         :key="item.title"
-        :to="item.to"
-        v-if="item.show" >
+        :to="item.to" >
         <v-btn flat>{{item.title}}</v-btn>
     </router-link>
 

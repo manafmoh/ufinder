@@ -12,12 +12,15 @@ class User {
         const user = res.data.user;
         if(Token.isValid(access_token)){
             AppStorage.store(access_token, user);
+            window.location = "/";
         }
     }
 
     hasToken() {
         const storedToken = AppStorage.getToken();
-        return Token.isValid(storedToken) ? true: false
+        if (storedToken) {
+            return Token.isValid(storedToken) ? true : this.logout()
+        }
         return false
     }
 
