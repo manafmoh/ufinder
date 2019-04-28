@@ -43,8 +43,11 @@ class AdController extends Controller
     {
         /*$ad =  new Ad;
         $ad->save(); */
-        Ad::create($request->all());
-        return response('Created', Response::HTTP_CREATED);
+        //$request['slug'] = str_slug($request->title); BOOT method used in Model/Ad.php
+        $ad = auth()->user()->ad()->create($request->all());
+        //Ad::create($request->all());
+        // AdResourse is used for getting PATH
+        return response(new AdResource($ad), Response::HTTP_CREATED);
     }
 
     /**

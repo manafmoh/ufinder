@@ -19,9 +19,11 @@ class AdResource extends JsonResource
         return [
             'title' => $this->title,
             'path'  => $this->path,
+            'slug'  => $this->slug,
             'body'  => $this->body,
             'category'  => $this->category->name,
             'user'  => $this->user->name,
+            'user_id'  => $this->user->id,
             'created_at' => $this->created_at->diffForHumans()
         ];
     }

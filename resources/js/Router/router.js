@@ -6,6 +6,8 @@ import Login from '../components/login/Login.vue';
 import Signup from '../components/login/Signup.vue';
 import Logout from '../components/logout/Logout';
 import Ads from '../components/ads/Ads';
+import AdSingle from '../components/ads/Single';
+import AdCreate  from '../components/ads/create.vue';
 
 
 const routes = [
@@ -13,6 +15,8 @@ const routes = [
     { path: '/signup', component: Signup },
     { path: '/logout', component: Logout },
     { path: '/ads', component: Ads, name:'ads' },
+    { path: '/ad/:slug', component: AdSingle},
+    { path: '/post', component: AdCreate},
   ]
 
 const router = new VueRouter({

@@ -46,6 +46,9 @@ class User {
         }
         return null
     }
+    ownAd(id) {
+        return this.id() == id? true: false;
+    }
 }
 
 export default User = new User();
