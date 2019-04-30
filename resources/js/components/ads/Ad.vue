@@ -14,12 +14,14 @@
         <v-card-text>
             {{ad.body}}
         </v-card-text>
+
       </v-card>
 </template>
 
 <script>
 export default {
-    props:['ad']
+    props:['ad'],
+
 }
 </script>
 

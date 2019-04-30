@@ -22,7 +22,7 @@ export default {
             items: [
                 {title: 'All Ads', to: '/ads', show:true},
                 {title: 'Free Post', to: '/post', show:true},
-                {title: 'Category', to: '/category', show:User.loggedIn()},
+                {title: 'Category', to: '/category', show:User.isAdmin()},
                 {title: 'Login', to: '/login', show:!User.loggedIn()},
                 {title: 'Logout', to: '/logout', show:User.loggedIn()}
             ]

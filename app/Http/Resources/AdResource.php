@@ -19,6 +19,8 @@ class AdResource extends JsonResource
         return [
             'title' => $this->title,
             'path'  => $this->path,
+            'messages' => MessageResource::collection($this->message) ,
+            'messages_count' => $this->message->count(),
             'slug'  => $this->slug,
             'body'  => $this->body,
             'category'  => $this->category->name,

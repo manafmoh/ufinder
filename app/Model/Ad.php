@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ad extends Model
 {
+    protected $with = ['message'];
 
     // Boot method for adding slug automaticaly when create AD
 

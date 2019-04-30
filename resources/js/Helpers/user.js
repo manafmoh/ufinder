@@ -49,6 +49,11 @@ class User {
     ownAd(id) {
         return this.id() == id? true: false;
     }
+
+    isAdmin(id) {
+        // id of Admin
+        return this.id() == 18? true: false;
+    }
 }
 
 export default User = new User();

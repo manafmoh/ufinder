@@ -1,4 +1,5 @@
 <template>
+<v-layout>
  <v-card>
      <v-container fluid>
          <v-card-title primary-title>
@@ -9,7 +10,7 @@
             <div class="grey--text">{{ad.user}} Said {{ad.created_at}} </div>
           </div>
           <v-spacer></v-spacer>
-          <v-btn color="teal">5 Replies</v-btn>
+          <v-btn color="teal" dark>{{ad.messages_count}} Replies</v-btn>
         </v-card-title>
         <v-card-text v-html="body"></v-card-text>
         <v-card-actions v-if="ownad">
@@ -20,13 +21,17 @@
                 <v-icon color="red">delete</v-icon>
             </v-btn>
         </v-card-actions>
+        <Messages :messages="ad.messages"></Messages>
      </v-container>
       </v-card>
+    </v-layout>
 </template>
 
 <script>
+import Messages from '../message/messages'
 export default {
     props:['ad'],
+    components: {Messages},
     computed: {
         body() {
             return md.parse(this.ad.body)
