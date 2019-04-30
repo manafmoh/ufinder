@@ -35,9 +35,10 @@ class MessageController extends Controller
      */
     public function store(Ad $ad, Request $request)
     {
-        //$message = $ad->message()->create($request->all());
-        $message = Message::create($request->all());
-        return  response(['message' => $message], Response::HTTP_CREATED);
+        $message = $ad->message()->create($request->all());
+        //$message = Message::create($request->all());
+
+        return  response(['message' => new MessageResource($message)], Response::HTTP_CREATED);
     }
 
     /**

@@ -22,6 +22,7 @@
             </v-btn>
         </v-card-actions>
         <Messages :messages="ad.messages"></Messages>
+        <NewMessage :adSlug="ad.slug"></NewMessage>
      </v-container>
       </v-card>
     </v-layout>
@@ -29,9 +30,10 @@
 
 <script>
 import Messages from '../message/messages'
+import NewMessage from '../message/newMessage'
 export default {
     props:['ad'],
-    components: {Messages},
+    components: {Messages, NewMessage},
     computed: {
         body() {
             return md.parse(this.ad.body)

@@ -10,6 +10,15 @@ use Illuminate\Database\Eloquent\Model;
 class Message extends Model
 {
     protected $guarded = [];
+
+    protected static function boot() {
+        parent::boot();
+
+        static::creating(function($message){
+            $message->user_id = auth()->id();
+        });
+    }
+
     public function ad() {
         return $this->belongsTo(Ad::class);
     }
