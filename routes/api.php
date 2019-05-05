@@ -7,6 +7,10 @@ Route::apiResource('/ad/{ad}/message', 'MessageController');
 Route::post('/like/{message}', 'LikeController@LikeIt');
 Route::delete('/like/{message}', 'LikeController@UnLikeIt');
 
+Route::post('notifications', 'NotificationController@index');
+Route::post('markAsRead', 'NotificationController@markAsRead');
+
+
 Route::group([
     'middleware' => 'api',
     'prefix' => 'auth'

@@ -8,7 +8,7 @@
                 </router-link>
 
                 </h3>
-            <div class="grey--text"> Said {{ad.created_at}} </div>
+            <div class="grey--text">{{ad.user}} Said {{ad.created_at}} </div>
           </div>
         </v-card-title>
         <v-card-text>

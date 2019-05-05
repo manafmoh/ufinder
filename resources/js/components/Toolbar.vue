@@ -3,6 +3,7 @@
     <!-- <v-toolbar-side-icon></v-toolbar-side-icon> -->
     <v-toolbar-title>uFinder</v-toolbar-title>
     <v-spacer></v-spacer>
+    <app-notification></app-notification>
     <div class="hidden-sm-and-down">
     <router-link
         v-for="item in items.filter(item => item.show)"
@@ -16,7 +17,9 @@
 </template>
 
 <script>
+import AppNotification from './AppNotification';
 export default {
+    components: {AppNotification},
     data(){
         return {
             items: [
