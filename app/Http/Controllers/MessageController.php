@@ -7,6 +7,7 @@ use App\Model\Message;
 use Illuminate\Http\Request;
 use App\Http\Resources\MessageResource;
 use Symfony\Component\HttpFoundation\Response;
+use App\Notifications\NewMessageNotification;
 
 class MessageController extends Controller
 {
@@ -37,7 +38,10 @@ class MessageController extends Controller
     {
         $message = $ad->message()->create($request->all());
         //$message = Message::create($request->all());
-
+        $user =  $message->user;
+        if ($message->user_id !== $ad->user_id) {
+            $user->notify(new NewMessageNotification($message));
+        }
         return  response(['message' => new MessageResource($message)], Response::HTTP_CREATED);
     }
 
@@ -75,7 +79,7 @@ class MessageController extends Controller
      * @param  \App\Model\Message  $message
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Message $message)
+    public function destroy(Ad $ad, Message $message)
     {
         $message->delete();
         return response(null, Response::HTTP_NO_CONTENT);

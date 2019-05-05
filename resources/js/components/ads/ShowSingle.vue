@@ -21,7 +21,7 @@
                 <v-icon color="red">delete</v-icon>
             </v-btn>
         </v-card-actions>
-        <Messages :messages="ad.messages"></Messages>
+        <Messages :ad="ad"></Messages>
         <NewMessage :adSlug="ad.slug"></NewMessage>
      </v-container>
       </v-card>

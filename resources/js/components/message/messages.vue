@@ -1,7 +1,10 @@
 <template>
   <v-container fluid>
-      <h1 v-if="messages">Replies</h1>
-        <message v-for="message in contents" :key="message.id" :message="message"></message>
+      <h1 v-if="contents">Replies</h1>
+        <message v-for="(message, index) in contents"
+        :key="message.id"
+        :message="message"
+        :index="index"></message>
   </v-container>
 </template>
 
@@ -9,10 +12,10 @@
 import message from './message';
 export default {
     components: {message},
-    props:['messages'],
+    props:['ad'],
     data() {
         return {
-            contents: this.messages,
+            contents: this.ad.messages,
         }
     },
     created() {
@@ -22,7 +25,15 @@ export default {
         listen() {
             EventBus.$on('NewMessage', (message)=>{
                 this.contents.unshift(message);
-            })
+            });
+            EventBus.$on('DeleteMessage', (index)=>{
+                axios.delete(`/api/ad/${this.ad.slug}/message/${this.contents[index].id}`)
+                .then(res => {
+                    this.contents.splice(index, 1);
+                })
+                .catch(error=> console.log(error))
+
+            });
         }
     }
 

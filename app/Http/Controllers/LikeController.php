@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Model\Like;
 use App\Model\Message;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class LikeController extends Controller
 {
@@ -24,15 +25,14 @@ class LikeController extends Controller
         ]); */
         $like = new Like();
         $like->message_id = $message->id;
-        $like->user_id = 1;
+        $like->user_id = auth()->id();
         $like->save();
         return response('Liked', Response::HTTP_CREATED);
     }
 
     public function UnLikeIt(Message $message)
     {
-        $message->like()->where(//'user_id' => auth()->id()
-            'user_id', 1)->first()->delete();
+        $message->like()->where('user_id', auth()->id())->first()->delete();
     }
 
 
