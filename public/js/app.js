@@ -1845,14 +1845,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      loggedIn: User.loggedIn(),
       read: {},
       unread: {},
-      unreadCount: {}
+      unreadCount: 0
     };
   },
   created: function created() {
     if (User.loggedIn()) {
       this.getNotifications();
+    }
+  },
+  computed: {
+    color: function color() {
+      return this.unreadCount ? 'red' : 'red lighten-4';
     }
   },
   methods: {
@@ -58579,17 +58585,21 @@ var render = function() {
               fn: function(ref) {
                 var on = ref.on
                 return [
-                  _c(
-                    "v-btn",
-                    { attrs: { icon: "" } },
-                    [
-                      _c("v-icon", _vm._g({ staticClass: "red" }, on), [
-                        _vm._v("add_alert")
-                      ]),
-                      _vm._v(_vm._s(_vm.unreadCount) + "\n      ")
-                    ],
-                    1
-                  )
+                  _vm.loggedIn
+                    ? _c(
+                        "v-btn",
+                        { attrs: { icon: "" } },
+                        [
+                          _c(
+                            "v-icon",
+                            _vm._g({ attrs: { color: _vm.color } }, on),
+                            [_vm._v("add_alert")]
+                          ),
+                          _vm._v(_vm._s(_vm.unreadCount) + "\n      ")
+                        ],
+                        1
+                      )
+                    : _vm._e()
                 ]
               }
             }

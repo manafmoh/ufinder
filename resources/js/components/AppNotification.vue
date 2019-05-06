@@ -1,9 +1,9 @@
 <template>
     <div class="text-xs-center">
     <v-menu offset-y>
-      <template v-slot:activator="{ on }">
-        <v-btn icon>
-            <v-icon class="red" v-on="on">add_alert</v-icon>{{unreadCount}}
+      <template v-slot:activator="{ on }" >
+        <v-btn icon v-if="loggedIn">
+            <v-icon :color="color" v-on="on">add_alert</v-icon>{{unreadCount}}
         </v-btn>
       </template>
       <v-list>
@@ -27,14 +27,20 @@
 export default {
     data() {
         return {
+            loggedIn: User.loggedIn(),
             read: {},
             unread: {},
-            unreadCount: {}
+            unreadCount: 0
         }
     },
     created() {
         if(User.loggedIn()) {
             this.getNotifications();
+        }
+    },
+    computed: {
+        color() {
+            return this.unreadCount? 'red': 'red lighten-4'
         }
     },
     methods: {
@@ -43,7 +49,7 @@ export default {
             .then(res => {
                 this.read = res.data.read;
                 this.unread = res.data.unread;
-                this.unreadCount = res.data.unread.length
+                this.unreadCount = res.data.unread.length;
             })
         },
         readIt(notification) {
