@@ -4,12 +4,14 @@ Route::apiResource('/ad', 'AdController');
 Route::apiResource('/category', 'CategoryController');
 Route::apiResource('/ad/{ad}/message', 'MessageController');
 
+
 Route::post('/like/{message}', 'LikeController@LikeIt');
 Route::delete('/like/{message}', 'LikeController@UnLikeIt');
 
 Route::post('notifications', 'NotificationController@index');
 Route::post('markAsRead', 'NotificationController@markAsRead');
 
+Route::apiResource('/upload', 'UploadController');
 
 Route::group([
     'middleware' => 'api',

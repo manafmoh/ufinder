@@ -12,6 +12,9 @@ import Vue from 'vue'
 import Vuetify from 'vuetify'
 Vue.use(Vuetify)
 
+import ElementUI from 'element-ui'
+import locale from 'element-ui/lib/locale/lang/en'
+Vue.use(ElementUI, { locale })
 
 import VueSimplemde from 'vue-simplemde'
 Vue.use(VueSimplemde)

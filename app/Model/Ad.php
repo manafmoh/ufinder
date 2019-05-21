@@ -26,7 +26,7 @@ class Ad extends Model
     {
         return 'slug';
     }
-    protected $fillable = ['title','featured','amount','image','body','post_type','type','country','city','area','category_id'];
+    protected $fillable = ['title','featured','amount','image','body','post_type','type','country','city','area','category_id', 'uploads'];
     //protected $guarded = [];
     public function user() {
         return $this->belongsTo(User::class);
@@ -34,6 +34,10 @@ class Ad extends Model
 
     public function message() {
         return $this->hasMany(Message::class)->latest();
+    }
+
+    public function upload() {
+        return $this->hasMany(Upload::class);
     }
 
     public function category() {

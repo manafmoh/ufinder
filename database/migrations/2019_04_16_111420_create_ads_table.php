@@ -28,6 +28,7 @@ class CreateAdsTable extends Migration
             $table->string('area');
             $table->integer('category_id')->unsigned();
             $table->integer('user_id')->unsigned();
+            $table->string('uploads');
             $table->softDeletes();
             $table->timestamps();
         });

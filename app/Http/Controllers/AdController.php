@@ -11,7 +11,7 @@ class AdController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('JWT', ['except' => ['index', 'show']]);
+        $this->middleware('JWT', ['except' => ['index', 'show', 'upload']]);
     }
     /**
      * Display a listing of the resource.
@@ -41,12 +41,42 @@ class AdController extends Controller
      */
     public function store(Request $request)
     {
-        /*$ad =  new Ad;
-        $ad->save(); */
+        dd($request->all());
+
+        //return  $request->image->getClientOriginalName();
         //$request['slug'] = str_slug($request->title); BOOT method used in Model/Ad.php
-        $ad = auth()->user()->ad()->create($request->all());
+        //$ad = auth()->user()->ad()->create($request->all());
         //Ad::create($request->all());
         // AdResourse is used for getting PATH
+
+        //'title','featured','amount','image','body','post_type','type','country','city','area','category_id'
+
+        $ad =  new Ad;
+        $ad->title = $request->title;
+        $ad->user_id = auth()->id();
+        $ad->featured = $request->featured;
+        $ad->amount = $request->amount;
+        $ad->body = $request->body;
+        $ad->post_type = $request->post_type;
+        $ad->type = $request->type;
+        $ad->country = $request->country;
+        $ad->city = $request->city;
+        $ad->area = $request->area;
+        $ad->category_id = $request->category_id;
+        $ad->uploads = $request->uploads;
+
+        //Saving image on a location and save to DB
+
+       // $ad->image = $request->image;
+
+        if($request->hasFile('image')) {
+            $imagename = $request->image->getClientOriginalName();
+            $request->image->storeAs('public', $imagename);
+        } else {
+            $ad->image = '';
+        }
+
+        $ad->save();
         return response(new AdResource($ad), Response::HTTP_CREATED);
     }
 
@@ -97,4 +127,5 @@ class AdController extends Controller
         $ad->delete();
         return response(null, Response::HTTP_NO_CONTENT);
     }
+
 }
