@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\Upload;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class UploadController extends Controller
 {
@@ -33,8 +34,9 @@ class UploadController extends Controller
                 $uploadId[] = Upload::create([
                     'filepath' => $name])->id;
             }
+            return response()->json($uploadId, 200);
         }
-        return response()->json($uploadId, 200);
+        return response()->json(null, Response::HTTP_NO_CONTENT);
     }
 
     /**
@@ -73,7 +75,8 @@ class UploadController extends Controller
                 unlink(public_path() . public_path("/storage") . $upload->file);
             }
             Upload::where('id', $upload->id)->delete();
+            return response()->json(null, Response::HTTP_NO_CONTENT);
         }
-return response()->json(null, 204);
+
     }
 }

@@ -11,15 +11,13 @@
             ></v-text-field>
             <span class="red--text" v-if="errors.title">{{errors.title[0]}}</span>
 
-            <v-select
+            <v-autocomplete
             :items="categories"
-
             v-model="form.category_id"
             item-text="name"
             item-value="id"
             label="Category"
-            autocomplete
-            ></v-select>
+            ></v-autocomplete>
 
             <markdown-editor v-model="form.body"></markdown-editor>
             <v-flex xs12 class="text-xs-center text-sm-center text-md-center text-lg-center">
@@ -33,18 +31,26 @@
 						@change="onFilePicked"
 					>
 			</v-flex>
+            <el-dialog  :visible.sync="isShowPic" size="small">
+            <span>
+                <img :src="upload.url">
+                </span>
+                <span slot="footer" class="dialog-footer">
+            </span>
+            </el-dialog>
             <el-upload
                     class="upload-demo"
                     action="api/upload"
                     accept="image/jpeg,image/gif,image/png"
+                    list-type="picture-card"
                     ref="uploads"
                     name="file[]"
                     :on-preview="handlePreview"
                     :auto-upload="true"
                     :on-success="handleSuccess"
                     :on-remove="handleRemove"
-                    :before-remove="beforeRemove"
                     :before-upload="onBeforeUpload"
+
                     multiple
                     :limit="3"
                     :on-exceed="handleExceed"
@@ -52,6 +58,7 @@
                 <el-button size="small" type="primary">Click to upload</el-button>
                 <div slot="tip" class="el-upload__tip">jpg/png files with a size less than 500kb</div>
             </el-upload>
+
 
             <v-btn
             color="success"
@@ -79,14 +86,18 @@ export default {
                 amount: 0,
                 featured: 0,
                 image: null,
-                uploads: null
+                uploads: null,
             },
-            categories: {},
+            categories: [],
             errors: {},
             imageName: '',
 	    	imageUrl: '',
             imageFile: '',
-            fileList: []
+            fileList: [],
+            upload: {
+                name:'',url:''
+            },
+            isShowPic: false
         }
 
     },
@@ -146,6 +157,7 @@ export default {
 			}
         },
          handleRemove(file, fileList) {
+                if(!file.uid) return;
                 let vm = this
                 axios.delete('/api/upload/' + file.uid)
                     .then(function () {
@@ -163,6 +175,12 @@ export default {
                     //console.log('IMG', data);
                 })
                 vm.fileList = fileList;
+                //console.log(file);
+                if(file.status == 'success'){
+                //Save the data returned from the back end
+                    this.upload.url = file.url;
+                    this.upload.name = file.name;
+                }
 
             },
             handleExceed(files, fileList) {
@@ -172,23 +190,27 @@ export default {
                 return this.$confirm(`do you really want to delete ${ file.name }？`);
             },
             onBeforeUpload(file)  {
-            const isIMAGE = file.type === 'image/jpeg'||'image/gif'||'image/png';
-            const isLt1M = file.size / 1024 / 1024 < 1;
-
-            if (!isIMAGE) {
-                this.$message.error('Upload file must be JPG format!');
-            }
-            if (!isLt1M) {
-                this.$message.error('Upload file size can not exceed 1MB!');
-            }
-            return isIMAGE && isLt1M;
+                const isIMAGE = file.type === 'image/jpeg'||'image/gif'||'image/png';
+                const isLt1M = file.size / 1024 / 1024 < 1;
+                if (!isIMAGE) {
+                    this.$message.error('Upload file must be JPG format!');
+                }
+                if (!isLt1M) {
+                    this.$message.error('Upload file size can not exceed 1MB!');
+                }
+                return isIMAGE && isLt1M;
+            },
+            handlePreview(file) {
+                //console.log('Preview',file);
+                 this.isShowPic = true;
             }
 
     },
     created() {
             axios.get('/api/category')
             .then( res => this.categories = res.data.data)
-            .catch(error => console.log(error.data.error));
+            .catch(error => console.log(error))
+            ;
         }
 }
 
