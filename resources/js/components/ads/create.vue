@@ -46,7 +46,7 @@
                     ref="uploads"
                     name="file[]"
                     :on-preview="handlePreview"
-                    :auto-upload="true"
+                    :auto-upload="false"
                     :on-success="handleSuccess"
                     :on-remove="handleRemove"
                     :before-upload="onBeforeUpload"

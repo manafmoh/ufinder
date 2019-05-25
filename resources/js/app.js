@@ -19,6 +19,9 @@ Vue.use(ElementUI, { locale })
 import VueSimplemde from 'vue-simplemde'
 Vue.use(VueSimplemde)
 
+import VueImg from 'v-img'
+Vue.use(VueImg)
+
 import User from './Helpers/user';
 window.User =  User;
 window.EventBus = new Vue();

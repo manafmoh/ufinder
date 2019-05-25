@@ -1,18 +1,23 @@
 <template>
 <v-layout>
- <v-card>
+
      <v-container fluid>
          <v-card-title primary-title>
           <div>
             <h3 class="headline">
                     {{ad.title}}
                 </h3>
+                {{ad.uploads}}
             <div class="grey--text">{{ad.user}} Said {{ad.created_at}} </div>
           </div>
           <v-spacer></v-spacer>
           <v-btn color="teal" dark>{{ad.messages_count}} Replies</v-btn>
         </v-card-title>
         <v-card-text v-html="body"></v-card-text>
+        <img v-img:group-2="{ cursor: 'zoom-in' }" src="https://picsum.photos/500/300?image=15" width="150px">
+        <img v-img:group-2="{ cursor: 'zoom-in' }" src="https://picsum.photos/500/300?image=16" width="150px">
+
+
         <v-card-actions v-if="ownad">
             <v-btn icon small @click="edit" >
                 <v-icon color="orange">edit</v-icon>
@@ -24,7 +29,6 @@
         <Messages :ad="ad"></Messages>
         <NewMessage :adSlug="ad.slug"></NewMessage>
      </v-container>
-      </v-card>
     </v-layout>
 </template>
 

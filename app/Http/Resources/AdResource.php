@@ -26,6 +26,7 @@ class AdResource extends JsonResource
             'category'  => $this->category->name,
             'user'  => $this->user->name,
             'user_id'  => $this->user->id,
+           // 'uploads'   => $this->uploads->whereJsonContains('options->languages', ['en', 'de']),
             'created_at' => $this->created_at->diffForHumans()
         ];
     }

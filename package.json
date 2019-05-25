@@ -26,6 +26,7 @@
     "dependencies": {
         "element-ui": "^2.8.2",
         "marked": "^0.6.2",
+        "v-img": "^0.2.0",
         "vue-router": "^3.0.6",
         "vue-simplemde": "^0.5.1",
         "vuetify": "^1.5.13"
