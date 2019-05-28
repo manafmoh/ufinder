@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Model\Ad;
+use App\Model\Upload;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Resources\AdResource;
+use Illuminate\Support\Facades\Storage;
 
 class AdController extends Controller
 {
@@ -40,9 +42,8 @@ class AdController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        dd($request->all());
-
+    {   
+        //dd($request->all());
         //return  $request->image->getClientOriginalName();
         //$request['slug'] = str_slug($request->title); BOOT method used in Model/Ad.php
         //$ad = auth()->user()->ad()->create($request->all());
@@ -63,20 +64,45 @@ class AdController extends Controller
         $ad->city = $request->city;
         $ad->area = $request->area;
         $ad->category_id = $request->category_id;
-        $ad->uploads = $request->uploads;
-
         //Saving image on a location and save to DB
-
        // $ad->image = $request->image;
-
         if($request->hasFile('image')) {
-            $imagename = $request->image->getClientOriginalName();
-            $request->image->storeAs('public', $imagename);
+            //$imagename = $request->image->getClientOriginalName();
+            //$request->image->storeAs('public/storage', $imagename);
+            $imageFile = $request->file('image');
+            $name = time().$imageFile->getClientOriginalName();
+            $filename = $imageFile->move(public_path("/storage"), $name);
+            /*Storage::disk('local')->putFileAs(
+                'public/storage/'.$filename,
+                $imageFile,
+                $filename
+            ); */
         } else {
             $ad->image = '';
         }
-
+        $ad->image = $filename;
         $ad->save();
+        $adId = $ad->id;
+        if($adId) {
+            // Multiple Files Upload
+            $uploadId = array();
+            if ( $files =  $request->file('files')) {
+            foreach ($request->file('files') as $key => $file) {
+                $name = time() . $key . $file->getClientOriginalName();
+                $filename = $file->move(public_path("/storage"), $name);
+                $mUpload =  new Upload;
+                $mUpload->ad_id = $adId;
+                $mUpload->filepath = $name;
+                $mUpload->save();
+                //Upload Ids
+                /*$uploadId[] = Upload::create(
+                    ['ad_id' => $adId,
+                    'filepath' => $name])->id; */
+            }
+            //return response()->json($uploadId, 200);
+            }
+        }
+        
         return response(new AdResource($ad), Response::HTTP_CREATED);
     }
 

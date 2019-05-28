@@ -44,13 +44,12 @@
                     accept="image/jpeg,image/gif,image/png"
                     list-type="picture-card"
                     ref="uploads"
-                    name="file[]"
                     :on-preview="handlePreview"
                     :auto-upload="false"
                     :on-success="handleSuccess"
                     :on-remove="handleRemove"
                     :before-upload="onBeforeUpload"
-
+                    :on-change="onChange"
                     multiple
                     :limit="3"
                     :on-exceed="handleExceed"
@@ -86,7 +85,6 @@ export default {
                 amount: 0,
                 featured: 0,
                 image: null,
-                uploads: null,
             },
             categories: [],
             errors: {},
@@ -103,12 +101,6 @@ export default {
     },
     methods: {
         createAd() {
-            let uploads = [];
-            for( var i = 0; i < this.fileList.length; i++ ){
-                uploads[i] = this.fileList[i].uid;
-                //console.log('files[' + i + ']', file);
-            }
-            //console.log(this.fileList); return;
             let form = new FormData();
             form.append('image', this.imageFile);
             form.append('title', this.form.title);
@@ -116,9 +108,11 @@ export default {
             form.append('body', this.form.body);
             form.append('amount', this.form.amount);
             form.append('featured', this.form.featured);
-            form.append('uploads', JSON.stringify(uploads));
-
             this.form =  form;
+            const filesRaw = this.fileList.map(f => f.raw);
+            for (const file of filesRaw) {
+                    this.form.append('files[]', file, file.name)
+                }
             axios.post('/api/ad', this.form, {
             headers: {
                 'Content-Type': 'multipart/form-data'
@@ -203,8 +197,11 @@ export default {
             handlePreview(file) {
                 //console.log('Preview',file);
                  this.isShowPic = true;
+            },
+            onChange(file, fileList, name){
+                //console.log('File',fileList);
+                this.fileList = fileList
             }
-
     },
     created() {
             axios.get('/api/category')
