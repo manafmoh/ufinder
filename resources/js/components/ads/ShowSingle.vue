@@ -7,16 +7,13 @@
             <h3 class="headline">
                     {{ad.title}}
                 </h3>
-                {{ad.uploads}}
             <div class="grey--text">{{ad.user}} Said {{ad.created_at}} </div>
           </div>
           <v-spacer></v-spacer>
           <v-btn color="teal" dark>{{ad.messages_count}} Replies</v-btn>
         </v-card-title>
         <v-card-text v-html="body"></v-card-text>
-        <img v-img:group-2="{ cursor: 'zoom-in' }" src="https://picsum.photos/500/300?image=15" width="150px">
-        <img v-img:group-2="{ cursor: 'zoom-in' }" src="https://picsum.photos/500/300?image=16" width="150px">
-
+        <ImageGallery  :ad="ad"></ImageGallery>
 
         <v-card-actions v-if="ownad">
             <v-btn icon small @click="edit" >
@@ -35,9 +32,10 @@
 <script>
 import Messages from '../message/messages'
 import NewMessage from '../message/newMessage'
+import ImageGallery from './ImageGallery'
 export default {
     props:['ad'],
-    components: {Messages, NewMessage},
+    components: {Messages, NewMessage, ImageGallery},
     computed: {
         body() {
             return md.parse(this.ad.body)

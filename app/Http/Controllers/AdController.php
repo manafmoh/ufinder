@@ -42,7 +42,7 @@ class AdController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   
+    {
         //dd($request->all());
         //return  $request->image->getClientOriginalName();
         //$request['slug'] = str_slug($request->title); BOOT method used in Model/Ad.php
@@ -73,14 +73,14 @@ class AdController extends Controller
             $name = time().$imageFile->getClientOriginalName();
             //$filename = $imageFile->move(public_path("/storage"), $name);
             Storage::disk('local')->putFileAs(
-                'public/storage/'.$name,
+                'public/image',
                 $imageFile,
                 $name
-            ); 
+            );
+            $ad->image = $name;
         } else {
             $ad->image = '';
         }
-        $ad->image = $name;
         $ad->save();
         $adId = $ad->id;
         if($adId) {
@@ -90,11 +90,12 @@ class AdController extends Controller
             foreach ($request->file('files') as $key => $file) {
                 $name = time() . $key . $file->getClientOriginalName();
                 //$filename = $file->move(public_path("/storage"), $name);
+                //File Moved to public_html/storage/app/public/storage/image => link to public/storahe/image
                 Storage::disk('local')->putFileAs(
-                    'public/storage/'.$name,
+                    'public/image',
                     $file,
                     $name
-                ); 
+                );
                 $mUpload =  new Upload;
                 $mUpload->ad_id = $adId;
                 $mUpload->filepath = $name;
@@ -107,7 +108,7 @@ class AdController extends Controller
             //return response()->json($uploadId, 200);
             }
         }
-        
+
         return response(new AdResource($ad), Response::HTTP_CREATED);
     }
 

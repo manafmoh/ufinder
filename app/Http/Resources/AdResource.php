@@ -19,14 +19,14 @@ class AdResource extends JsonResource
         return [
             'title' => $this->title,
             'path'  => $this->path,
-            'messages' => MessageResource::collection($this->message) ,
+            'messages' => MessageResource::collection($this->message),
             'messages_count' => $this->message->count(),
             'slug'  => $this->slug,
             'body'  => $this->body,
             'category'  => $this->category->name,
             'user'  => $this->user->name,
             'user_id'  => $this->user->id,
-           // 'uploads'   => $this->uploads->whereJsonContains('options->languages', ['en', 'de']),
+            'uploads'   => UploadResource::collection($this->upload),
             'created_at' => $this->created_at->diffForHumans()
         ];
     }

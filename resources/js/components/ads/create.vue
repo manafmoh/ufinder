@@ -151,57 +151,66 @@ export default {
 			}
         },
          handleRemove(file, fileList) {
-                if(!file.uid) return;
-                let vm = this
-                axios.delete('/api/upload/' + file.uid)
-                    .then(function () {
-                        let index = _.findIndex(vm.fileList, ['uid', file.uid])
-                        vm.$delete(vm.fileList, index)
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
-            },
-            handleSuccess(response, file, fileList) {
-                var vm = this
-                _.map(response, function (data) {
-                    file['uid'] = data
-                    //console.log('IMG', data);
+            if(!file.uid) return;
+            let vm = this
+            axios.delete('/api/upload/' + file.uid)
+                .then(function () {
+                    let index = _.findIndex(vm.fileList, ['uid', file.uid])
+                    vm.$delete(vm.fileList, index)
                 })
-                vm.fileList = fileList;
-                //console.log(file);
-                if(file.status == 'success'){
-                //Save the data returned from the back end
-                    this.upload.url = file.url;
-                    this.upload.name = file.name;
-                }
-
-            },
-            handleExceed(files, fileList) {
-                this.$message.warning(`The limit is 3, you selected ${files.length} files this time, add up to ${files.length + fileList.length} totally`);
-            },
-            beforeRemove(file, fileList) {
-                return this.$confirm(`do you really want to delete ${ file.name }？`);
-            },
-            onBeforeUpload(file)  {
-                const isIMAGE = file.type === 'image/jpeg'||'image/gif'||'image/png';
-                const isLt1M = file.size / 1024 / 1024 < 1;
-                if (!isIMAGE) {
-                    this.$message.error('Upload file must be JPG format!');
-                }
-                if (!isLt1M) {
-                    this.$message.error('Upload file size can not exceed 1MB!');
-                }
-                return isIMAGE && isLt1M;
-            },
-            handlePreview(file) {
-                //console.log('Preview',file);
-                 this.isShowPic = true;
-            },
-            onChange(file, fileList, name){
-                //console.log('File',fileList);
-                this.fileList = fileList
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+        handleSuccess(response, file, fileList) {
+            var vm = this
+            _.map(response, function (data) {
+                file['uid'] = data
+                //console.log('IMG', data);
+            })
+            vm.fileList = fileList;
+            //console.log(file);
+            if(file.status == 'success'){
+            //Save the data returned from the back end
+                this.upload.url = file.url;
+                this.upload.name = file.name;
             }
+
+        },
+        handleExceed(files, fileList) {
+            this.$message.warning(`The limit is 3, you selected ${files.length} files this time, add up to ${files.length + fileList.length} totally`);
+        },
+        beforeRemove(file, fileList) {
+            return this.$confirm(`do you really want to delete ${ file.name }？`);
+        },
+        onBeforeUpload(file)  {
+            const isIMAGE = file.type === 'image/jpeg'||'image/gif'||'image/png';
+            const isLt1M = file.size / 1024 / 1024 < 1;
+            if (!isIMAGE) {
+                this.$message.error('Upload file must be JPG format!');
+            }
+            if (!isLt1M) {
+                this.$message.error('Upload file size can not exceed 1MB!');
+            }
+            return isIMAGE && isLt1M;
+        },
+        handlePreview(file) {
+            //console.log('Preview',file);
+                this.isShowPic = true;
+        },
+        onChange(file, fileList, name){
+            //console.log('File',fileList);
+            this.fileList = fileList
+            const isIMAGE = file.type === 'image/jpeg'||'image/gif'||'image/png';
+            const isLt1M = file.size / 1024 / 1024 < 1;
+            if (!isIMAGE) {
+                this.$message.error('Upload file must be JPG format!');
+            }
+            if (!isLt1M) {
+                this.$message.error('Upload file size can not exceed 1MB!');
+            }
+            return isIMAGE && isLt1M;
+        }
     },
     created() {
             axios.get('/api/category')

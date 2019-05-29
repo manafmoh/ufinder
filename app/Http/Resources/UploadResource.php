@@ -15,7 +15,9 @@ class UploadResource extends JsonResource
     public function toArray($request)
     {
         return [
-          //  'filepath' => $this->filepath->whereJsonContains('id', ['en', 'de']),
+            'id'   => $this->id,
+            'filepath'   => $this->filepath,
+            'ad_id'      => $this->ad_id,
         ];
     }
 }

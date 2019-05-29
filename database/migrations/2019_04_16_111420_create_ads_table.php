@@ -31,6 +31,10 @@ class CreateAdsTable extends Migration
             $table->string('uploads');
             $table->softDeletes();
             $table->timestamps();
+            $table->dropForeign('ads_ad_id_foreign');
+            $table->foreign('ad_id')
+            ->references('id')->on('uploads')
+            ->onDelete('cascade');
         });
     }
 
