@@ -71,16 +71,16 @@ class AdController extends Controller
             //$request->image->storeAs('public/storage', $imagename);
             $imageFile = $request->file('image');
             $name = time().$imageFile->getClientOriginalName();
-            $filename = $imageFile->move(public_path("/storage"), $name);
-            /*Storage::disk('local')->putFileAs(
-                'public/storage/'.$filename,
+            //$filename = $imageFile->move(public_path("/storage"), $name);
+            Storage::disk('local')->putFileAs(
+                'public/storage/'.$name,
                 $imageFile,
-                $filename
-            ); */
+                $name
+            ); 
         } else {
             $ad->image = '';
         }
-        $ad->image = $filename;
+        $ad->image = $name;
         $ad->save();
         $adId = $ad->id;
         if($adId) {
@@ -89,7 +89,12 @@ class AdController extends Controller
             if ( $files =  $request->file('files')) {
             foreach ($request->file('files') as $key => $file) {
                 $name = time() . $key . $file->getClientOriginalName();
-                $filename = $file->move(public_path("/storage"), $name);
+                //$filename = $file->move(public_path("/storage"), $name);
+                Storage::disk('local')->putFileAs(
+                    'public/storage/'.$name,
+                    $file,
+                    $name
+                ); 
                 $mUpload =  new Upload;
                 $mUpload->ad_id = $adId;
                 $mUpload->filepath = $name;
