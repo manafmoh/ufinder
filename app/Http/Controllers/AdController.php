@@ -5,9 +5,10 @@ namespace App\Http\Controllers;
 use App\Model\Ad;
 use App\Model\Upload;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
 use App\Http\Resources\AdResource;
+use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\Response;
 
 class AdController extends Controller
 {
@@ -85,25 +86,33 @@ class AdController extends Controller
         $adId = $ad->id;
         if($adId) {
             // Multiple Files Upload
-            $uploadId = array();
             if ( $files =  $request->file('files')) {
-            foreach ($request->file('files') as $key => $file) {
+            foreach ($files  as $key => $file) {
+                if($file->getClientOriginalName()) {
                 $name = time() . $key . $file->getClientOriginalName();
-                //$filename = $file->move(public_path("/storage"), $name);
-                //File Moved to public_html/storage/app/public/storage/image => link to public/storahe/image
-                Storage::disk('local')->putFileAs(
-                    'public/image',
-                    $file,
-                    $name
-                );
+                $uploadImagePath = '/public/image/'.$name;
+                // open an image file
+                $file = Image::make($file);
+                $file->fit(600, 600, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $watermark = Image::make(Storage::get('public/watermark.png'));
+                $watermark->widen(floor(($file->width() / 4) * 3));
+                $file->insert($watermark, 'center');
+                Storage::put($uploadImagePath, (string) $file->encode());
+                //Save to DB
                 $mUpload =  new Upload;
                 $mUpload->ad_id = $adId;
                 $mUpload->filepath = $name;
                 $mUpload->save();
                 //Upload Ids
-                /*$uploadId[] = Upload::create(
+                /*
+                    $uploadId = array();
+                    $uploadId[] = Upload::create(
                     ['ad_id' => $adId,
                     'filepath' => $name])->id; */
+                }
+
             }
             //return response()->json($uploadId, 200);
             }

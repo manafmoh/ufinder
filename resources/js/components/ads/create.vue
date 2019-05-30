@@ -53,7 +53,7 @@
                     multiple
                     :limit="3"
                     :on-exceed="handleExceed"
-                    :file-list="fileList">
+                    :file-list="fileList_2">
                 <el-button size="small" type="primary">Click to upload</el-button>
                 <div slot="tip" class="el-upload__tip">jpg/png files with a size less than 500kb</div>
             </el-upload>
@@ -92,6 +92,7 @@ export default {
 	    	imageUrl: '',
             imageFile: '',
             fileList: [],
+            fileList_2: [],
             upload: {
                 name:'',url:''
             },
@@ -101,6 +102,7 @@ export default {
     },
     methods: {
         createAd() {
+
             let form = new FormData();
             form.append('image', this.imageFile);
             form.append('title', this.form.title);
@@ -110,6 +112,7 @@ export default {
             form.append('featured', this.form.featured);
             this.form =  form;
             const filesRaw = this.fileList.map(f => f.raw);
+            console.log(filesRaw); return;
             for (const file of filesRaw) {
                     this.form.append('files[]', file, file.name)
                 }
@@ -163,7 +166,7 @@ export default {
                 });
         },
         handleSuccess(response, file, fileList) {
-            var vm = this
+           /* var vm = this
             _.map(response, function (data) {
                 file['uid'] = data
                 //console.log('IMG', data);
@@ -174,7 +177,7 @@ export default {
             //Save the data returned from the back end
                 this.upload.url = file.url;
                 this.upload.name = file.name;
-            }
+            }*/
 
         },
         handleExceed(files, fileList) {
@@ -198,9 +201,8 @@ export default {
             //console.log('Preview',file);
                 this.isShowPic = true;
         },
-        onChange(file, fileList, name){
+        onChange(file, fileList, name, index){ console.log(index);
             //console.log('File',fileList);
-            this.fileList = fileList
             const isIMAGE = file.type === 'image/jpeg'||'image/gif'||'image/png';
             const isLt1M = file.size / 1024 / 1024 < 1;
             if (!isIMAGE) {
@@ -209,7 +211,14 @@ export default {
             if (!isLt1M) {
                 this.$message.error('Upload file size can not exceed 1MB!');
             }
-            return isIMAGE && isLt1M;
+            if(isIMAGE && isLt1M) {
+                this.fileList = fileList;
+                console.log(fileList);
+                return true;
+            }
+           // let index = _.findIndex(vm.fileList, ['uid', file.uid])
+           // vm.$delete(vm.fileList, index)
+            return false;
         }
     },
     created() {
