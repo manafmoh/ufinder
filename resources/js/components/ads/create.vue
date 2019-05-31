@@ -53,7 +53,7 @@
                     multiple
                     :limit="3"
                     :on-exceed="handleExceed"
-                    :file-list="fileList_2">
+                    :file-list="fileList">
                 <el-button size="small" type="primary">Click to upload</el-button>
                 <div slot="tip" class="el-upload__tip">jpg/png files with a size less than 500kb</div>
             </el-upload>
@@ -92,7 +92,6 @@ export default {
 	    	imageUrl: '',
             imageFile: '',
             fileList: [],
-            fileList_2: [],
             upload: {
                 name:'',url:''
             },
@@ -112,7 +111,6 @@ export default {
             form.append('featured', this.form.featured);
             this.form =  form;
             const filesRaw = this.fileList.map(f => f.raw);
-            console.log(filesRaw); return;
             for (const file of filesRaw) {
                     this.form.append('files[]', file, file.name)
                 }
@@ -198,10 +196,12 @@ export default {
             return isIMAGE && isLt1M;
         },
         handlePreview(file) {
-            //console.log('Preview',file);
-                this.isShowPic = true;
+            //console.log('Preview',file.url);
+            this.upload.url = file.url
+            this.upload.name = file.name
+            this.isShowPic = true;
         },
-        onChange(file, fileList, name, index){ console.log(index);
+        onChange(file, fileList, name){
             //console.log('File',fileList);
             const isIMAGE = file.type === 'image/jpeg'||'image/gif'||'image/png';
             const isLt1M = file.size / 1024 / 1024 < 1;
@@ -213,11 +213,9 @@ export default {
             }
             if(isIMAGE && isLt1M) {
                 this.fileList = fileList;
-                console.log(fileList);
                 return true;
             }
-           // let index = _.findIndex(vm.fileList, ['uid', file.uid])
-           // vm.$delete(vm.fileList, index)
+            fileList.pop()
             return false;
         }
     },
