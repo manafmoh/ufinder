@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\Upload;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
 
 class UploadController extends Controller
@@ -69,12 +70,13 @@ class UploadController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Upload $upload)
-    {
-        if (!(empty($upload->file))) {
-            if (file_exists(public_path() . public_path("/storage") . $upload->file)) {
-                unlink(public_path() . public_path("/storage") . $upload->file);
+    { //return response()->json(Storage::disk('public')->path("storage/image/") . $upload->filepath, Response::HTTP_ACCEPTED);
+        if (!(empty($upload))) {
+            if (file_exists( Storage::disk('public')->path("storage/image/") . $upload->filepath)) {
+                unlink(Storage::disk('public')->path("storage/image/") . $upload->filepath);
             }
-            Upload::where('id', $upload->id)->delete();
+            //Upload::where('id', $upload->id)->delete();
+            $upload->delete();
             return response()->json(null, Response::HTTP_NO_CONTENT);
         }
 

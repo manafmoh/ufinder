@@ -4,7 +4,6 @@ Route::apiResource('/ad', 'AdController');
 Route::apiResource('/category', 'CategoryController');
 Route::apiResource('/ad/{ad}/message', 'MessageController');
 
-
 Route::post('/like/{message}', 'LikeController@LikeIt');
 Route::delete('/like/{message}', 'LikeController@UnLikeIt');
 

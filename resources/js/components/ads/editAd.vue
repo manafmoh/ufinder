@@ -35,7 +35,7 @@
                     multiple
                     :limit="3"
                     :on-exceed="handleExceed"
-                    :file-list="fileList_2">
+                    :file-list="fileList">
                 <el-button size="small" type="primary">Click to upload</el-button>
                 <div slot="tip" class="el-upload__tip">jpg/png files with a size less than 500kb</div>
             </el-upload>
@@ -59,18 +59,13 @@ export default {
         return {
             form: {
                 title: null,
-                body: null
+                category_id: null,
+                body: null,
+                amount: 0,
+                featured: 0,
             },
             errors: {},
-            fileList: [
-                {
-                    name: 'food.jpeg',
-                    url: 'http://127.0.0.1:8000/storage/image/15593171060manafm(1).jpg'
-                },
-                {   name: 'food2.jpeg',
-                    url: 'http://127.0.0.1:8000/storage/image/15593171060manafm(1).jpg'
-                }
-            ],
+            fileList: [            ],
             upload: {
                 name:'',url:''
             },
@@ -79,6 +74,19 @@ export default {
     },
     methods: {
         updateAd() {
+            let form = new FormData();
+            form.append('title', this.form.title);
+            form.append('category_id', this.form.category_id);
+            form.append('body', this.form.body);
+            form.append('amount', this.form.amount);
+            form.append('featured', this.form.featured);
+            this.form =  form;
+            const filesRaw = this.fileList.map(f => f.raw);
+            console.log(filesRaw); return;
+            for (const file of filesRaw) {
+                    this.form.append('files[]', file, file.name)
+                }
+
             axios.patch(`/api/ad/${this.ad.slug}`, this.form)
             .then(res => this.cancel())
             .catch(error => error.response.data);
@@ -87,9 +95,10 @@ export default {
             EventBus.$emit('cancelEditing');
         },
         handleRemove(file, fileList) {
+            var filename = file.url.replace('/storage/image/','');
             if(!file.uid) return;
             let vm = this
-            axios.delete('/api/upload/' + file.uid)
+            axios.delete('/api/upload/' + filename)
                 .then(function () {
                     let index = _.findIndex(vm.fileList, ['uid', file.uid])
                     vm.$delete(vm.fileList, index)
@@ -156,6 +165,14 @@ export default {
     },
     mounted() {
         this.form = this.ad;
+    },
+    created() {
+        this.ad.uploads.forEach(item => {
+            //this.fileList.push(a);
+            var title = '';
+            var link = "/storage/image/"+item.filepath;
+            this.fileList.push({'name' : title, 'url' : link });
+            });
     }
 
 
