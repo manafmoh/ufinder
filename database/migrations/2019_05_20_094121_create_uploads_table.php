@@ -18,6 +18,13 @@ class CreateUploadsTable extends Migration
             $table->text('filepath');
             $table->integer('ad_id');
             $table->timestamps();
+
+        });
+        Schema::table('uploads', function($table) {
+            $table->foreign('ad_id')
+            ->references('id')->on('ads')
+            ->onDelete('cascade')
+            ->change();
         });
     }
 

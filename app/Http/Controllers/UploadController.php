@@ -70,10 +70,11 @@ class UploadController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Upload $upload)
-    { //return response()->json(Storage::disk('public')->path("storage/image/") . $upload->filepath, Response::HTTP_ACCEPTED);
+    { //return response()->json(Storage::disk('public')->path("image/") . $upload->filepath, Response::HTTP_ACCEPTED);
         if (!(empty($upload))) {
-            if (file_exists( Storage::disk('public')->path("storage/image/") . $upload->filepath)) {
-                unlink(Storage::disk('public')->path("storage/image/") . $upload->filepath);
+            if(Storage::disk('public')->exists("image/".$upload->filepath)) {
+                Storage::disk('public')->delete("image/".$upload->filepath);
+                //return response()->json('File exist', Response::HTTP_ACCEPTED);
             }
             //Upload::where('id', $upload->id)->delete();
             $upload->delete();

@@ -14,6 +14,7 @@ class CreateAdsTable extends Migration
     public function up()
     {
         Schema::create('ads', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('title');
             $table->string('slug');
@@ -31,10 +32,6 @@ class CreateAdsTable extends Migration
             $table->string('uploads');
             $table->softDeletes();
             $table->timestamps();
-            $table->dropForeign('ads_ad_id_foreign');
-            $table->foreign('ad_id')
-            ->references('id')->on('uploads')
-            ->onDelete('cascade');
         });
     }
 
@@ -45,6 +42,8 @@ class CreateAdsTable extends Migration
      */
     public function down()
     {
+
         Schema::dropIfExists('ads');
+
     }
 }

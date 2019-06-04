@@ -16,10 +16,13 @@ class CreateMessagesTable extends Migration
         Schema::create('messages', function (Blueprint $table) {
             $table->increments('id');
             $table->text('body');
-            $table->integer('ad_id')->unsigned();
+            $table->integer('ad_id')->unsigned()->nullable();
             $table->integer('user_id')->unsigned();
-            $table->foreign('ad_id')->references('id')->on('ads')->onDelete('cascade');
             $table->timestamps();
+
+        });
+        Schema::table('messages', function($table) {
+            $table->foreign('ad_id')->references('id')->on('ads')->onDelete('cascade');
         });
     }
 
