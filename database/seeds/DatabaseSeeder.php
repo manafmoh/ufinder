@@ -17,12 +17,12 @@ class DatabaseSeeder extends Seeder
     {
         // $this->call(UsersTableSeeder::class);
         //factory(User::class, 10)->create();
-        //factory(Category::class, 5)->create();
+        factory(Category::class, 5)->create();
         //factory(Ad::class, 10)->create();
-        factory(Message::class, 10)->create()->each(
+        /*factory(Message::class, 10)->create()->each(
             function($message){
                 return $message->like()->save(factory(User::class)->make());
             }
-        );
+        ); */
     }
 }

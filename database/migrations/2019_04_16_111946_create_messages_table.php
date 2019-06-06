@@ -13,10 +13,11 @@ class CreateMessagesTable extends Migration
      */
     public function up()
     {
+        Schema::enableForeignKeyConstraints();
         Schema::create('messages', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->text('body');
-            $table->integer('ad_id')->unsigned()->nullable();
+            $table->unsignedBigInteger('ad_id')->nullable();
             $table->integer('user_id')->unsigned();
             $table->timestamps();
 

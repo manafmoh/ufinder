@@ -16,15 +16,14 @@ class CreateUploadsTable extends Migration
         Schema::create('uploads', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->text('filepath');
-            $table->integer('ad_id');
+            $table->unsignedBigInteger('ad_id')->nullable();
             $table->timestamps();
 
         });
         Schema::table('uploads', function($table) {
             $table->foreign('ad_id')
             ->references('id')->on('ads')
-            ->onDelete('cascade')
-            ->change();
+            ->onDelete('cascade');
         });
     }
 
