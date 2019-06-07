@@ -11,19 +11,21 @@
         :to="item.to" >
         <v-btn flat>{{item.title}}</v-btn>
     </router-link>
-
+    <LoginPopup />
     </div>
   </v-toolbar>
 </template>
 
 <script>
 import AppNotification from './AppNotification';
+import LoginPopup from './LoginPopup';
 export default {
-    components: {AppNotification},
+    components: {AppNotification, LoginPopup},
     data(){
         return {
             items: [
                 {title: 'All Ads', to: '/ads', show:true},
+                {title: 'Facebook', to: '/auth/facebook', show:true},
                 {title: 'Free Post', to: '/post', show:true},
                 {title: 'Category', to: '/category', show:User.isAdmin()},
                 {title: 'Login', to: '/login', show:!User.loggedIn()},

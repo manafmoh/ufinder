@@ -178,6 +178,9 @@ return [
         //ImageServiceProvider
         Intervention\Image\ImageServiceProvider::class,
 
+         // Socialitte- Facebook
+        Laravel\Socialite\SocialiteServiceProvider::class,
+
     ],
 
     /*
@@ -230,6 +233,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         //ImageServiceProvider
         'Image' => Intervention\Image\Facades\Image::class,
+        //Socialite
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
 
     ],
 
