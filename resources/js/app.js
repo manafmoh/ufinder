@@ -24,6 +24,10 @@ Vue.use(VueImg)
 
 import User from './Helpers/user';
 window.User =  User;
+
+import Facebook from './Helpers/facebook';
+window.Facebook =  Facebook;
+
 window.EventBus = new Vue();
 
 import md from 'marked';

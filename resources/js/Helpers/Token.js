@@ -16,6 +16,14 @@ class Token {
         }
         return false;
     }
+    isValidFacebook(data) {
+        const payload = this.getPayload(data);
+        if(payload) {
+            return payload.iss == "http://localhost:8000/api/auth/facebooklogin"
+             ? true: false;
+        }
+        return false;
+    }
 
 }
 

@@ -17,9 +17,11 @@ export default {
   components: { facebookLogin},
   data(){
     return{
-      idImage, loginImage, mailImage, faceImage,
+      idImage:'', loginImage:'', mailImage:'', faceImage:'',
       isConnected: false,
       name: '',
+      firstname: '',
+      lastname: '',
       email: '',
       personalID: '',
       FB: undefined
@@ -27,12 +29,22 @@ export default {
   },
   methods: {
   getUserData() {
-      this.FB.api('/me', 'GET', { fields: 'id,name,email' },
+      this.FB.api('/me', 'GET', { fields: 'id,name,first_name,last_name,email,gender,picture,link' },
         userInformation => {
-          console.warn("data api",userInformation)
+          //console.warn("data api",userInformation)
           this.personalID = userInformation.id;
-          this.email = userInformation.email;
           this.name = userInformation.name;
+          this.email = userInformation.email;
+          this.firstname = userInformation.first_name;
+          this.lastname = userInformation.last_name;
+          const userInfo= {
+              'id':this.personalID,
+              'name':this.name,
+              'email':this.email,
+              'firstname':this.firstname,
+              'lastname':this.lastname
+          }
+          Facebook.login(userInfo);
         }
       )
     },
@@ -43,7 +55,10 @@ export default {
     },
     onLogin() {
       this.isConnected = true
-      this.getUserData()
+      this.getUserData();
+      if(User.loggedIn()) {
+            this.$router.push({name: 'ads'});
+        }
     },
     onLogout() {
       this.isConnected = false;

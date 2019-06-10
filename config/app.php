@@ -179,7 +179,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
 
          // Socialitte- Facebook
-        Laravel\Socialite\SocialiteServiceProvider::class,
+        //Laravel\Socialite\SocialiteServiceProvider::class,
 
     ],
 
@@ -234,7 +234,7 @@ return [
         //ImageServiceProvider
         'Image' => Intervention\Image\Facades\Image::class,
         //Socialite
-        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+        //'Socialite' => Laravel\Socialite\Facades\Socialite::class,
 
     ],
 
