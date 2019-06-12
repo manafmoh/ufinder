@@ -37,10 +37,8 @@
             >
             Sign Up
             </v-btn>
-            <router-link to="login">
-                <v-btn color="blue" flat>Login</v-btn>
-            </router-link>
         </v-form>
+        <v-btn color="blue" @click="showLogin" flat>Login</v-btn>
     </v-container>
 </template>
 
@@ -59,7 +57,7 @@ export default {
             }
         }
     },
-     created() {
+    created() {
         if(User.loggedIn()) {
             this.$router.push({name: 'ads'});
         }
@@ -74,6 +72,9 @@ export default {
                 })
                 //.catch(error => console.log(error.response.data));
                 .catch(error => this.errors =  error.response.data.errors);
+        },
+        showLogin() {
+            EventBus.$emit('ShowLogin', true);
         }
     }
 }

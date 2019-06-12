@@ -12,7 +12,7 @@ class Facebook {
         const user = res.data.user;
         if(Token.isValidFacebook(access_token)){
             AppStorage.store(access_token, user);
-            //window.location = "/";
+            window.location = "/";
         }
     }
 

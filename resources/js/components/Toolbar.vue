@@ -25,8 +25,7 @@ export default {
         return {
             items: [
                 {title: 'All Ads', to: '/ads', show:true},
-                {title: 'Facebook', to: '/auth/facebook', show:true},
-                {title: 'Free Post', to: '/post', show:true},
+                {title: 'Free Post', to: '/post', show:User.loggedIn()},
                 {title: 'Category', to: '/category', show:User.isAdmin()},
                 {title: 'Login', to: '/login', show:!User.loggedIn()},
                 {title: 'Logout', to: '/logout', show:User.loggedIn()}

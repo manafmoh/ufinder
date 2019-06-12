@@ -1,10 +1,13 @@
 <template>
   <div >
     <facebook-login class="button"
-      appId="2328368750589826"
+      appId=2328368750589826
       @login="onLogin"
       @logout="onLogout"
-      @sdk-loaded="sdkLoaded">
+      @sdk-loaded="sdkLoaded"
+      loginLabel="Login with Facebook"
+      logoutLabel="Logout Facebook"
+      >
     </facebook-login>
   </div>
 </template>
@@ -12,9 +15,11 @@
 import Vue from 'vue'
 import facebookLogin from 'facebook-login-vuejs';
 
-
 export default {
   components: { facebookLogin},
+  created() {
+      this.listen();
+  },
   data(){
     return{
       idImage:'', loginImage:'', mailImage:'', faceImage:'',
@@ -51,18 +56,27 @@ export default {
     sdkLoaded(payload) {
       this.isConnected = payload.isConnected
       this.FB = payload.FB
-      if (this.isConnected) this.getUserData()
+      if (this.isConnected) {}
+      EventBus.$emit('isFacebookLoggin', this.isConnected);
     },
     onLogin() {
       this.isConnected = true
       this.getUserData();
-      if(User.loggedIn()) {
-            this.$router.push({name: 'ads'});
+      EventBus.$emit('isFacebookLoggin', this.isConnected);
+        if(User.loggedIn()) {
+            //window.location = "/";
         }
     },
     onLogout() {
       this.isConnected = false;
-    }
+    },
+    listen() {
+            EventBus.$on('FacebookContinue', ()=> {
+                this.isConnected = true
+                this.onLogin();
+                EventBus.$emit('CloseDialog');
+            });
+      }
   }
 }
 </script>

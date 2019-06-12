@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <v-form
+        <v-form v-if="loginFlag"
             ref="form"
             @submit.prevent="login"
         >
@@ -22,24 +22,34 @@
             >
             Login
             </v-btn>
-            <router-link to="signup">
-                <v-btn color="blue" flat>Sign Up</v-btn>
-            </router-link>
+
+            <v-btn
+            color="success"
+            @click="showSignUp"
+            >
+            Sign Up
+            </v-btn>
         </v-form>
+        <Signup v-if="signupFlag" />
     </v-container>
 </template>
 
 <script>
+import Signup from './Signup';
 export default {
+    components: { Signup},
     data() {
         return {
             form: {
                 email: null,
                 password: null
-            }
+            },
+            loginFlag: true,
+            signupFlag:false
         }
     },
     created() {
+        this.listen();
         if(User.loggedIn()) {
             this.$router.push({name: 'ads'});
         }
@@ -48,7 +58,21 @@ export default {
         login() {
            User.login(this.form);
            this.$router.push({name: 'ads'});
+        },
+        showSignUp() {
+            this.signupFlag = true;
+            this.loginFlag = false;
+        },
+        showLogin() {
+            this.signupFlag = false;
+            this.loginFlag = true;
+        },
+        listen() {
+            EventBus.$on('ShowLogin', ()=> {
+                this.showLogin();
+            })
         }
+
     }
 }
 </script>
