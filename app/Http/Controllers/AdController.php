@@ -56,7 +56,7 @@ class AdController extends Controller
         $ad =  new Ad;
         $ad->title = $request->title;
         $ad->user_id = auth()->id();
-        $ad->featured = $request->featured;
+        $ad->featured = $request->has('featured');
         $ad->amount = $request->amount;
         $ad->body = $request->body;
         $ad->post_type = $request->post_type;

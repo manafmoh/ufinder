@@ -17,8 +17,11 @@
             item-text="name"
             item-value="id"
             label="Category"
+            @change="onSubCategoryClick"
             ></v-autocomplete>
-
+            <v-dialog  max-width="600px" v-model="subcategoryDialog" >
+                <v-btn>Select</v-btn>
+            </v-dialog>
             <markdown-editor v-model="form.body"></markdown-editor>
             <v-flex xs12 class="text-xs-center text-sm-center text-md-center text-lg-center">
                     <img :src="imageUrl" height="150" v-if="imageUrl"/>
@@ -57,8 +60,34 @@
                 <el-button size="small" type="primary">Click to upload</el-button>
                 <div slot="tip" class="el-upload__tip">jpg/png files with a size less than 500kb</div>
             </el-upload>
-
-
+            <input
+						type="file"
+						style="display: none"
+						ref="image"
+						accept="image/*"
+						@change="onFilePicked"
+					>
+            <v-checkbox
+                v-model="form.featured"
+                :label="`Featured: ${form.featured.toString()}`"
+            ></v-checkbox>
+            <v-radio-group v-model="form.post_type">
+                <v-radio
+                    label="Sell"
+                    color="red"
+                    value="sell"
+                ></v-radio>
+                <v-radio
+                    label="Buy"
+                    color="green"
+                    value="buy"
+                ></v-radio>
+            </v-radio-group>
+            <v-text-field
+                v-model="form.amount"
+                label="Amount"
+                required
+            ></v-text-field>
             <v-btn
             color="success"
             type="submit"
@@ -83,7 +112,8 @@ export default {
                 category_id: null,
                 body: null,
                 amount: 0,
-                featured: 0,
+                featured: true,
+                post_type: 'sell',
                 image: null,
             },
             categories: [],
@@ -95,7 +125,8 @@ export default {
             upload: {
                 name:'',url:''
             },
-            isShowPic: false
+            isShowPic: false,
+            subcategoryDialog:false
         }
 
     },
@@ -217,6 +248,9 @@ export default {
             }
             fileList.pop()
             return false;
+        },
+        onSubCategoryClick() {
+            this.subcategoryDialog=true
         }
     },
     created() {

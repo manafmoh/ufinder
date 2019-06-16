@@ -18,8 +18,25 @@ class Ad extends Model
         parent::boot();
 
         static::creating(function ($ad){
-            $ad->slug = str_slug($ad->title);
+            //$ad->slug = str_slug($ad->title);
+            $ad->slug = $ad->setSlug($ad->title);
         });
+    }
+    //Mutator not wrking
+    public function setSlug($value) {
+        if (static::whereSlug($slug = str_slug($value))->exists()) {
+            $slug = $this->incrementSlug($slug);
+        }
+        return $slug;
+        //$this->attributes['slug'] = $slug;
+    }
+    public function incrementSlug($slug) {
+        $original = $slug;
+        $count = 2;
+        while (static::whereSlug($slug)->exists()) {
+            $slug = "{$original}-" . $count++;
+        }
+        return $slug;
     }
 
     public function getRouteKeyName()

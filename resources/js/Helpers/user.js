@@ -52,7 +52,7 @@ class User {
 
     isAdmin(id) {
         // id of Admin
-        return this.id() == 18? true: false;
+        return this.id() == 4? true: false;
     }
 }
 
