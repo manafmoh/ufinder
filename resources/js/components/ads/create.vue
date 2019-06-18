@@ -15,13 +15,21 @@
             :items="categories"
             v-model="form.category_id"
             item-text="name"
-            item-value="id"
+            item-value="slug"
             label="Category"
             @change="onSubCategoryClick"
             ></v-autocomplete>
             <v-dialog  max-width="600px" v-model="subcategoryDialog" >
-                <v-btn>Select</v-btn>
+                <v-btn v-for="subitem in subcategories" :key="subitem.slug" @click="setSubcategory(subitem)">
+                    {{subitem.name}}</v-btn>
+
             </v-dialog>
+            <v-text-field
+                v-model="form.subcategory"
+                label="Sub Category"
+                readonly
+                required
+            ></v-text-field>
             <markdown-editor v-model="form.body"></markdown-editor>
             <v-flex xs12 class="text-xs-center text-sm-center text-md-center text-lg-center">
                     <img :src="imageUrl" height="150" v-if="imageUrl"/>
@@ -115,6 +123,7 @@ export default {
                 featured: true,
                 post_type: 'sell',
                 image: null,
+                subcategory:null
             },
             categories: [],
             errors: {},
@@ -126,7 +135,8 @@ export default {
                 name:'',url:''
             },
             isShowPic: false,
-            subcategoryDialog:false
+            subcategoryDialog:false,
+            subcategories:[],
         }
 
     },
@@ -249,8 +259,16 @@ export default {
             fileList.pop()
             return false;
         },
-        onSubCategoryClick() {
-            this.subcategoryDialog=true
+        onSubCategoryClick(slug) {
+            this.subcategoryDialog=true;
+             axios.get(`/api/category/${slug}/subcategory`)
+                .then( res => this.subcategories = res.data.data)
+                .catch(error => console.log(error));
+        },
+        setSubcategory(subcat) {
+            this.form.subcategory = subcat.slug;
+            //this.subCatName = subcat.name;
+            this.subcategoryDialog=false;
         }
     },
     created() {

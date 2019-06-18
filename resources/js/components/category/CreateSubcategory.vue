@@ -82,7 +82,7 @@ export default {
         axios.get(`/api/category/${this.$route.params.slug}/subcategory`)
         .then(res => {
              this.categories = res.data.data;
-             thhis.categoryName = this.categories[0].category;
+             this.categoryName = this.categories[0].category;
         })
         .then(error => console.log(error.data))
     },
