@@ -77,7 +77,7 @@ export default {
             this.$router.push('/ads')
         }
 
-        axios.get('/api/subcategory')
+        axios.get(`/api/subcategory`)
         .then(res => this.categories = res.data.data)
         .then(error => console.log(error.data))
     },

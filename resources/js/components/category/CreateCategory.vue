@@ -46,7 +46,7 @@
                     </v-list-tile-sub-title>
                 </v-list-tile-content>
                 <v-list-tile-action>
-                <v-btn small color="primary" dark :href="category.path">Sub Category</v-btn>
+                <v-btn small color="primary" dark :href="category.subcatpath">Sub Category</v-btn>
                 <v-btn icon small @click="destroy(category.slug, index)">
                     <v-icon color="red">delete</v-icon>
                 </v-btn>
@@ -76,7 +76,6 @@ export default {
         if(!User.isAdmin()) {
             this.$router.push('/ads')
         }
-
         axios.get('/api/category')
         .then(res => this.categories = res.data.data)
         .then(error => console.log(error.data))

@@ -20,6 +20,7 @@ class CategoryResource extends JsonResource
             'id'  => $this->id,
             'slug'  => $this->slug,
             'path'  => $this->path,
+            'subcatpath'  => $this->subcatpath,
             'created_at'    => $this->created_at->diffForHumans(),
             'updated_at'    => $this->updated_at->diffForHumans()
         ];

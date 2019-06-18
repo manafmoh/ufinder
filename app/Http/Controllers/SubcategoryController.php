@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SubcategoryController extends Controller
 {
-    
+
     public function __construct()
     {
         $this->middleware('JWT', ['except' => ['index', 'show']]);
@@ -20,9 +20,10 @@ class SubcategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        return SubcategoryResource::collection(Subcategory::latest()->get());
+    public function index(Category $category)
+    {   echo "Sub asd";
+        exit;
+        return SubcategoryResource::collection($category->subCategories);
     }
 
     /**
@@ -57,7 +58,7 @@ class SubcategoryController extends Controller
      * @param  \App\Model\Subcategory  $subcategory
      * @return \Illuminate\Http\Response
      */
-    public function show(Subcategory $subcategory)
+    public function show(Category $category, Subcategory $subcategory)
     {
         return new SubcategoryResource($subcategory);
     }

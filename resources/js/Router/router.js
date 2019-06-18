@@ -20,7 +20,7 @@ const routes = [
     { path: '/ad/:slug', component: AdSingle},
     { path: '/post', component: AdCreate},
     { path: '/category', component: CreateCategory},
-    { path: '/category/:slug', component: CreateSubcategory},
+    { path: '/subcategory/:slug/subcategory', component: CreateSubcategory},
   ]
 
 const router = new VueRouter({

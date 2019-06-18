@@ -19,9 +19,9 @@ class Category extends Model
     {
         return 'slug';
     }
-    /*public function subCategories() {
-        return $this->hasMany(Category::class);
-    }*/
+    public function subCategories() {
+        return $this->hasMany(Subcategory::class);
+    }
     public function setSlug($value) {
         if (static::whereSlug($slug = str_slug($value))->exists()) {
             $slug = $this->incrementSlug($slug);
@@ -41,4 +41,9 @@ class Category extends Model
         //return asset("api/ad/$this->slug");
         return "category/$this->slug";
     }
+    public function getSubcatpathAttribute() {
+        //return asset("api/ad/$this->slug");
+        return "category/$this->slug/subcategory";
+    }
+
 }
