@@ -21,8 +21,7 @@ class SubcategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Category $category)
-    {   echo "Sub asd";
-        exit;
+    {   
         return SubcategoryResource::collection($category->subCategories);
     }
 
@@ -46,7 +45,7 @@ class SubcategoryController extends Controller
     {
         $subcategory = new Subcategory();
         $subcategory->name = $request->name;
-        $subcategory->category_id = $category->slug;
+        $subcategory->category_id = $category->id;
         $subcategory->slug = str_slug($request->name);
         $subcategory->save();
         return response(new SubcategoryResource($subcategory), Response::HTTP_CREATED);
@@ -81,7 +80,7 @@ class SubcategoryController extends Controller
      * @param  \App\Model\Subcategory  $subcategory
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Subcategory $subcategory)
+    public function update(Category $category,Request $request, Subcategory $subcategory)
     {
         $subcategory->update([
             'name' => $request->name,
@@ -96,7 +95,7 @@ class SubcategoryController extends Controller
      * @param  \App\Model\Subcategory  $subcategory
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Subcategory $subcategory)
+    public function destroy(Category $category,Subcategory $subcategory)
     {
         $subcategory->delete();
         return response(null, Response::HTTP_NO_CONTENT);

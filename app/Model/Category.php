@@ -43,7 +43,7 @@ class Category extends Model
     }
     public function getSubcatpathAttribute() {
         //return asset("api/ad/$this->slug");
-        return "category/$this->slug/subcategory";
+        return "/category/$this->slug/subcategory";
     }
 
 }

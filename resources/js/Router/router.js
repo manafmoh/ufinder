@@ -9,10 +9,11 @@ import Ads from '../components/ads/Ads';
 import AdSingle from '../components/ads/Single';
 import AdCreate  from '../components/ads/create.vue';
 import CreateCategory from '../components/category/CreateCategory.vue';
-import CreateSubcategory from '../components/category/CreateSubcategory';
+import CreateSubcategory from '../components/category/CreateSubcategory.vue';
 
 
 const routes = [
+  
     { path: '/login', component: Login },
     { path: '/signup', component: Signup },
     { path: '/logout', component: Logout },
@@ -20,7 +21,7 @@ const routes = [
     { path: '/ad/:slug', component: AdSingle},
     { path: '/post', component: AdCreate},
     { path: '/category', component: CreateCategory},
-    { path: '/subcategory/:slug/subcategory', component: CreateSubcategory},
+    { path: '/category/:slug/subcategory', component: CreateSubcategory},
   ]
 
 const router = new VueRouter({

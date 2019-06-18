@@ -27,7 +27,7 @@
 
         <v-card>
         <v-toolbar color="indigo" dark dense>
-          <v-toolbar-title>All Sub Category of [category]</v-toolbar-title>
+          <v-toolbar-title >All Sub Category of <b v-html="categoryName">{{categoryName}}</b></v-toolbar-title>
         </v-toolbar>
          <v-list three-line>
             <div v-for="(category,index) in categories" :key="category.id">
@@ -46,7 +46,6 @@
                     </v-list-tile-sub-title>
                 </v-list-tile-content>
                 <v-list-tile-action>
-                <v-btn small color="primary" dark :href="category.path">Sub Category</v-btn>
                 <v-btn icon small @click="destroy(category.slug, index)">
                     <v-icon color="red">delete</v-icon>
                 </v-btn>
@@ -55,6 +54,9 @@
             <v-divider></v-divider>
             </div>
             </v-list>
+            <router-link to="/category">
+                    BACK TO CATEGORY
+                </router-link>
       </v-card>
     </v-container>
 </template>
@@ -69,6 +71,7 @@ export default {
             errors: {},
             categories: {},
             editFlag:null,
+            categoryName:''
         }
     },
      created() {
@@ -76,9 +79,11 @@ export default {
         if(!User.isAdmin()) {
             this.$router.push('/ads')
         }
-
-        axios.get(`/api/subcategory`)
-        .then(res => this.categories = res.data.data)
+        axios.get(`/api/category/${this.$route.params.slug}/subcategory`)
+        .then(res => {
+             this.categories = res.data.data;
+             thhis.categoryName = this.categories[0].category;
+        })
         .then(error => console.log(error.data))
     },
     methods : {
@@ -90,7 +95,7 @@ export default {
             }
         },
         createCategory() {
-             axios.post('/api/subcategory', this.form)
+             axios.post(`/api/category/${this.$route.params.slug}/subcategory`, this.form)
             .then(res => {
                 this.categories.unshift(res.data);
                 this.form.name = null;
@@ -98,7 +103,7 @@ export default {
             .catch(error => console.log(error.data))
         },
         updateCategory() {
-             axios.patch(`/api/subcategory/${this.editFlag}`, this.form)
+             axios.patch(`/api/category/${this.$route.params.slug}/subcategory/${this.editFlag}`, this.form)
             .then(res => {
                 this.categories.unshift(res.data);
                 this.form.name = null;
@@ -106,7 +111,7 @@ export default {
             .catch(error => console.log(error.data))
         },
         destroy(slug, index) {
-            axios.delete(`/api/subcategory/${slug}`)
+            axios.delete(`/api/category/${this.$route.params.slug}/subcategory/${slug}`)
             .then(res => this.categories.splice(index, 1))
             .catch(error=>console.log(error))
         },

@@ -18,6 +18,7 @@
 Route::view('/', 'home');
 Route::view('/{any}', 'home');
 Route::view('/{any}/{any2}', 'home');
+Route::view('/{any}/{any2}/{any3}', 'home');
 
 
 
