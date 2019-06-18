@@ -9,6 +9,7 @@ import Ads from '../components/ads/Ads';
 import AdSingle from '../components/ads/Single';
 import AdCreate  from '../components/ads/create.vue';
 import CreateCategory from '../components/category/CreateCategory.vue';
+import CreateSubcategory from '../components/category/CreateSubcategory';
 
 
 const routes = [
@@ -19,6 +20,7 @@ const routes = [
     { path: '/ad/:slug', component: AdSingle},
     { path: '/post', component: AdCreate},
     { path: '/category', component: CreateCategory},
+    { path: '/category/:slug', component: CreateSubcategory},
   ]
 
 const router = new VueRouter({
