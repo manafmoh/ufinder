@@ -1,35 +1,40 @@
 <template>
     <v-container>
-        <v-form
-            ref="form"
-            @submit.prevent="createAd"
-        >
+        <v-form ref="form" @submit.prevent="createAd" v-model="valid" >
             <v-text-field
-            v-model="form.title"
-            label="Title"
-            required
+                v-model="form.title"
+                label="Title"
+                required
             ></v-text-field>
             <span class="red--text" v-if="errors.title">{{errors.title[0]}}</span>
 
+            <v-flex xs12 sm6 d-flex>
             <v-autocomplete
-            :items="categories"
-            v-model="form.category_id"
-            item-text="name"
-            item-value="slug"
-            label="Category"
-            @change="onSubCategoryClick"
-            ></v-autocomplete>
-            <v-dialog  max-width="600px" v-model="subcategoryDialog" >
+                :items="categories"
+                v-model="form.category_id"
+                item-text="name"
+                item-value="categories.id"
+                label="Category"
+                :return-object="true"
+                @change="onSubCategoryClick">
+                </v-autocomplete>
+                <span class="red--text" v-if="errors.category_id">{{errors.category_id[0]}}</span>
+            </v-flex>
+            <!--<v-dialog  max-width="600px" v-model="subcategoryDialog" >
                 <v-btn v-for="subitem in subcategories" :key="subitem.slug" @click="setSubcategory(subitem)">
                     {{subitem.name}}</v-btn>
-
-            </v-dialog>
-            <v-text-field
-                v-model="form.subcategory"
+            </v-dialog>-->
+            <v-flex xs12 sm6 d-flex>
+                <v-select
+                v-model="form.subcategory_id"
+                :items="subcategories"
                 label="Sub Category"
-                readonly
-                required
-            ></v-text-field>
+                item-text="name"
+                item-value="id"
+                required>
+                </v-select>
+                <span class="red--text" v-if="errors.subcategory_id">{{errors.csubcategory_id[0]}}</span>
+            </v-flex>
             <markdown-editor v-model="form.body"></markdown-editor>
             <v-flex xs12 class="text-xs-center text-sm-center text-md-center text-lg-center">
                     <img :src="imageUrl" height="150" v-if="imageUrl"/>
@@ -68,16 +73,16 @@
                 <el-button size="small" type="primary">Click to upload</el-button>
                 <div slot="tip" class="el-upload__tip">jpg/png files with a size less than 500kb</div>
             </el-upload>
-            <input
+                    <!--<input
 						type="file"
 						style="display: none"
 						ref="image"
 						accept="image/*"
 						@change="onFilePicked"
-					>
+					> -->
             <v-checkbox
                 v-model="form.featured"
-                :label="`Featured: ${form.featured.toString()}`"
+                :label="`Featured`"
             ></v-checkbox>
             <v-radio-group v-model="form.post_type">
                 <v-radio
@@ -96,9 +101,10 @@
                 label="Amount"
                 required
             ></v-text-field>
+            <span class="red--text" v-if="errors.amount">{{errors.amount[0]}}</span>
             <v-btn
-            color="success"
-            type="submit"
+                color="success"
+                type="submit"
             >
             Create
             </v-btn>
@@ -115,15 +121,16 @@ export default {
     },
     data(){
         return {
+            valid: false,
             form: {
                 title: null,
                 category_id: null,
+                subcategory_id:null,
                 body: null,
                 amount: 0,
                 featured: true,
                 post_type: 'sell',
                 image: null,
-                subcategory:null
             },
             categories: [],
             errors: {},
@@ -136,17 +143,25 @@ export default {
             },
             isShowPic: false,
             subcategoryDialog:false,
-            subcategories:[],
+            subcategories:[{name:'',id:''}],
+            subCatName:null
         }
 
     },
-    methods: {
-        createAd() {
 
+    methods: {
+         validate () { alert('1');
+            if (this.$refs.form.validate()) { alert('2');
+            this.snackbar = true
+            }
+        },
+        createAd() {
+            this.validate();
             let form = new FormData();
             form.append('image', this.imageFile);
             form.append('title', this.form.title);
-            form.append('category_id', this.form.category_id);
+           // form.append('category_id', this.form.category_id['id']);
+            form.append('subcategory_id', this.form.subcategory_id);
             form.append('body', this.form.body);
             form.append('amount', this.form.amount);
             form.append('featured', this.form.featured);
@@ -164,7 +179,7 @@ export default {
                 //Redirecting the url
                 this.$router.push(res.data.path)
             })
-            .catch(error => console.log(error.response.data.error));
+            .catch(error => this.errors =  error.response.data.errors);
         },
 
         pickFile () {
@@ -259,16 +274,16 @@ export default {
             fileList.pop()
             return false;
         },
-        onSubCategoryClick(slug) {
-            this.subcategoryDialog=true;
-             axios.get(`/api/category/${slug}/subcategory`)
+        onSubCategoryClick(categoryArr) {
+            //this.subcategoryDialog=true;
+             axios.get(`/api/category/${categoryArr['slug']}/subcategory`)
                 .then( res => this.subcategories = res.data.data)
                 .catch(error => console.log(error));
         },
         setSubcategory(subcat) {
-            this.form.subcategory = subcat.slug;
+            //this.form.subcategory_id = subcat.id;
             //this.subCatName = subcat.name;
-            this.subcategoryDialog=false;
+            //this.subcategoryDialog=false;
         }
     },
     created() {

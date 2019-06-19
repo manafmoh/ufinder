@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Model\Ad;
 use App\Model\Upload;
 use Illuminate\Http\Request;
+use App\Http\Requests\AdRequest;
 use App\Http\Resources\AdResource;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
@@ -16,11 +17,20 @@ class AdController extends Controller
     {
         $this->middleware('JWT', ['except' => ['index', 'show', 'upload']]);
     }
+
+    /*protected function validator(AdRequest $request)
+    {
+        return Validator::make($request, [
+            'title' => ['required', 'min:3', 'max:255'],
+        ]);
+    }*/
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
         return AdResource::collection(Ad::latest()->get());
@@ -42,7 +52,7 @@ class AdController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AdRequest $request)
     {
         //dd($request->all());
         //return  $request->image->getClientOriginalName();
@@ -53,6 +63,7 @@ class AdController extends Controller
 
         //'title','featured','amount','image','body','post_type','type','country','city','area','category_id'
 
+        $request->validated();
         $ad =  new Ad;
         $ad->title = $request->title;
         $ad->user_id = auth()->id();
@@ -65,6 +76,7 @@ class AdController extends Controller
         $ad->city = $request->city;
         $ad->area = $request->area;
         $ad->category_id = $request->category_id;
+        $ad->sub_category_id = $request->subcategory_id;
         //Saving image on a location and save to DB
        // $ad->image = $request->image;
         if($request->hasFile('image')) {
