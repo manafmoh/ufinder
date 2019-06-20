@@ -25,7 +25,7 @@ class AdRequest extends FormRequest
     {
         return [
             'title' => 'required|min:3|max:150',
-            //'category_id' => 'required',
+            'category_id' => 'required',
             'subcategory_id' => 'required',
             'amount' => 'required',
         ];

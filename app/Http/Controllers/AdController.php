@@ -62,21 +62,22 @@ class AdController extends Controller
         // AdResourse is used for getting PATH
 
         //'title','featured','amount','image','body','post_type','type','country','city','area','category_id'
-
-        $request->validated();
+        $validatedData = $request->validated();
+        //dd($validatedData);
         $ad =  new Ad;
-        $ad->title = $request->title;
+        $ad->title = $validatedData['title'];
         $ad->user_id = auth()->id();
         $ad->featured = $request->has('featured');
-        $ad->amount = $request->amount;
+        $ad->amount = $validatedData['amount'];
         $ad->body = $request->body;
         $ad->post_type = $request->post_type;
         $ad->type = $request->type;
         $ad->country = $request->country;
         $ad->city = $request->city;
         $ad->area = $request->area;
+        //$ad->category_id = $validatedData['category_id'];
         $ad->category_id = $request->category_id;
-        $ad->sub_category_id = $request->subcategory_id;
+        $ad->sub_category_id = $validatedData['subcategory_id'];
         //Saving image on a location and save to DB
        // $ad->image = $request->image;
         if($request->hasFile('image')) {

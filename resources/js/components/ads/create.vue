@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <v-form ref="form" @submit.prevent="createAd" v-model="valid" >
+        <v-form ref="form" @submit.prevent="createAd" id="formAd" >
             <v-text-field
                 v-model="form.title"
                 label="Title"
@@ -16,6 +16,7 @@
                 item-value="categories.id"
                 label="Category"
                 :return-object="true"
+                required
                 @change="onSubCategoryClick">
                 </v-autocomplete>
                 <span class="red--text" v-if="errors.category_id">{{errors.category_id[0]}}</span>
@@ -121,7 +122,6 @@ export default {
     },
     data(){
         return {
-            valid: false,
             form: {
                 title: null,
                 category_id: null,
@@ -143,24 +143,19 @@ export default {
             },
             isShowPic: false,
             subcategoryDialog:false,
-            subcategories:[{name:'',id:''}],
+            subcategories:[],
             subCatName:null
         }
 
     },
 
     methods: {
-         validate () { alert('1');
-            if (this.$refs.form.validate()) { alert('2');
-            this.snackbar = true
-            }
-        },
         createAd() {
-            this.validate();
+            //console.log(this.form.category_id['id']);
             let form = new FormData();
             form.append('image', this.imageFile);
             form.append('title', this.form.title);
-           // form.append('category_id', this.form.category_id['id']);
+            form.append('category_id', this.form.category_id['id']);
             form.append('subcategory_id', this.form.subcategory_id);
             form.append('body', this.form.body);
             form.append('amount', this.form.amount);
