@@ -24,16 +24,20 @@ class AdRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|min:3|max:150',
-            'category_id' => 'required',
-            'subcategory_id' => 'required',
-            'amount' => 'required',
+            'title' => 'required|min:3|max:150|not_in:null',
+            'category_id' => 'required|integer',
+            'subcategory_id' => 'required|integer',
+            'amount' => 'required|not_in:0',
         ];
     }
     public function messages()
     {
         return [
-            'title.required' => 'An Item Name is required',
+            'title.required' => 'Title is required',
+            'title.not_in' => 'Title is required',
+            'category_id.integer' => 'Category Required',
+            'subcategory_id.integer' => 'Sub Category Required',
+            'amount.not_in' => 'Amount is required',
         ];
     }
 }

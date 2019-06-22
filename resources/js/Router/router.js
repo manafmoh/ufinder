@@ -13,7 +13,7 @@ import CreateSubcategory from '../components/category/CreateSubcategory.vue';
 
 
 const routes = [
-  
+    { path: '/', component: Ads, name:'ads' },
     { path: '/login', component: Login },
     { path: '/signup', component: Signup },
     { path: '/logout', component: Logout },

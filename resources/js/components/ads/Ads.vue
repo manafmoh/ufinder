@@ -2,11 +2,15 @@
     <v-container flued grid-list-md class="mt-2" >
     <v-layout row wrap>
       <v-flex xs8>
-       <ad
-       v-for="ad in ads"
-       :key="ad.path"
-       :ad=ad
-       ></ad>
+
+              <v-flex xs3>
+                <ad
+                v-for="ad in ads"
+                :key="ad.path"
+                :ad=ad
+                ></ad>
+              </v-flex>
+
       </v-flex>
       <v-flex xs4>
           <AdSidebar></AdSidebar>

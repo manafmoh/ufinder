@@ -8,6 +8,7 @@
                 </router-link>
 
                 </h3>
+            <ImageThumb  :ad="ad"></ImageThumb>
             <div class="grey--text">{{ad.user}} Said {{ad.created_at}} </div>
           </div>
         </v-card-title>
@@ -19,7 +20,9 @@
 </template>
 
 <script>
+import ImageThumb from './ImageThumb'
 export default {
+    components: { ImageThumb},
     props:['ad'],
 
 }

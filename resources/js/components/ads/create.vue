@@ -2,7 +2,7 @@
     <v-container>
         <v-form ref="form" @submit.prevent="createAd" id="formAd" >
             <v-text-field
-                v-model="form.title"
+                v-model="title"
                 label="Title"
                 required
             ></v-text-field>
@@ -11,7 +11,7 @@
             <v-flex xs12 sm6 d-flex>
             <v-autocomplete
                 :items="categories"
-                v-model="form.category_id"
+                v-model="category_id"
                 item-text="name"
                 item-value="categories.id"
                 label="Category"
@@ -27,27 +27,17 @@
             </v-dialog>-->
             <v-flex xs12 sm6 d-flex>
                 <v-select
-                v-model="form.subcategory_id"
+                v-model="subcategory_id"
                 :items="subcategories"
                 label="Sub Category"
                 item-text="name"
                 item-value="id"
                 required>
                 </v-select>
-                <span class="red--text" v-if="errors.subcategory_id">{{errors.csubcategory_id[0]}}</span>
+                <span class="red--text" v-if="errors.subcategory_id">{{errors.subcategory_id[0]}}</span>
             </v-flex>
-            <markdown-editor v-model="form.body"></markdown-editor>
-            <v-flex xs12 class="text-xs-center text-sm-center text-md-center text-lg-center">
-                    <img :src="imageUrl" height="150" v-if="imageUrl"/>
-					<v-text-field label="Select Image" @click='pickFile' v-model='imageName' prepend-icon='attach_file'></v-text-field>
-					<input
-						type="file"
-						style="display: none"
-						ref="image"
-						accept="image/*"
-						@change="onFilePicked"
-					>
-			</v-flex>
+            <markdown-editor v-model="body"></markdown-editor>
+
             <el-dialog  :visible.sync="isShowPic" size="small">
             <span>
                 <img :src="upload.url">
@@ -82,10 +72,10 @@
 						@change="onFilePicked"
 					> -->
             <v-checkbox
-                v-model="form.featured"
+                v-model="featured"
                 :label="`Featured`"
             ></v-checkbox>
-            <v-radio-group v-model="form.post_type">
+            <v-radio-group v-model="post_type">
                 <v-radio
                     label="Sell"
                     color="red"
@@ -98,7 +88,7 @@
                 ></v-radio>
             </v-radio-group>
             <v-text-field
-                v-model="form.amount"
+                v-model="amount"
                 label="Amount"
                 required
             ></v-text-field>
@@ -122,16 +112,16 @@ export default {
     },
     data(){
         return {
-            form: {
+
                 title: null,
                 category_id: null,
                 subcategory_id:null,
-                body: null,
+                body: '',
                 amount: 0,
                 featured: true,
                 post_type: 'sell',
-                image: null,
-            },
+
+
             categories: [],
             errors: {},
             imageName: '',
@@ -151,32 +141,45 @@ export default {
 
     methods: {
         createAd() {
-            //console.log(this.form.category_id['id']);
+            let CatId=null;
+            if (this.category_id == null || typeof this.category_id == "undefined" ) {
+                console.log('NULL');
+            } else {
+                console.log(this.category_id['id']);
+                 if(this.category_id['id']){
+                    CatId = this.category_id['id'];
+                }
+            }
+
+
+
             let form = new FormData();
-            form.append('image', this.imageFile);
-            form.append('title', this.form.title);
-            form.append('category_id', this.form.category_id['id']);
-            form.append('subcategory_id', this.form.subcategory_id);
-            form.append('body', this.form.body);
-            form.append('amount', this.form.amount);
-            form.append('featured', this.form.featured);
-            this.form =  form;
+            form.append('title', this.title);
+            form.append('category_id', CatId );
+            form.append('subcategory_id', this.subcategory_id);
+            form.append('body', this.body);
+            form.append('amount', this.amount);
+            form.append('featured', this.featured);
+            //this.form =  form;
             const filesRaw = this.fileList.map(f => f.raw);
             for (const file of filesRaw) {
-                    this.form.append('files[]', file, file.name)
+                    form.append('files[]', file, file.name)
                 }
-            axios.post('/api/ad', this.form, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-                }
-            })
-            .then( res => {
+
+            axios({
+                    method: 'post',
+                    url: '/api/ad' ,
+                    data: form,
+                    config: { headers: {'Content-Type': 'multipart/form-data' }}
+                }).then( res => {
                 //Redirecting the url
                 this.$router.push(res.data.path)
             })
-            .catch(error => this.errors =  error.response.data.errors);
+            .catch(error => {
+                this.errors =  error.response.data.errors;
+                //console.log('ERROR ',this.errors)
+                });
         },
-
         pickFile () {
             this.$refs.image.click ()
         },

@@ -54,7 +54,7 @@ class AdController extends Controller
      */
     public function store(AdRequest $request)
     {
-        //dd($request->all());
+       // dd($request->all());
         //return  $request->image->getClientOriginalName();
         //$request['slug'] = str_slug($request->title); BOOT method used in Model/Ad.php
         //$ad = auth()->user()->ad()->create($request->all());
@@ -65,10 +65,10 @@ class AdController extends Controller
         $validatedData = $request->validated();
         //dd($validatedData);
         $ad =  new Ad;
-        $ad->title = $validatedData['title'];
+        $ad->title = $request->title;
         $ad->user_id = auth()->id();
         $ad->featured = $request->has('featured');
-        $ad->amount = $validatedData['amount'];
+        $ad->amount = $request->amount;
         $ad->body = $request->body;
         $ad->post_type = $request->post_type;
         $ad->type = $request->type;
@@ -77,10 +77,10 @@ class AdController extends Controller
         $ad->area = $request->area;
         //$ad->category_id = $validatedData['category_id'];
         $ad->category_id = $request->category_id;
-        $ad->sub_category_id = $validatedData['subcategory_id'];
+        $ad->sub_category_id = $request->subcategory_id;
         //Saving image on a location and save to DB
        // $ad->image = $request->image;
-        if($request->hasFile('image')) {
+        /*if($request->hasFile('image')) {
             //$imagename = $request->image->getClientOriginalName();
             //$request->image->storeAs('public/storage', $imagename);
             $imageFile = $request->file('image');
@@ -94,7 +94,7 @@ class AdController extends Controller
             $ad->image = $name;
         } else {
             $ad->image = '';
-        }
+        }*/
         $ad->save();
         $adId = $ad->id;
         if($adId) {
