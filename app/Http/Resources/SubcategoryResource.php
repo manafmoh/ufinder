@@ -20,6 +20,7 @@ class SubcategoryResource extends JsonResource
             'slug'  => $this->slug,
             'path'  => $this->path,
             'category'  => $this->category->name,
+            'active'    =>$this->active,
             'created_at'    => $this->created_at->diffForHumans(),
             'updated_at'    => $this->updated_at->diffForHumans()
         ];

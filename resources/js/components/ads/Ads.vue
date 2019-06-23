@@ -1,7 +1,6 @@
 <template>
     <v-container flued grid-list-md class="mt-2" >
     <v-layout row wrap>
-    <CategoryMenu />
       <v-flex xs12>
           <v-card>
             <v-toolbar flat>
@@ -36,9 +35,8 @@
 <script>
 import ad from './Ad';
 import AdSidebar from './AdSidebar';
-import CategoryMenu from '../category/CategoryMenu'
 export default {
-    components: {ad, AdSidebar, CategoryMenu},
+    components: {ad, AdSidebar},
     data() {
         return {
             ads: {}

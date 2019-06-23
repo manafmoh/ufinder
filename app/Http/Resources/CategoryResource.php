@@ -20,9 +20,12 @@ class CategoryResource extends JsonResource
             'id'  => $this->id,
             'slug'  => $this->slug,
             'path'  => $this->path,
+            'subcategories' =>  SubcategoryResource::collection($this->subCategories),
             'subcatpath'  => $this->subcatpath,
+            'active'    =>$this->active,
             'created_at'    => $this->created_at->diffForHumans(),
-            'updated_at'    => $this->updated_at->diffForHumans()
+            'updated_at'    => $this->updated_at->diffForHumans(),
+
         ];
     }
 }

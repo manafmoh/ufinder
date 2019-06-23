@@ -1,4 +1,5 @@
 <template>
+<div>
     <v-toolbar>
     <!-- <v-toolbar-side-icon></v-toolbar-side-icon> -->
     <v-toolbar-title>uFinder</v-toolbar-title>
@@ -13,14 +14,27 @@
     </router-link>
     <LoginPopup />
     </div>
-  </v-toolbar>
+     
+    
+    </v-toolbar>
+    <v-expansion-panel>
+        <v-expansion-panel-content >
+        <div slot='header'><h6>Headline</h6></div>
+        <div>
+            Coming soon
+        </div>
+        </v-expansion-panel-content>
+    </v-expansion-panel>
+    <CategoryMenu class="text-sm-left" />
+</div>
 </template>
 
 <script>
 import AppNotification from './AppNotification';
 import LoginPopup from './LoginPopup';
+import CategoryMenu from './category/CategoryMenu'
 export default {
-    components: {AppNotification, LoginPopup},
+    components: {AppNotification, LoginPopup, CategoryMenu},
     data(){
         return {
             items: [

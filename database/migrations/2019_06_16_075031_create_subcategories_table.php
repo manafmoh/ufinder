@@ -18,6 +18,7 @@ class CreateSubcategoriesTable extends Migration
             $table->unsignedBigInteger('category_id')->nullable();
             $table->string('name');
             $table->string('slug');
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
         Schema::table('subcategories', function($table) {
