@@ -1,51 +1,142 @@
 <template>
 <div class="text-xs-center">
-    <v-menu open-on-hover offset-y open-delay="500"
-               v-for="(item, index) in Menus" :key="index">
-        <v-btn slot="activator" color="secondary" dark @click="menuinfo(item)">{{item.title}}-{{index}}</v-btn>
-        <v-list dense>
-          <v-list-tile v-for="(subitem, index1) in item.sub" :key="index1" @click="subinfo(subitem)">
-            <v-list-tile-title>{{ subitem.title }}-{{index1}}</v-list-tile-title>
-            <v-divider></v-divider>
-          </v-list-tile>
-        </v-list>
+    <v-menu  offset-y open-delay="500"
+    :close-on-content-click="closeOnContentClick" z-index=100    >
+        <v-btn slot="activator" color="secondary" dark @click="menuinfo(item)">MENU</v-btn>
+        <v-layout flex-child wrap>
+        <v-flex xs12 md4 d-flex
+            v-model="item.active"
+            v-for="item in items"
+            :key="item.title"
+        >
+         <v-sheet>
+            <v-list row wrap>
+            <v-list-group
+              v-model="item.active"
+              :prepend-icon="item.action"
+              no-action
+              row wrap
+            >
+              <v-list-tile slot="activator">
+                <v-list-tile-content>
+                  <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                </v-list-tile-content>
+              </v-list-tile>
+              <v-list-tile v-for="subItem in item.items" :key="subItem.title" ripple @click="close">
+                <v-list-tile-content>
+                  <v-list-tile-title>{{ subItem.title }}</v-list-tile-title>
+                </v-list-tile-content>
+                <v-list-tile-action>
+                  <v-icon>{{ subItem.action }}</v-icon>
+                </v-list-tile-action>
+              </v-list-tile>
+            </v-list-group>
+          </v-list>
+        </v-sheet>
+        </v-flex>
+        </v-layout>
       </v-menu>
 </div>
+
+
+
+
+
 </template>
 
 <script>
 export default {
-    data: () => ({
-   Menus: [
-     {
-       title: 'Menu1',
-       sub: [
-        { title: 'sMenu1'},
-         { title: 'sMenu2'}
-       ]
-     },
-     {
-       title: 'Menu2',
-       sub: [
-        { title: 'sMenu3'},
-         { title: 'sMenu4'}
-       ]
-     },
-     {
-       title: 'Menu3',
-       sub: [
-        { title: 'sMenu5'},
-         { title: 'sMenu6'}
-       ]
-     }
-   ]
-  }),
+   data () {
+    return {
+    closeOnContentClick: false,
+      items: [
+        {
+          action: 'local_activity',
+          title: 'Attractions',
+          active: true,
+          items: [
+            { title: 'List Item Attractions' }
+          ]
+        },
+        {
+          action: 'restaurant',
+          title: 'Dining',
+          active: true,
+          items: [
+            { title: 'Breakfast & brunch' },
+            { title: 'New American' },
+            { title: 'Sushi' }
+          ]
+        },
+        {
+          action: 'school',
+          title: 'Education',
+          active: false,
+          items: [
+            { title: 'List Item' }
+          ]
+        },
+        {
+          action: 'directions_run',
+          title: 'Family',
+          active: false,
+          items: [
+            { title: 'List Item' }
+          ]
+        },
+        {
+          action: 'healing',
+          title: 'Health',
+          active: false,
+          items: [
+            { title: 'List Item' }
+          ]
+        },
+        {
+          action: 'content_cut',
+          title: 'Office',
+          active: false,
+          items: [
+            { title: 'List Item' }
+          ]
+        },
+        {
+          action: 'local_offer',
+          title: 'Promotions',
+          active: false,
+          items: [
+            { title: 'List Item' }
+          ]
+        },
+        {
+          action: 'local_offer1',
+          title: 'Promotions2',
+          active: false,
+          items: [
+            { title: 'List Item' }
+          ]
+        },
+        {
+          action: 'local_offer2',
+          title: 'Promotions2',
+          active: false,
+          items: [
+            { title: 'List Item' }
+          ]
+        }
+      ]
+    }
+  },
   methods: {
-    subinfo(subitem) {
-      alert("Test "+ subitem.title)
-    },
-    menuinfo(liton) {
-      alert("Main"+liton.title)
+    close () {
+      this.items.forEach(item => {
+        if (item.active) {
+          _.delay(function () {
+            item.active = false
+          }, 300)
+          return false
+        }
+      })
     }
   }
 }
