@@ -1,18 +1,32 @@
 <template>
     <v-container flued grid-list-md class="mt-2" >
     <v-layout row wrap>
-      <v-flex xs8>
-
-              <v-flex xs3>
+    <CategoryMenu />
+      <v-flex xs12>
+          <v-card>
+            <v-toolbar flat>
+            <v-btn icon>
+                <v-icon>arrow_back</v-icon>
+            </v-btn>
+            <v-toolbar-title>Albums</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-btn icon>
+                <v-icon>search</v-icon>
+            </v-btn>
+            </v-toolbar>
+            <v-subheader>May</v-subheader>
+            <v-container fluid grid-list-sm>
+            <v-layout row wrap>
                 <ad
                 v-for="ad in ads"
                 :key="ad.path"
                 :ad=ad
                 ></ad>
-              </v-flex>
-
+            </v-layout>
+            </v-container>
+          </v-card>
       </v-flex>
-      <v-flex xs4>
+      <v-flex xs12>
           <AdSidebar></AdSidebar>
       </v-flex>
     </v-layout>
@@ -22,8 +36,9 @@
 <script>
 import ad from './Ad';
 import AdSidebar from './AdSidebar';
+import CategoryMenu from '../category/CategoryMenu'
 export default {
-    components: {ad, AdSidebar},
+    components: {ad, AdSidebar, CategoryMenu},
     data() {
         return {
             ads: {}
