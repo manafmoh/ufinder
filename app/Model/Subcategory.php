@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Subcategory extends Model
 {
-   
+
     protected $guarded = [];
     protected static function boot() {
 
@@ -38,5 +38,9 @@ class Subcategory extends Model
             $slug = "{$original}-" . $count++;
         }
         return $slug;
+    }
+    public function getSubCategorypathAttribute() {
+        //return asset("api/ad/$this->slug");
+        return "/sc/$this->slug";
     }
 }

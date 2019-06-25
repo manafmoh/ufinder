@@ -43,9 +43,27 @@ export default {
         }
     },
     created() {
-        axios.get('/api/ad')
+        let route = this.$route.fullPath;
+        let pathPrams = route.split('/');
+        switch (pathPrams[1]) {
+        case 'c':
+            axios.get(`/api/ad/${this.$route.params.slug}/category`)
             .then(res => {this.ads = res.data.data; })
             .catch(error => console.log(error.response.data));
+           break;
+        case 'sc':
+
+            break;
+        default:
+             axios.get('/api/ad')
+            .then(res => {this.ads = res.data.data; })
+            .catch(error => console.log(error.response.data));
+        }
+
+    },
+
+    methods:{
+
     }
 
 }

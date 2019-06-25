@@ -10,6 +10,7 @@ use App\Http\Resources\AdResource;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
+use App\Model\Category;
 
 class AdController extends Controller
 {
@@ -31,8 +32,13 @@ class AdController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function index()
+    public function index(Ad $ad, Category $cat)
     {
+
+        if(!empty($cat['id'])){
+            $ads=Category::find($cat['id'])->ads;
+            return AdResource::collection($ads);
+        }
         return AdResource::collection(Ad::latest()->get());
     }
 

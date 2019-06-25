@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use App\Model\Ad;
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
@@ -18,6 +19,9 @@ class Category extends Model
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+    public function ads() {
+        return $this->hasMany(Ad::class);
     }
     public function subCategories() {
         return $this->hasMany(Subcategory::class);
@@ -45,5 +49,8 @@ class Category extends Model
         //return asset("api/ad/$this->slug");
         return "/category/$this->slug/subcategory";
     }
-
+    public function getCatpathAttribute() {
+        //return asset("api/ad/$this->slug");
+        return "/c/$this->slug";
+    }
 }

@@ -1,6 +1,7 @@
 <?php
 
 Route::apiResource('/ad', 'AdController');
+Route::apiResource('/ad/{cat}/category', 'AdController');
 Route::apiResource('/category', 'CategoryController');
 Route::apiResource('/category/{category}/subcategory', 'SubcategoryController');
 Route::apiResource('/ad/{ad}/message', 'MessageController');

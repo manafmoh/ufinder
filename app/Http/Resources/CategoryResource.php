@@ -20,6 +20,7 @@ class CategoryResource extends JsonResource
             'id'  => $this->id,
             'slug'  => $this->slug,
             'path'  => $this->path,
+            'catpath'  => $this->catpath,
             'subcategories' =>  SubcategoryResource::collection($this->subCategories),
             'subcatpath'  => $this->subcatpath,
             'active'    =>$this->active,

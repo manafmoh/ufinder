@@ -16,12 +16,12 @@
               no-action
               row wrap
             >
-              <v-list-tile slot="activator" :to="item.slug">
+              <v-list-tile slot="activator" :to="item.catpath">
                 <v-list-tile-content>
                   <v-list-tile-title>{{ item.name }}</v-list-tile-title>
                 </v-list-tile-content>
               </v-list-tile>
-              <v-list-tile v-for="subItem in item.subcategories" :key="subItem.name"  :to="subItem.slug" ripple @click="close">
+              <v-list-tile v-for="subItem in item.subcategories" :key="subItem.name"  :to="subItem.subcatpath" ripple @click="close">
                 <v-list-tile-content>
                   <v-list-tile-title>{{ subItem.name }}</v-list-tile-title>
                 </v-list-tile-content>
@@ -48,7 +48,7 @@ export default {
   },
   created() {
      axios.get('/api/category')
-            .then( 
+            .then(
               res => {this.categories = res.data.data;
             })
             .catch(error => console.log(error));

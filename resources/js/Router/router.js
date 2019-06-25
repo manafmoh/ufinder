@@ -19,6 +19,8 @@ const routes = [
     { path: '/logout', component: Logout },
     { path: '/ads', component: Ads, name:'ads' },
     { path: '/ad/:slug', component: AdSingle},
+    { path: '/c/:slug', component: Ads },
+    { path: '/sc/:slug', component: Ads},
     { path: '/post', component: AdCreate},
     { path: '/category', component: CreateCategory},
     { path: '/category/:slug/subcategory', component: CreateSubcategory},
