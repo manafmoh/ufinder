@@ -21,14 +21,16 @@ class SubcategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Category $category)
-    { 
+    {
         return SubcategoryResource::collection($category->subCategories);
     }
-    public function search()
-    { 
-        return response('SEEEE', Response::HTTP_CREATED);
-        
-      
+    public function search(Request $request)
+    {
+        if($search= $request['search'])
+        //return SubcategoryResource::collection();
+        return response(Subcategory::where('name', 'like', '%' . $search . '%')->get(), Response::HTTP_CREATED);
+
+
     }
 
     /**

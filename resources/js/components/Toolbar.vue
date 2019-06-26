@@ -12,13 +12,22 @@
                  <CategoryMenu class="text-sm-left" />
                 </v-flex>
           <v-flex xs6 sm9>
-              <v-form @keyup.native.enter="submit">
-                <v-text-field prepend-icon="search" class="text-sm-right"
-                v-model="search" v-on:keyup="getSearchData"
-                solo append-icon="cancel" hide-details single-line></v-text-field>
-               <div class="panel-footer" v-if="results.length"><ul class="list-group"><li class="list-group-item" v-for="result in results">@{{ result.category_name }}</li></ul></div>
-                   
-              </v-form>
+
+
+                 <v-autocomplete
+                 prepend-icon="search"
+                 append-icon="cancel"
+                :items="results"
+
+                v-model="model"
+                item-text="name"
+                item-value="name"
+                label="Search..."
+                :search-input.sync="search"
+                @change="onSearchClick">
+                </v-autocomplete>
+
+
           </v-flex>
           </v-layout>
       </v-toolbar-title>
@@ -56,7 +65,9 @@ export default {
     components: {AppNotification, LoginPopup, CategoryMenu},
     data(){
         return {
-            search: '',
+            search:'',
+            model:'',
+            isLoading: false,
             results: [],
             items: [
                 {title: 'All Ads', to: '/ads', show:true},
@@ -72,7 +83,31 @@ export default {
             User.loggedOut();
         });
     },
+    watch: {
+      search (val) {
+       // Items have already been loaded
+        if (this.results.length > 0) return
+
+        // Items have already been requested
+        if (this.isLoading) return
+
+        this.isLoading = true
+
+        // Lazily load input items
+         axios.get('api/search',{params: {search: this.search}}).then(response => {
+          this.results = response.data; //console.log(this.results);
+         })
+        .catch(err => {
+            console.log(err)
+        })
+        .finally(() => (this.isLoading = false))
+      }
+    },
     methods: {
+        onSearchClick() {
+
+        },
+
         getSearchData(){
         this.results = [];
         if(this.search.length > 0){
