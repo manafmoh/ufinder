@@ -2,21 +2,22 @@
 <div>
     <v-toolbar>
     <!-- <v-toolbar-side-icon></v-toolbar-side-icon> -->
-    <v-toolbar-title>uFinder</v-toolbar-title>
+    <v-toolbar-title>
+        <router-link to="/" class="toolbar-title"><v-img alt="uFinder" :src="`images/logo.png`" width="138" height="53" /></router-link>
+    </v-toolbar-title>
     <v-spacer></v-spacer>
     <app-notification></app-notification>
     <div class="hidden-sm-and-down">
-    <router-link
+    <router-link color="white" class="noline"
         v-for="item in items.filter(item => item.show)"
         :key="item.title"
         :to="item.to" >
-        <v-btn flat>{{item.title}}</v-btn>
+        <v-btn outline color="indigo">{{item.title}}</v-btn>
     </router-link>
     <LoginPopup />
     </div>
-     
-    
     </v-toolbar>
+    <!--
     <v-expansion-panel>
         <v-expansion-panel-content >
         <div slot='header'><h6>Headline</h6></div>
@@ -24,7 +25,7 @@
             Coming soon
         </div>
         </v-expansion-panel-content>
-    </v-expansion-panel>
+    </v-expansion-panel>-->
     <CategoryMenu class="text-sm-left" />
 </div>
 </template>

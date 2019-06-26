@@ -19,6 +19,9 @@ class Subcategory extends Model
     public function category() {
         return $this->belongsTo(Category::class);
     }
+    public function ads() {
+        return $this->hasMany(Ad::class);
+    }
     public function getRouteKeyName()
     {
         return 'slug';
@@ -41,6 +44,6 @@ class Subcategory extends Model
     }
     public function getSubCategorypathAttribute() {
         //return asset("api/ad/$this->slug");
-        return "/sc/$this->slug";
+        return "/sc/".$this->category->slug."_".$this->slug;
     }
 }

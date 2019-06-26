@@ -5,6 +5,7 @@ namespace App\Model;
 use App\User;
 use App\Model\Message;
 use App\Model\Category;
+use App\Model\Subcategory;
 use Illuminate\Database\Eloquent\Model;
 
 class Ad extends Model
@@ -59,6 +60,10 @@ class Ad extends Model
 
     public function category() {
         return $this->belongsTo(Category::class);
+    }
+
+    public function subcategory() {
+        return $this->belongsTo(Subcategory::class);
     }
 
     public function getPathAttribute() {

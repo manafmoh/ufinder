@@ -52,7 +52,10 @@ export default {
             .catch(error => console.log(error.response.data));
            break;
         case 'sc':
-
+            let catPrams = this.$route.params.slug.split('_');
+            axios.get(`/api/ad/${catPrams[0]}/${catPrams[1]}/subcategory`)
+            .then(res => {this.ads = res.data.data; })
+            .catch(error => console.log(error.response.data));
             break;
         default:
              axios.get('/api/ad')

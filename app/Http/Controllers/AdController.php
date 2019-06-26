@@ -11,6 +11,7 @@ use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
 use App\Model\Category;
+use App\Model\Subcategory;
 
 class AdController extends Controller
 {
@@ -32,10 +33,12 @@ class AdController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function index(Ad $ad, Category $cat)
+    public function index(Ad $ad, Category $cat, Subcategory $subcat)
     {
-
-        if(!empty($cat['id'])){
+        if(!empty($cat['id']) && !empty($subcat['id'])){
+            $ads=Subcategory::find($subcat['id'])->ads;
+            return AdResource::collection($ads);
+        } else if(!empty($cat['id'])){
             $ads=Category::find($cat['id'])->ads;
             return AdResource::collection($ads);
         }
@@ -83,7 +86,7 @@ class AdController extends Controller
         $ad->area = $request->area;
         //$ad->category_id = $validatedData['category_id'];
         $ad->category_id = $request->category_id;
-        $ad->sub_category_id = $request->subcategory_id;
+        $ad->subcategory_id = $request->subcategory_id;
         //Saving image on a location and save to DB
        // $ad->image = $request->image;
         /*if($request->hasFile('image')) {
