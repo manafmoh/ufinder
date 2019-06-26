@@ -13,7 +13,7 @@ class SubcategoryController extends Controller
 
     public function __construct()
     {
-        $this->middleware('JWT', ['except' => ['index', 'show']]);
+        $this->middleware('JWT', ['except' => ['index', 'show', 'search']]);
     }
     /**
      * Display a listing of the resource.
@@ -21,8 +21,14 @@ class SubcategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Category $category)
-    {   
+    { 
         return SubcategoryResource::collection($category->subCategories);
+    }
+    public function search()
+    { 
+        return response('SEEEE', Response::HTTP_CREATED);
+        
+      
     }
 
     /**

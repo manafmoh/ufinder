@@ -15,6 +15,7 @@ Route::post('markAsRead', 'NotificationController@markAsRead');
 
 Route::apiResource('/upload', 'UploadController');
 
+Route::get('/search', 'SubcategoryController@search');
 Route::group([
     'middleware' => 'api',
     'prefix' => 'auth'

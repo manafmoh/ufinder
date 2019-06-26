@@ -2,7 +2,7 @@
 <div class="text-xs-center">
     <v-menu  offset-y open-delay="500"
     :close-on-content-click="closeOnContentClick" z-index=100    >
-        <v-btn slot="activator" color="secondary" >All Categories</v-btn>
+        <v-btn slot="activator" round color="primary" dark >All Categories</v-btn>
         <v-layout flex-child wrap>
         <v-flex xs12 md4 d-flex
             v-for="item in categories"
