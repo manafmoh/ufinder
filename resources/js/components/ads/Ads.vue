@@ -4,16 +4,17 @@
       <v-flex xs12>
           <v-card>
             <v-toolbar flat>
-            <v-btn icon>
+            <v-btn icon v-if="!homePage">
                 <v-icon>arrow_back</v-icon>
             </v-btn>
-            <v-toolbar-title>Albums</v-toolbar-title>
+            <v-toolbar-title v-if="!homePage">Albums</v-toolbar-title>
+            <v-toolbar-title v-else>Featured Ads</v-toolbar-title>
             <v-spacer></v-spacer>
-            <v-btn icon>
+            <v-btn icon v-if="!homePage">
                 <v-icon>search</v-icon>
             </v-btn>
             </v-toolbar>
-            <v-subheader>May</v-subheader>
+            <v-subheader>Google Ad</v-subheader>
             <v-container fluid grid-list-sm>
             <v-layout row wrap>
                 <ad
@@ -25,9 +26,16 @@
             </v-container>
           </v-card>
       </v-flex>
-      <v-flex xs12>
+      <div class="text-xs-center">
+        <v-pagination
+        v-model="page"
+        :length="4"
+        circle
+        ></v-pagination>
+    </div>
+      <!-- <v-flex xs12>
           <AdSidebar></AdSidebar>
-      </v-flex>
+      </v-flex> -->
     </v-layout>
     </v-container>
 </template>
@@ -39,10 +47,13 @@ export default {
     components: {ad, AdSidebar},
     data() {
         return {
-            ads: {}
+            ads: {},
+            page: 1
         }
     },
     created() {
+        this.homePage() ;
+        this.listen() ;
         let route = this.$route.fullPath;
         let pathPrams = route.split('/');
         switch (pathPrams[1]) {
@@ -66,8 +77,21 @@ export default {
     },
 
     methods:{
-
-    }
+        homePage() {
+            if(this.$route.path =="/" || this.$route.path =="/home") {
+                this.homePage = true
+            } else {
+                this.homePage = false
+            }
+        },
+        listen() {
+            EventBus.$on('SearchAd', (search)=>{ console.log(search);
+                axios.get(`/api/ad/search/${search}`)
+                .then(res => {this.ads = res.data.data; })
+                .catch(error => console.log(error.response.data));
+            });
+        }
+    },
 
 }
 </script>

@@ -17,7 +17,7 @@ class AdController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('JWT', ['except' => ['index', 'show', 'upload']]);
+        //$this->middleware('JWT', ['except' => ['index', 'show', 'upload', 'search']]);
     }
 
     /*protected function validator(AdRequest $request)
@@ -43,6 +43,13 @@ class AdController extends Controller
             return AdResource::collection($ads);
         }
         return AdResource::collection(Ad::latest()->get());
+    }
+
+    public function search(Request $request)
+    {
+        if($search= $request['search']) {
+            return AdResource::collection(Ad::where('title', 'like', '%' . $search . '%')->offset(0)->limit(15)->get());
+        }
     }
 
     /**

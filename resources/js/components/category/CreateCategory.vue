@@ -101,6 +101,7 @@ export default {
             .then(res => {
                 this.categories.unshift(res.data);
                 this.form.name = null;
+                this.editFlag = null
             })
             .catch(error => console.log(error.data))
         },

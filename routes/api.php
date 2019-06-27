@@ -16,6 +16,11 @@ Route::post('markAsRead', 'NotificationController@markAsRead');
 Route::apiResource('/upload', 'UploadController');
 
 Route::get('/search', 'SubcategoryController@search');
+Route::get('/ad/search/{search}', 'AdController@search');
+
+Route::apiResource('/state', 'StateController');
+Route::apiResource('/state/{state}/district', 'DistrictController');
+
 Route::group([
     'middleware' => 'api',
     'prefix' => 'auth'

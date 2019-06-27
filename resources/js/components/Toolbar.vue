@@ -12,22 +12,17 @@
                  <CategoryMenu class="text-sm-left" />
                 </v-flex>
           <v-flex xs6 sm9>
-
-
-                 <v-autocomplete
+                 <v-combobox
                  prepend-icon="search"
                  append-icon="cancel"
                 :items="results"
-
                 v-model="model"
                 item-text="name"
                 item-value="name"
                 label="Search..."
                 :search-input.sync="search"
                 @change="onSearchClick">
-                </v-autocomplete>
-
-
+                </v-combobox>
           </v-flex>
           </v-layout>
       </v-toolbar-title>
@@ -73,6 +68,7 @@ export default {
                 {title: 'All Ads', to: '/ads', show:true},
                 {title: 'Free Post', to: '/post', show:User.loggedIn()},
                 {title: 'Category', to: '/category', show:User.isAdmin()},
+                {title: 'State', to: '/state', show:User.loggedIn()},
                 // {title: 'Login', to: '/login', show:!User.loggedIn()},
                 // {title: 'Logout', to: '/logout', show:User.loggedIn()}
             ]
@@ -85,16 +81,18 @@ export default {
     },
     watch: {
       search (val) {
+          // this.search == val are same
        // Items have already been loaded
-        if (this.results.length > 0) return
+       // if (this.results.length > 0) return
 
         // Items have already been requested
-        if (this.isLoading) return
+       // if (this.isLoading) return
 
-        this.isLoading = true
+        //this.isLoading = true
 
         // Lazily load input items
-         axios.get('api/search',{params: {search: this.search}}).then(response => {
+        if(val == null || val.length < 3) return;
+         axios.get('/api/search',{params: {'search': val}}).then(response => {
           this.results = response.data; //console.log(this.results);
          })
         .catch(err => {
@@ -104,18 +102,9 @@ export default {
       }
     },
     methods: {
-        onSearchClick() {
-
+        onSearchClick(search) {
+             EventBus.$emit('SearchAd', search);
         },
-
-        getSearchData(){
-        this.results = [];
-        if(this.search.length > 0){
-         axios.get('api/search',{params: {search: this.search}}).then(response => {
-          this.results = response.data; //console.log(this.results);
-         });
-        }
-       }
       },
 }
 </script>

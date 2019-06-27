@@ -7,6 +7,7 @@ use App\Model\Category;
 use Illuminate\Http\Request;
 use App\Http\Resources\SubcategoryResource;
 use Symfony\Component\HttpFoundation\Response;
+use phpDocumentor\Reflection\Types\Null_;
 
 class SubcategoryController extends Controller
 {
@@ -26,9 +27,10 @@ class SubcategoryController extends Controller
     }
     public function search(Request $request)
     {
-        if($search= $request['search'])
-        //return SubcategoryResource::collection();
-        return response(Subcategory::where('name', 'like', '%' . $search . '%')->get(), Response::HTTP_CREATED);
+        if($search= $request['search']) {
+            return response(Subcategory::where('name', 'like', '%' . $search . '%')->offset(0)->limit(15)->get(), Response::HTTP_CREATED);
+        }
+        return response(null, Response::HTTP_CREATED);
 
 
     }

@@ -82,9 +82,15 @@ export default {
         axios.get(`/api/category/${this.$route.params.slug}/subcategory`)
         .then(res => {
              this.categories = res.data.data;
-             this.categoryName = this.categories[0].category;
         })
-        .then(error => console.log(error.data))
+        .catch(error => console.log(error.data))
+
+        // Getting Category Details
+        axios.get(`/api/category/${this.$route.params.slug}`)
+        .then(res => {
+            this.categoryName = res.data.data.name;
+        })
+        .catch(error => console.log(error.data))
     },
     methods : {
         submit() {
@@ -107,6 +113,7 @@ export default {
             .then(res => {
                 this.categories.unshift(res.data);
                 this.form.name = null;
+                this.editFlag = null
             })
             .catch(error => console.log(error.data))
         },
