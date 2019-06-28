@@ -27,10 +27,10 @@
 
         <v-card>
         <v-toolbar color="indigo" dark dense>
-          <v-toolbar-title >All District of <b v-html="stateName">{{stateName}}</b></v-toolbar-title>
+          <v-toolbar-title >All District of <b v-html="districtName">{{districtName}}</b></v-toolbar-title>
         </v-toolbar>
          <v-list three-line>
-            <div v-for="(state,index) in states" :key="state.id">
+            <div v-for="(district,index) in districts" :key="district.id">
             <v-list-tile>
                 <v-list-tile-action>
                     <v-btn icon small @click="edit(index)">
@@ -39,13 +39,14 @@
                 </v-list-tile-action>
                 <v-list-tile-content>
                     <v-list-tile-title >
-                        {{state.name}}
+                        {{district.name}} {{district.placepath}}
                     </v-list-tile-title>
                     <v-list-tile-sub-title >
 
                     </v-list-tile-sub-title>
                 </v-list-tile-content>
                 <v-list-tile-action>
+                <v-btn small color="primary" dark :href="district.placepath">Area</v-btn>
                 <v-btn icon small @click="destroy(state.slug, index)">
                     <v-icon color="red">delete</v-icon>
                 </v-btn>
@@ -69,9 +70,9 @@ export default {
                 name: null,
             },
             errors: {},
-            states: {},
+            districts: {},
             editFlag:null,
-            stateName:''
+            districtName:''
         }
     },
      created() {
@@ -81,14 +82,14 @@ export default {
         }
         axios.get(`/api/state/${this.$route.params.slug}/district`)
         .then(res => {
-             this.states = res.data.data;
-             this.stateName = this.states[0].district;
+             this.districts = res.data.data;
+             this.districtName = this.districts[0].district;
         })
         .catch(error => console.log(error.data))
         // Getting State Details
         axios.get(`/api/state/${this.$route.params.slug}`)
         .then(res => {
-            this.stateName = res.data.data.name;
+            this.districtName = res.data.data.name;
         })
         .catch(error => console.log(error.data))
     },
@@ -103,7 +104,7 @@ export default {
         createDistrict() {
              axios.post(`/api/state/${this.$route.params.slug}/district`, this.form)
             .then(res => {
-                this.states.unshift(res.data);
+                this.districts.unshift(res.data);
                 this.form.name = null;
             })
             .catch(error => console.log(error.data))
@@ -111,7 +112,7 @@ export default {
         updateDistrict() {
              axios.patch(`/api/state/${this.$route.params.slug}/district/${this.editFlag}`, this.form)
             .then(res => {
-                this.states.unshift(res.data);
+                this.districts.unshift(res.data);
                 this.form.name = null;
                 this.editFlag = null
             })
@@ -119,13 +120,13 @@ export default {
         },
         destroy(slug, index) {
             axios.delete(`/api/state/${this.$route.params.slug}/district/${slug}`)
-            .then(res => this.states.splice(index, 1))
+            .then(res => this.districts.splice(index, 1))
             .catch(error=>console.log(error))
         },
         edit(index) {
-           this.form.name = this.states[index].name;
-           this.editFlag = this.states[index].slug
-           this.states.splice(index, 1)
+           this.form.name = this.districts[index].name;
+           this.editFlag = this.districts[index].slug
+           this.districts.splice(index, 1)
         },
     },
 }

@@ -85,7 +85,7 @@ class DistrictController extends Controller
             'name' => $request->name,
             'slug'  => str_slug($request->name)
         ]);
-    return response(new DistrictResource($district), Response::HTTP_ACCEPTED);
+        return response(new DistrictResource($district), Response::HTTP_ACCEPTED);
     }
 
     /**

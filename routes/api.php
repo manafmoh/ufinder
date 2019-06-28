@@ -20,6 +20,7 @@ Route::get('/ad/search/{search}', 'AdController@search');
 
 Route::apiResource('/state', 'StateController');
 Route::apiResource('/state/{state}/district', 'DistrictController');
+Route::apiResource('/place/{state}/{district}/area', 'PlaceController');
 
 Route::group([
     'middleware' => 'api',

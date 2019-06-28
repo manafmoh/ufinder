@@ -16,6 +16,7 @@ class CreatePlacesTable extends Migration
         Schema::create('places', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('district_id')->nullable();
+            $table->unsignedBigInteger('state_id')->nullable();
             $table->string('name');
             $table->string('slug');
             $table->boolean('active')->default(true);

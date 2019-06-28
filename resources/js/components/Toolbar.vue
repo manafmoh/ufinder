@@ -11,6 +11,16 @@
                 <v-flex xs3 sm3 >
                  <CategoryMenu class="text-sm-left" />
                 </v-flex>
+                <v-flex xs3 sm3>
+                 <v-autocomplete
+                :items="places"
+                v-model="places"
+                item-text="name"
+                item-value="name"
+                label="Area.."
+                @change="onPlaceClick">
+                </v-autocomplete>
+          </v-flex>
           <v-flex xs6 sm9>
                  <v-combobox
                  prepend-icon="search"
@@ -78,6 +88,10 @@ export default {
         EventBus.$on('logout', ()=>{
             User.loggedOut();
         });
+        axios.get('/api/places')
+        .then( res => this.places = res.data.data)
+        .catch(error => console.log(error))
+        ;
     },
     watch: {
       search (val) {

@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use App\Model\Ad;
+use App\Model\Place;
 use Illuminate\Database\Eloquent\Model;
 
 class State extends Model
@@ -22,6 +23,9 @@ class State extends Model
     }
     public function ads() {
         return $this->hasMany(Ad::class);
+    }
+    public function places() {
+        return $this->hasMany(Place::class);
     }
     public function district() {
         return $this->hasMany(District::class);

@@ -20,6 +20,7 @@ class DistrictResource extends JsonResource
             'slug'  => $this->slug,
             'path'  => $this->path,
             'distictpath'  => $this->districtpath,
+            'placepath'  => $this->placepath,
             'state'  => $this->state->name,
             'active'    =>$this->active,
             'created_at'    => $this->created_at->diffForHumans(),

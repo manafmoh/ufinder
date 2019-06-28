@@ -3,18 +3,27 @@
 namespace App\Http\Controllers;
 
 use App\Model\Place;
+use App\Model\State;
+use App\Model\District;
 use Illuminate\Http\Request;
+use App\Http\Resources\PlaceResource;
+use App\Http\Resources\DistrictResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class PlaceController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('JWT', ['except' => ['index', 'show', 'search']]);
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(State $state, District $district)
     {
-        //
+        return PlaceResource::collection($district->place);
     }
 
     /**
@@ -33,9 +42,15 @@ class PlaceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(State $state, District $district, Request $request)
     {
-        //
+        $place = new Place();
+        $place->name = $request->name;
+        $place->state_id = $state->id;
+        $place->district_id = $district->id;
+        $place->slug = str_slug($request->name);
+        $place->save();
+        return response(new DistrictResource($place), Response::HTTP_CREATED);
     }
 
     /**
@@ -44,9 +59,9 @@ class PlaceController extends Controller
      * @param  \App\Model\Place  $place
      * @return \Illuminate\Http\Response
      */
-    public function show(Place $place)
+    public function show(State $state, District $district, Place $place)
     {
-        //
+        return new PlaceResource($place);
     }
 
     /**
@@ -67,9 +82,13 @@ class PlaceController extends Controller
      * @param  \App\Model\Place  $place
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Place $place)
-    {
-        //
+    public function update( Request $request, Place $place)
+    { dd($place);
+        $place->update([
+            'name' => $request->name,
+            'slug'  => str_slug($request->name)
+        ]);
+        return response(new PlaceResource($place), Response::HTTP_ACCEPTED);
     }
 
     /**
@@ -80,6 +99,7 @@ class PlaceController extends Controller
      */
     public function destroy(Place $place)
     {
-        //
+        $place->delete();
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }

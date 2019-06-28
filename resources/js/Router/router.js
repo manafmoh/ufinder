@@ -12,7 +12,7 @@ import CreateCategory from '../components/category/CreateCategory.vue';
 import CreateSubcategory from '../components/category/CreateSubcategory.vue';
 import CreateState from '../components/place/CreateState.vue';
 import CreateDistrict from '../components/place/CreateDistrict.vue';
-
+import CreatePlace from '../components/place/CreatePlace.vue';
 
 const routes = [
     { path: '/', component: Ads, name:'ads' },
@@ -28,6 +28,7 @@ const routes = [
     { path: '/category/:slug/subcategory', component: CreateSubcategory},
     { path: '/state', component: CreateState},
     { path: '/state/:slug/district', component: CreateDistrict},
+    { path: '/area/:state/:district', component: CreatePlace},
   ]
 
 const router = new VueRouter({

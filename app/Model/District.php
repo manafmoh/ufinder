@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use App\Model\Ad;
+use App\Model\Place;
 use App\Model\State;
 use Illuminate\Database\Eloquent\Model;
 
@@ -19,6 +20,12 @@ class District extends Model
     }
     public function state() {
         return $this->belongsTo(State::class);
+    }
+    public function district() {
+        return $this->belongsTo(District::class);
+    }
+    public function place() {
+        return $this->hasMany(Place::class);
     }
     public function ads() {
         return $this->hasMany(Ad::class);
@@ -45,5 +52,9 @@ class District extends Model
     public function getDistrictpathAttribute() {
         //return asset("api/ad/$this->slug");
         return "/district/".$this->state->slug."_".$this->slug;
+    }
+    public function getPlacepathAttribute() {
+        //return asset("api/ad/$this->slug");
+        return "/area/".$this->state->slug."/".$this->slug;
     }
 }
