@@ -36,6 +36,45 @@
                 </v-select>
                 <span class="red--text" v-if="errors.subcategory_id">{{errors.subcategory_id[0]}}</span>
             </v-flex>
+
+            <v-flex xs12 sm6 d-flex>
+                <v-autocomplete
+                :items="states"
+                v-model="state_id"
+                item-text="name"
+                item-value="states.id"
+                label="State"
+                :return-object="true"
+                required
+                @change="onDistrictClick">
+                </v-autocomplete>
+                <span class="red--text" v-if="errors.state_id">{{errors.state_id[0]}}</span>
+            </v-flex>
+            <v-flex xs12 sm6 d-flex>
+                <v-autocomplete
+                :items="districts"
+                v-model="district_id"
+                item-text="name"
+                item-value="district.id"
+                label="District"
+                :return-object="true"
+                required
+                @change="onPlaceClick">
+                </v-autocomplete>
+                <span class="red--text" v-if="errors.district_id">{{errors.district_id[0]}}</span>
+            </v-flex>
+            <v-flex xs12 sm6 d-flex>
+                <v-autocomplete
+                :items="places"
+                v-model="place_id"
+                item-text="name"
+                item-value="id"
+                label="City"
+                required
+               >
+                </v-autocomplete>
+                <span class="red--text" v-if="errors.place_id">{{errors.place_id[0]}}</span>
+            </v-flex>
             <markdown-editor v-model="body"></markdown-editor>
 
             <el-dialog  :visible.sync="isShowPic" size="small">
@@ -116,6 +155,9 @@ export default {
                 title: null,
                 category_id: null,
                 subcategory_id:null,
+                state_id:null,
+                district_id:null,
+                place_id:null,
                 body: '',
                 amount: 0,
                 featured: true,
@@ -134,7 +176,10 @@ export default {
             isShowPic: false,
             subcategoryDialog:false,
             subcategories:[],
-            subCatName:null
+            subCatName:null,
+            states:[],
+            districts:[],
+            places:[]
         }
 
     },
@@ -282,13 +327,26 @@ export default {
             //this.form.subcategory_id = subcat.id;
             //this.subCatName = subcat.name;
             //this.subcategoryDialog=false;
-        }
+        },
+        onDistrictClick(stateArr) {
+             axios.get(`/api/state/${stateArr['slug']}/district`)
+                .then( res => this.districts = res.data.data)
+                .catch(error => console.log(error));
+        },
+        onPlaceClick(districtArr) { //console.log(districtArr);
+             axios.get(`/api${districtArr['placepath']}`)
+                .then( res => this.districts = res.data.data)
+                .catch(error => console.log(error));
+        },
     },
     created() {
             axios.get('/api/category')
             .then( res => this.categories = res.data.data)
-            .catch(error => console.log(error))
-            ;
+            .catch(error => console.log(error));
+
+             axios.get('/api/state')
+            .then( res => this.states = res.data.data)
+            .catch(error => console.log(error));
         }
 }
 

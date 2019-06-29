@@ -53,6 +53,7 @@ class District extends Model
     }
     public function getPlacepathAttribute() {
         //return asset("api/ad/$this->slug");
-        return "/area/".$this->state->slug."/".$this->slug;
+        ///state/{state}/{district}/place
+        return "/state/".$this->state->slug."/".$this->slug."/place";
     }
 }
