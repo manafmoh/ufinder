@@ -20,6 +20,7 @@ class PlaceResource extends JsonResource
             'slug'  => $this->slug,
             'path'  => $this->path,
             'statepath'  => $this->statepath,
+            'ads'  => $this->ads,
           //  'state'  => $this->state->name,
           //  'district'  => $this->district->name,
             'active'    =>$this->active,

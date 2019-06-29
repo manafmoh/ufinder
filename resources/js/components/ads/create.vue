@@ -143,9 +143,9 @@ export default {
         createAd() {
             let CatId=null;
             if (this.category_id == null || typeof this.category_id == "undefined" ) {
-                console.log('NULL');
+                //console.log('NULL');
             } else {
-                console.log(this.category_id['id']);
+                //console.log(this.category_id['id']);
                  if(this.category_id['id']){
                     CatId = this.category_id['id'];
                 }

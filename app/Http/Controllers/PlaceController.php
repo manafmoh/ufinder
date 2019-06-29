@@ -84,7 +84,7 @@ class PlaceController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(State $state, District $district, Request $request, Place $place)
-    { 
+    {
         $place->update([
             'name' => $request->name,
             'slug'  => str_slug($request->name)
@@ -105,8 +105,8 @@ class PlaceController extends Controller
     }
 
     public function search(Request $request) {
-     //select places.name from places join districts on (districts.id = places.district_id) join states on (states.id = districts.state_id)   
-        
+     //select places.name from places join districts on (districts.id = places.district_id) join states on (states.id = districts.state_id)
+
         //$where = "'1','=','1'";
         if($search= $request['search']) {
           //  $where = "'places.name', 'like', '%' . $search . '%'";
@@ -114,11 +114,11 @@ class PlaceController extends Controller
         $places = DB::table('places')
             ->join('districts', 'districts.id', '=', 'places.district_id')
             ->join('states', 'states.id', '=', 'districts.state_id')
-            ->select('places.name as place', 'districts.name as district', 'states.name as state')
+            ->select('places.name as place', 'districts.name as district', 'states.name as state', 'places.slug as place_slug', 'districts.slug as district_slug', 'states.slug as state_slug')
             ->where('places.name', 'like', '%' . $search . '%')
             ->offset(0)->limit(15)->get();
         return response($places , Response::HTTP_CREATED);
-        
-       
+
+
     }
 }

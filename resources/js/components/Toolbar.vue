@@ -14,10 +14,11 @@
                 <v-flex xs2 sm2 >
                  <v-autocomplete
                 :items="places"
-                v-model="places"
+                v-model="placesmodel"
                 item-text="place"
-                item-value="place"
+                item-value="placeSlug"
                 label="Area.."
+                :search-input.sync="placessearch"
                 @change="onPlaceClick">
                 </v-autocomplete>
           </v-flex>
@@ -72,6 +73,8 @@ export default {
         return {
             search:'',
             model:'',
+            placesmodel:'',
+            placessearch:'',
             isLoading: false,
             results: [],
             places:[{'place':'Choose Location'}],
@@ -92,7 +95,11 @@ export default {
         axios.get('/api/places')
         .then( res => {
              res.data.forEach(element => {
-                 this.places.push({'place': element.place+","+element.district+","+element.state});
+                 this.places.push(
+                     {
+                         'place': element.place+","+element.district+","+element.state,
+                         'placeSlug': element.place_slug+","+element.district_slug+","+element.state_slug
+                    });
             });
             })
         .catch(error => console.log(error))
@@ -119,27 +126,32 @@ export default {
         })
         .finally(() => (this.isLoading = false))
       },
-      places (val) {
+      placessearch (val) {
         if(val == null || val.length < 3) return;
          axios.get('/api/places',{params: {'place': val}}).then(response => {
-          this.results = response.data; 
-           this.places = [];
+          this.results = response.data;
+           //this.places = [];
            results.data.forEach(element => {
-                 this.places.push({'place': element.place+","+element.district+","+element.state});
+                 this.places.push(
+                     {
+                         'place': element.place+","+element.district+","+element.state,
+                         'placeSlug': element.place_slug+","+element.district_slug+","+element.state_slug
+                     }
+
+                     );
             });
          })
         .catch(err => {
             console.log(err)
         })
-        .finally(() => (this.isLoading = false))
       }
     },
     methods: {
         onSearchClick(search) {
-             EventBus.$emit('SearchAd', search);
+            EventBus.$emit('SearchAd', search);
         },
-        onPlaceClick() {
-
+        onPlaceClick(places) { console.log('AAA ',places);
+            EventBus.$emit('SearchPlaceAd', places);
         }
       },
 }
