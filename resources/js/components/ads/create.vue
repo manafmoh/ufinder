@@ -55,7 +55,7 @@
                 :items="districts"
                 v-model="district_id"
                 item-text="name"
-                item-value="district.id"
+                item-value="districts.id"
                 label="District"
                 :return-object="true"
                 required
@@ -187,12 +187,21 @@ export default {
     methods: {
         createAd() {
             let CatId=null;
-            if (this.category_id == null || typeof this.category_id == "undefined" ) {
-                //console.log('NULL');
-            } else {
-                //console.log(this.category_id['id']);
-                 if(this.category_id['id']){
+            let StateId=null;
+            let DistrictId=null;
+            if (this.category_id != null || typeof this.category_id != "undefined" ) {
+                if(this.category_id['id']){
                     CatId = this.category_id['id'];
+                }
+            }
+            if (this.state_id != null || typeof this.state_id != "undefined" ) {
+                if(this.state_id['id']){
+                    StateId = this.state_id['id'];
+                }
+            }
+            if (this.district_id != null || typeof this.district_id != "undefined" ) {
+                if(this.district_id['id']){
+                    DistrictId = this.district_id['id'];
                 }
             }
 
@@ -202,6 +211,9 @@ export default {
             form.append('title', this.title);
             form.append('category_id', CatId );
             form.append('subcategory_id', this.subcategory_id);
+            form.append('state_id', StateId);
+            form.append('district_id', DistrictId);
+            form.append('place_id', this.place_id);
             form.append('body', this.body);
             form.append('amount', this.amount);
             form.append('featured', this.featured);
@@ -335,7 +347,7 @@ export default {
         },
         onPlaceClick(districtArr) { //console.log(districtArr);
              axios.get(`/api${districtArr['placepath']}`)
-                .then( res => this.districts = res.data.data)
+                .then( res => this.places = res.data.data)
                 .catch(error => console.log(error));
         },
     },

@@ -89,11 +89,12 @@ class AdController extends Controller
         $ad->post_type = $request->post_type;
         $ad->type = $request->type;
         $ad->country = $request->country;
-        $ad->city = $request->city;
-        $ad->area = $request->area;
         //$ad->category_id = $validatedData['category_id'];
         $ad->category_id = $request->category_id;
         $ad->subcategory_id = $request->subcategory_id;
+        $ad->state_id = $request->state_id;
+        $ad->district_id = $request->district_id;
+        $ad->place_id = $request->place_id;
         //Saving image on a location and save to DB
        // $ad->image = $request->image;
         /*if($request->hasFile('image')) {

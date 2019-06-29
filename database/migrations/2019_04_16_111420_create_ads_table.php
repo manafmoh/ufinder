@@ -25,8 +25,9 @@ class CreateAdsTable extends Migration
             $table->enum('post_type', ['sell', 'rent'])->nullable();
             $table->enum('type', ['new', 'resale'])->nullable();
             $table->char('country', 2)->nullable();
-            $table->string('city')->nullable();
-            $table->string('area')->nullable();
+            $table->integer('state_id')->nullable();
+            $table->integer('district_id')->nullable();
+            $table->integer('place_id')->nullable();
             $table->integer('category_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->string('uploads')->nullable();

@@ -27,6 +27,9 @@ class AdRequest extends FormRequest
             'title' => 'required|min:3|max:150|not_in:null',
             'category_id' => 'required|integer',
             'subcategory_id' => 'required|integer',
+            'state_id' => 'required|integer',
+            'district_id' => 'required|integer',
+            'place_id' => 'required|integer',
             'amount' => 'required|not_in:0',
         ];
     }
@@ -37,6 +40,9 @@ class AdRequest extends FormRequest
             'title.not_in' => 'Title is required',
             'category_id.integer' => 'Category Required',
             'subcategory_id.integer' => 'Sub Category Required',
+            'state_id.integer' => 'State Required',
+            'district_id.integer' => 'District Required',
+            'place_id.integer' => 'City Required',
             'amount.not_in' => 'Amount is required',
         ];
     }

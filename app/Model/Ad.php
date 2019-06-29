@@ -3,8 +3,11 @@
 namespace App\Model;
 
 use App\User;
+use App\Model\Place;
+use App\Model\State;
 use App\Model\Message;
 use App\Model\Category;
+use App\Model\District;
 use App\Model\Subcategory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -64,6 +67,18 @@ class Ad extends Model
 
     public function subcategory() {
         return $this->belongsTo(Subcategory::class);
+    }
+
+    public function state() {
+        return $this->belongsTo(State::class);
+    }
+
+    public function district() {
+        return $this->belongsTo(District::class);
+    }
+
+    public function place() {
+        return $this->belongsTo(Place::class);
     }
 
     public function getPathAttribute() {
