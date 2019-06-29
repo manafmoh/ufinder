@@ -24,9 +24,7 @@ class State extends Model
     public function ads() {
         return $this->hasMany(Ad::class);
     }
-    public function places() {
-        return $this->hasMany(Place::class);
-    }
+    
     public function district() {
         return $this->hasMany(District::class);
     }

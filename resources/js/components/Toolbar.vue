@@ -1,6 +1,6 @@
 <template>
 <div>
-    <v-toolbar>
+    <v-toolbar >
     <!-- <v-toolbar-side-icon></v-toolbar-side-icon> -->
     <v-toolbar-title>
         <router-link to="/" class="toolbar-title"><v-img alt="uFinder" :src="`/images/logo.png`" width="138" height="53" /></router-link>
@@ -8,20 +8,20 @@
      <template v-slot:extension >
       <v-toolbar-title class="flex white--text">
           <v-layout row wrap>
-                <v-flex xs3 sm3 >
+                <v-flex xs2 sm2 >
                  <CategoryMenu class="text-sm-left" />
                 </v-flex>
-                <v-flex xs3 sm3>
+                <v-flex xs2 sm2 >
                  <v-autocomplete
                 :items="places"
                 v-model="places"
-                item-text="name"
-                item-value="name"
+                item-text="place"
+                item-value="place"
                 label="Area.."
                 @change="onPlaceClick">
                 </v-autocomplete>
           </v-flex>
-          <v-flex xs6 sm9>
+          <v-flex xs8 sm8 class="pl-5">
                  <v-combobox
                  prepend-icon="search"
                  append-icon="cancel"
@@ -74,6 +74,7 @@ export default {
             model:'',
             isLoading: false,
             results: [],
+            places:[{'place':'Choose Location'}],
             items: [
                 {title: 'All Ads', to: '/ads', show:true},
                 {title: 'Free Post', to: '/post', show:User.loggedIn()},
@@ -89,7 +90,11 @@ export default {
             User.loggedOut();
         });
         axios.get('/api/places')
-        .then( res => this.places = res.data.data)
+        .then( res => {
+             res.data.forEach(element => {
+                 this.places.push({'place': element.place+","+element.district+","+element.state});
+            });
+            })
         .catch(error => console.log(error))
         ;
     },
@@ -113,12 +118,29 @@ export default {
             console.log(err)
         })
         .finally(() => (this.isLoading = false))
+      },
+      places (val) {
+        if(val == null || val.length < 3) return;
+         axios.get('/api/places',{params: {'place': val}}).then(response => {
+          this.results = response.data; 
+           this.places = [];
+           results.data.forEach(element => {
+                 this.places.push({'place': element.place+","+element.district+","+element.state});
+            });
+         })
+        .catch(err => {
+            console.log(err)
+        })
+        .finally(() => (this.isLoading = false))
       }
     },
     methods: {
         onSearchClick(search) {
              EventBus.$emit('SearchAd', search);
         },
+        onPlaceClick() {
+
+        }
       },
 }
 </script>

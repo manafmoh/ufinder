@@ -79,7 +79,7 @@ export default {
         if(!User.isAdmin()) {
             this.$router.push('/ads')
         }
-        axios.get(`/api/place/${this.$route.params.state}/${this.$route.params.district}/area`)
+        axios.get(`/api/state/${this.$route.params.state}/${this.$route.params.district}/place`)
         .then(res => {
              this.places = res.data.data;
              this.placeName = this.places[0].district;
@@ -101,7 +101,7 @@ export default {
             }
         },
         createDistrict() {
-             axios.post(`/api/place/${this.$route.params.state}/${this.$route.params.district}/area`, this.form)
+             axios.post(`/api/state/${this.$route.params.state}/${this.$route.params.district}/place`, this.form)
             .then(res => {
                 this.places.unshift(res.data);
                 this.form.name = null;
@@ -109,7 +109,7 @@ export default {
             .catch(error => console.log(error.data))
         },
         updateDistrict() {
-             axios.patch(`/api/place/${this.$route.params.state}/${this.$route.params.district}/area/${this.editFlag}`, this.form)
+             axios.patch(`/api/state/${this.$route.params.state}/${this.$route.params.district}/place/${this.editFlag}`, this.form)
             .then(res => {
                 this.places.unshift(res.data);
                 this.form.name = null;
@@ -118,7 +118,7 @@ export default {
             .catch(error => console.log(error.data))
         },
         destroy(slug, index) {
-            axios.delete(`/api/place/${this.$route.params.state}/${this.$route.params.district}/area/${slug}`)
+            axios.delete(`/api/state/${this.$route.params.state}/${this.$route.params.district}/place/${slug}`)
             .then(res => this.places.splice(index, 1))
             .catch(error=>console.log(error))
         },

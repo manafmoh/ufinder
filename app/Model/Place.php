@@ -17,9 +17,7 @@ class Place extends Model
             $place->slug = $place->setSlug($place->name);
         });
     }
-    public function state() {
-        return $this->belongsTo(State::class);
-    }
+ 
     public function district() {
         return $this->belongsTo(District::class);
     }
