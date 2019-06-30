@@ -26,6 +26,9 @@ Vue.use(VueImg)
 import User from './Helpers/user';
 window.User =  User;
 
+import Exception from './Helpers/Exception';
+window.Exception =  Exception;
+
 import Facebook from './Helpers/facebook';
 window.Facebook =  Facebook;
 

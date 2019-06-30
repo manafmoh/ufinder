@@ -41,10 +41,14 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $category = new Category();
-        $category->name = $request->name;
-        $category->slug = str_slug($request->name);
-        $category->save();
+        $cateoryArr = explode(PHP_EOL, $request->name);
+        foreach($cateoryArr as $singleCategory) {
+            $category = new Category();
+            $category->name = $singleCategory;
+            $category->slug = str_slug($singleCategory);
+            $category->save();
+        }
+
         return response(new CategoryResource($category), Response::HTTP_CREATED);
     }
 

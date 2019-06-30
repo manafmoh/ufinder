@@ -129,9 +129,9 @@ export default {
       placessearch (val) {
         if(val == null || val.length < 3) return;
          axios.get('/api/places',{params: {'place': val}}).then(response => {
-          this.results = response.data;
+          //this.results = response.data;
            //this.places = [];
-           results.data.forEach(element => {
+           response.data.data.forEach(element => {
                  this.places.push(
                      {
                          'place': element.place+","+element.district+","+element.state,
