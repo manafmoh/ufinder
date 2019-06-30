@@ -4,11 +4,11 @@
             ref="form"
             @submit.prevent="submit"
         >
-            <v-text-field
+            <v-textarea
             v-model="form.name"
             label="District Name"
             required
-            ></v-text-field>
+            ></v-textarea>
             <span class="red--text" v-if="errors.name">{{errors.name[0]}}</span>
             <v-btn v-if="!editFlag"
             color="success"
@@ -39,14 +39,14 @@
                 </v-list-tile-action>
                 <v-list-tile-content>
                     <v-list-tile-title >
-                        {{district.name}} {{district.placepath}}
+                        {{district.name}}
                     </v-list-tile-title>
                     <v-list-tile-sub-title >
 
                     </v-list-tile-sub-title>
                 </v-list-tile-content>
                 <v-list-tile-action>
-                <v-btn small color="primary" dark :href="district.placepath">Area</v-btn>
+                <v-btn small color="primary" dark :href="district.frontplacepath">Area</v-btn>
                 <v-btn icon small @click="destroy(state.slug, index)">
                     <v-icon color="red">delete</v-icon>
                 </v-btn>
@@ -83,6 +83,7 @@ export default {
         axios.get(`/api/state/${this.$route.params.slug}/district`)
         .then(res => {
              this.districts = res.data.data;
+             //console.log(this.districts);
              this.districtName = this.districts[0].district;
         })
         .catch(error => console.log(error.data))

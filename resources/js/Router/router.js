@@ -28,7 +28,7 @@ const routes = [
     { path: '/category/:slug/subcategory', component: CreateSubcategory},
     { path: '/state', component: CreateState},
     { path: '/state/:slug/district', component: CreateDistrict},
-    { path: '/area/:state/:district', component: CreatePlace},
+    { path: '/place/:state/:district', component: CreatePlace},
   ]
 
 const router = new VueRouter({

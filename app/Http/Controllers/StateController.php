@@ -41,10 +41,13 @@ class StateController extends Controller
      */
     public function store(Request $request)
     {
-        $state = new State();
-        $state->name = $request->name;
-        $state->slug = str_slug($request->name);
-        $state->save();
+        $titleArr = preg_split('/\r\n|\r|\n/', $request->name);
+        foreach($titleArr as $title) {
+            $state = new State();
+            $state->name = $title;
+            $state->slug = str_slug( $title);
+            $state->save();
+        }
         return response(new StateResource($state), Response::HTTP_CREATED);
     }
 

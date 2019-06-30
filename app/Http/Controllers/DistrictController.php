@@ -42,11 +42,14 @@ class DistrictController extends Controller
      */
     public function store(State $state, Request $request)
     {
-        $district = new District();
-        $district->name = $request->name;
-        $district->state_id = $state->id;
-        $district->slug = str_slug($request->name);
-        $district->save();
+        $titleArr = preg_split('/\r\n|\r|\n/', $request->name);
+        foreach($titleArr as $title) {
+            $district = new District();
+            $district->name = $title;
+            $district->state_id = $state->id;
+            $district->slug = str_slug($title);
+            $district->save();
+        }
         return response(new DistrictResource($district), Response::HTTP_CREATED);
     }
 

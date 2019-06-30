@@ -45,12 +45,15 @@ class PlaceController extends Controller
      */
     public function store(State $state, District $district, Request $request)
     {
-        $place = new Place();
-        $place->name = $request->name;
-       // $place->state_id = $state->id;
-        $place->district_id = $district->id;
-        $place->slug = str_slug($request->name);
-        $place->save();
+        $titleArr = preg_split('/\r\n|\r|\n/', $request->name);
+        foreach($titleArr as $title) {
+            $place = new Place();
+            $place->name = $title;
+        // $place->state_id = $state->id;
+            $place->district_id = $district->id;
+            $place->slug = str_slug($title);
+            $place->save();
+        }
         return response(new PlaceResource($place), Response::HTTP_CREATED);
     }
 
@@ -98,7 +101,7 @@ class PlaceController extends Controller
      * @param  \App\Model\Place  $place
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Place $place)
+    public function destroy(State $state, District $district, Place $place)
     {
         $place->delete();
         return response(null, Response::HTTP_NO_CONTENT);

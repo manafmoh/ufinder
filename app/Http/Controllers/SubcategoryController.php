@@ -7,7 +7,6 @@ use App\Model\Category;
 use Illuminate\Http\Request;
 use App\Http\Resources\SubcategoryResource;
 use Symfony\Component\HttpFoundation\Response;
-use phpDocumentor\Reflection\Types\Null_;
 
 class SubcategoryController extends Controller
 {
@@ -53,11 +52,14 @@ class SubcategoryController extends Controller
      */
     public function store(Category $category, Request $request)
     {
-        $subcategory = new Subcategory();
-        $subcategory->name = $request->name;
-        $subcategory->category_id = $category->id;
-        $subcategory->slug = str_slug($request->name);
-        $subcategory->save();
+        $titleArr = preg_split('/\r\n|\r|\n/', $request->name);
+        foreach($titleArr as $title) {
+            $subcategory = new Subcategory();
+            $subcategory->name = $title;
+            $subcategory->category_id = $category->id;
+            $subcategory->slug = str_slug($title);
+            $subcategory->save();
+        }
         return response(new SubcategoryResource($subcategory), Response::HTTP_CREATED);
     }
 

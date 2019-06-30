@@ -346,7 +346,7 @@ export default {
                 .catch(error => console.log(error));
         },
         onPlaceClick(districtArr) { //console.log(districtArr);
-             axios.get(`/api${districtArr['placepath']}`)
+             axios.get(`${districtArr['placepath']}`)
                 .then( res => this.places = res.data.data)
                 .catch(error => console.log(error));
         },

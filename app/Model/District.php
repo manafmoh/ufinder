@@ -47,13 +47,13 @@ class District extends Model
         }
         return $slug;
     }
-    public function getDistrictpathAttribute() {
+    public function getFrontplacepathAttribute() {
         //return asset("api/ad/$this->slug");
-        return "/district/".$this->state->slug."_".$this->slug;
+        return "/place/".$this->state->slug."/".$this->slug;
     }
     public function getPlacepathAttribute() {
         //return asset("api/ad/$this->slug");
         ///state/{state}/{district}/place
-        return "/state/".$this->state->slug."/".$this->slug."/place";
+        return "/api/state/".$this->state->slug."/".$this->slug."/place";
     }
 }

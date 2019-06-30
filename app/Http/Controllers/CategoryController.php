@@ -41,7 +41,8 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $cateoryArr = explode(PHP_EOL, $request->name);
+       // $cateoryArr = explode('\r\n', $request->name);
+       $cateoryArr = preg_split('/\r\n|\r|\n/', $request->name);
         foreach($cateoryArr as $singleCategory) {
             $category = new Category();
             $category->name = $singleCategory;

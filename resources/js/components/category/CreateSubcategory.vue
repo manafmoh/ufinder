@@ -4,11 +4,11 @@
             ref="form"
             @submit.prevent="submit"
         >
-            <v-text-field
+            <v-textarea
             v-model="form.name"
             label="Sub Category Name"
             required
-            ></v-text-field>
+            ></v-textarea>
             <span class="red--text" v-if="errors.name">{{errors.name[0]}}</span>
             <v-btn v-if="!editFlag"
             color="success"

@@ -4,11 +4,11 @@
             ref="form"
             @submit.prevent="submit"
         >
-            <v-text-field
+            <v-textarea
             v-model="form.name"
             label="Area Name"
             required
-            ></v-text-field>
+            ></v-textarea>
             <span class="red--text" v-if="errors.name">{{errors.name[0]}}</span>
             <v-btn v-if="!editFlag"
             color="success"
@@ -54,7 +54,7 @@
             <v-divider></v-divider>
             </div>
             </v-list>
-            <router-link to="/place">
+            <router-link :to="`/state/${this.$route.params.state}/district`">
                     Back to District
                 </router-link>
       </v-card>
