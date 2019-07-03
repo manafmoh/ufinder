@@ -12,11 +12,11 @@
             <v-list row wrap>
             <v-list-group
               v-model="item.active"
-              :prepend-icon="item.slug"
+              :prepend-icon="item.icon"
               no-action
               row wrap
             >
-              <v-list-tile slot="activator" to="restaurant">
+              <v-list-tile slot="activator" >
                 <v-list-tile-content class="text-md-left">
                   <v-list-tile-title><b>{{ item.name }}</b></v-list-tile-title>
                 </v-list-tile-content>
