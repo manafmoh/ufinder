@@ -8,7 +8,7 @@
             v-for="item in categories"
             :key="item.name"
         >
-         <v-sheet>
+         <v-card>
             <v-list row wrap>
             <v-list-group
               v-model="item.active"
@@ -16,9 +16,9 @@
               no-action
               row wrap
             >
-              <v-list-tile slot="activator" :to="item.catpath">
-                <v-list-tile-content>
-                  <v-list-tile-title>{{ item.name }}</v-list-tile-title>
+              <v-list-tile slot="activator" to="restaurant">
+                <v-list-tile-content class="text-md-left">
+                  <v-list-tile-title><b>{{ item.name }}</b></v-list-tile-title>
                 </v-list-tile-content>
               </v-list-tile>
               <v-list-tile v-for="subItem in item.subcategories" :key="subItem.name"  :to="subItem.subcatpath" ripple @click="close">
@@ -31,7 +31,7 @@
               </v-list-tile>
             </v-list-group>
           </v-list>
-        </v-sheet>
+        </v-card>
         </v-flex>
         </v-layout>
       </v-menu>
