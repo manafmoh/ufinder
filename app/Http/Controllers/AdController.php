@@ -121,6 +121,8 @@ class AdController extends Controller
                 if($file->getClientOriginalName()) {
                 $name = time() . $key . $file->getClientOriginalName();
                 $uploadImagePath = '/public/image/'.$name;
+                $uploadImagePath = env('CLOUDCUBE_URL').'/public/'.$name;
+
                 // open an image file
                 $file = Image::make($file);
                 $file->fit(600, 600, function ($constraint) {
