@@ -128,7 +128,11 @@ class AdController extends Controller
                 $file->fit(600, 600, function ($constraint) {
                     $constraint->aspectRatio();
                 });
-                $watermark = Image::make(Storage::get('public/watermark.png'));
+                //$watermark = Image::make(Storage::get('public/watermark.png'));
+
+                $publicPath = base_path().'/public';
+                $watermark = Image::make(Storage::get($publicPath.'/watermark.png'));
+
                 $watermark->widen(floor(($file->width() / 4) * 3));
                 $file->insert($watermark, 'center');
                 Storage::put($uploadImagePath, (string) $file->encode());
