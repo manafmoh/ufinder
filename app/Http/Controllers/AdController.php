@@ -130,8 +130,8 @@ class AdController extends Controller
                 });
                 //$watermark = Image::make(Storage::get('public/watermark.png'));
 
-                $publicPath = base_path('../public');
-                $watermark = Image::make(Storage::get($publicPath.'/watermark.png'));
+                $publicPath = base_path('public');
+                $watermark = Image::make($publicPath.'/watermark.png');
 
                 $watermark->widen(floor(($file->width() / 4) * 3));
                 $file->insert($watermark, 'center');
