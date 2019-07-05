@@ -29,6 +29,7 @@ class CreateAdsTable extends Migration
             $table->integer('district_id')->nullable();
             $table->integer('place_id')->nullable();
             $table->integer('category_id')->unsigned();
+            $table->integer('subcategory_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->string('uploads')->nullable();
             $table->softDeletes();
