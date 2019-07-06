@@ -137,12 +137,20 @@ class AdController extends Controller
 
                 $watermark->widen(floor(($file->width() / 4) * 3));
                 $file->insert($watermark, 'center');
-                Storage::put($uploadImagePath, (string) $file->encode());
+                //Storage::put($uploadImagePath, (string) $file->encode());
+
+                // SAVE CLOUDCUBE
+                $path = Storage::disk('s3')->put($uploadImagePath,  (string) $file->encode());
+
                 //Save to DB
                 $mUpload =  new Upload;
                 $mUpload->ad_id = $adId;
                 $mUpload->filepath = $name;
                 $mUpload->save();
+
+
+
+
                 //Upload Ids
                 /*
                     $uploadId = array();
