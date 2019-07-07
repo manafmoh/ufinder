@@ -130,6 +130,7 @@ class AdController extends Controller
                 $file->fit(600, 600, function ($constraint) {
                     $constraint->aspectRatio();
                 });
+               // echo Storage::get('public/watermark.png');
                 //$watermark = Image::make(Storage::get('public/watermark.png'));
 
                 $publicPath = base_path('public');
