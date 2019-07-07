@@ -67,7 +67,7 @@ return [
             'driver' => 's3',
             'key' => 'AKIA37SVVXBH75P7XEAW',
             'secret' => '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',
-            'region' => env('AWS_DEFAULT_REGION'),
+            'region' => 'us-west-2',
             'bucket' => 'zkltwszqy8gc',
             'url' => env('AWS_URL'),
         ],
