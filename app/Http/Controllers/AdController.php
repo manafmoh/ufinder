@@ -140,8 +140,17 @@ class AdController extends Controller
                 //Storage::put($uploadImagePath, (string) $file->encode());
 
                 // SAVE CLOUDCUBE
+                //
+                //dd($uploadImagePath);
                 $path = Storage::disk('s3')->put($uploadImagePath,  (string) $file->encode());
 
+               /* $s3 = new Aws\S3\S3Client([
+                    'version'  => '2006-03-01',
+                    'region'   => 'us-east-1',
+                ]);
+                $bucket = getenv('S3_BUCKET')?: die('No "S3_BUCKET" config var in found in env!');
+                $upload = $s3->upload($bucket, $_FILES['userfile']['name'], fopen($_FILES['userfile']['tmp_name'], 'rb'), 'public-read');
+                */
                 //Save to DB
                 $mUpload =  new Upload;
                 $mUpload->ad_id = $adId;
