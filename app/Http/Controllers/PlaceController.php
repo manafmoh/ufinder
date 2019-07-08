@@ -109,7 +109,6 @@ class PlaceController extends Controller
 
     public function search(Request $request) {
      //select places.name from places join districts on (districts.id = places.district_id) join states on (states.id = districts.state_id)
-dd(env('AWS_ACCESS_KEY_ID'));
         //$where = "'1','=','1'";
         if($search= $request['search']) {
           //  $where = "'places.name', 'like', '%' . $search . '%'";
