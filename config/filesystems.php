@@ -55,22 +55,15 @@ return [
             'visibility' => 'public',
         ],
 
-        /*'s3' => [
+        's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
             'secret' => env('AWS_SECRET_ACCESS_KEY'),
             'region' => env('AWS_DEFAULT_REGION'),
             'bucket' => env('AWS_BUCKET'),
             'url' => env('AWS_URL'),
-        ],*/
-        's3' => [
-            'driver' => 's3',
-            'key' => 'AKIA37SVVXBH75P7XEAW',
-            'secret' => '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',
-            'region' => 'us-west-2',
-            'bucket' => 'zkltwszqy8gc',
-            'url' => env('AWS_URL'),
         ],
+
 
     ],
 

@@ -1,6 +1,6 @@
 <template>
 <div>
-    <img v-img:group-2="{ cursor: 'zoom-in' }" v-for="image in images" :key="image.id" :src="'/storage/image/' + image.filepath" :alt="adTitle" width="150px" />
+    <img v-img:group-2="{ cursor: 'zoom-in' }" v-for="image in images" :key="image.id" :src="env('AWS_URL')+'/image/' + image.filepath" :alt="adTitle" width="150px" />
 </div>
 </template>
 

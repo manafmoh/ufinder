@@ -150,7 +150,7 @@ export default {
         onSearchClick(search) {
             EventBus.$emit('SearchAd', search);
         },
-        onPlaceClick(places) { console.log('AAA ',places);
+        onPlaceClick(places) {
             EventBus.$emit('SearchPlaceAd', places);
         }
       },

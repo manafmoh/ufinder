@@ -207,7 +207,7 @@ export default {
 
         axios.get('/api/category')
         .then(res => this.categories = res.data.data)
-        .then(error => console.log(error.data))
+        .catch(error => console.log(error.data))
     },
     methods : {
         submit() {
@@ -247,7 +247,7 @@ export default {
 
         },
         //v-combobox
-        editChip (index, item) { console.log('Val ',item.text);
+        editChip (index, item) {
             if (!this.editing) {
             this.editing = item
             this.index = index

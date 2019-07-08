@@ -247,7 +247,7 @@ export default {
 
         },
         //v-combobox
-        editChip (index, item) { console.log('Val ',item.text);
+        editChip (index, item) {
             if (!this.editing) {
             this.editing = item
             this.index = index

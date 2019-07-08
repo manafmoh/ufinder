@@ -120,17 +120,13 @@ class AdController extends Controller
             foreach ($files  as $key => $file) {
                 if($file->getClientOriginalName()) {
                 $name = time() . $key . $file->getClientOriginalName();
-                $uploadImagePath = '/public/image/'.$name;
-                //$uploadImagePath = env('CLOUDCUBE_URL').'/'.$name;
-                $uploadImagePath = 'zkltwszqy8gc/public/'.$name;
-
+                $uploadImagePath = '/image/'.$name;
 
                 // open an image file
                 $file = Image::make($file);
                 $file->fit(600, 600, function ($constraint) {
                     $constraint->aspectRatio();
                 });
-               // echo Storage::get('public/watermark.png');
                 //$watermark = Image::make(Storage::get('public/watermark.png'));
 
                 $publicPath = base_path('public');
@@ -140,26 +136,15 @@ class AdController extends Controller
                 $file->insert($watermark, 'center');
                 //Storage::put($uploadImagePath, (string) $file->encode());
 
-                // SAVE CLOUDCUBE
+                // SAVE AWS S3
                 //
-                //dd($uploadImagePath);
                 $path = Storage::disk('s3')->put($uploadImagePath,  (string) $file->encode());
 
-               /* $s3 = new Aws\S3\S3Client([
-                    'version'  => '2006-03-01',
-                    'region'   => 'us-east-1',
-                ]);
-                $bucket = getenv('S3_BUCKET')?: die('No "S3_BUCKET" config var in found in env!');
-                $upload = $s3->upload($bucket, $_FILES['userfile']['name'], fopen($_FILES['userfile']['tmp_name'], 'rb'), 'public-read');
-                */
                 //Save to DB
                 $mUpload =  new Upload;
                 $mUpload->ad_id = $adId;
                 $mUpload->filepath = $name;
                 $mUpload->save();
-
-
-
 
                 //Upload Ids
                 /*

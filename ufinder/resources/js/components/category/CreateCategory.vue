@@ -78,7 +78,7 @@ export default {
         }
         axios.get('/api/category')
         .then(res => this.categories = res.data.data)
-        .then(error => console.log(error.data))
+        .catch(error => console.log(error.data))
     },
     methods : {
         submit() {

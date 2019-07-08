@@ -1,6 +1,6 @@
 <template>
 <div>
-    <img v-if="image" :src="'/storage/image/' + image.filepath" :alt="adTitle" width="150px" />
+    <img v-if="image" :src="env('AWS_URL') +'/image/' + image.filepath" :alt="adTitle" width="150px" />
 </div>
 </template>
 

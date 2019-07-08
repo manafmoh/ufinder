@@ -59,7 +59,6 @@ export default {
         },
         listen() {
             EventBus.$on('cancelMessage', (checkmessage)=> {
-                //console.log('LOOOOOG ',checkmessage);
                  this.editMessage = false;
                  if(checkmessage != this.message.message) {
                      this.message.message = this.messageBeforeEdit;

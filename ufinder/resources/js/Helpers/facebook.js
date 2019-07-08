@@ -5,7 +5,6 @@ class Facebook {
         axios.post('/api/auth/facebooklogin', null,{ params: { 'id':data.id , 'name':data.name, 'firstname':data.firstname, 'lastname':data.lastname,'email':data.email} })
            .then(res => this.responseAfterLogin(res))
            .catch(error => {
-               console.log(error.response.data);
                EventBus.$emit('isFacebookLoggin', false);
             });
     }

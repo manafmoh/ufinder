@@ -94,7 +94,7 @@ export default {
                 let placeArr = places.split(',');
                 if(placeArr.length !=3) return;
                 axios.get(`/api/state/${placeArr[2]}/${placeArr[1]}/place/${placeArr[0]}`)
-                .then(res => {this.ads = res.data.data.ads; console.log(res.data.data.ads)})
+                .then(res => {this.ads = res.data.data.ads; })
                 .catch(error => console.log(error.response.data));
             });
         }
