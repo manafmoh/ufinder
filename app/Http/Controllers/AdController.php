@@ -132,8 +132,9 @@ class AdController extends Controller
                 $publicPath = base_path('public');
                 $watermark = Image::make($publicPath.'/watermark.png');
 
-                $watermark->widen(floor(($file->width() / 4) * 3));
-                $file->insert($watermark, 'center');
+                //$watermark->widen(floor(($file->width() / 4) * 3));
+                $watermark->widen(80);
+                $file->insert($watermark, 'bottom-right', 10, 10);
                 //Storage::put($uploadImagePath, (string) $file->encode());
 
                 // SAVE AWS S3

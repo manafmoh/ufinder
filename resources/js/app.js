@@ -64,3 +64,13 @@ const app = new Vue({
     el: '#app',
     router
 });
+
+var filter = function(text, length, clamp){
+    clamp = clamp || '...';
+    //var node = document.createElement('div');
+    //node.innerHTML = text;
+    //var content = node.textContent;
+    return text.length > length ? text.slice(0, length) + clamp : text;
+};
+
+Vue.filter('truncate', filter);

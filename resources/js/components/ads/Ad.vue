@@ -14,7 +14,7 @@
           </div>
         </v-card-title>
         <v-card-text>
-            {{ad.body}}
+            {{ad.body | truncate(101, '...')}}
         </v-card-text>
         <v-card-actions class="white justify-center">
               <v-btn

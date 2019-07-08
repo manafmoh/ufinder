@@ -109,6 +109,7 @@ class PlaceController extends Controller
 
     public function search(Request $request) {
      //select places.name from places join districts on (districts.id = places.district_id) join states on (states.id = districts.state_id)
+
         //$where = "'1','=','1'";
         if($search= $request['search']) {
           //  $where = "'places.name', 'like', '%' . $search . '%'";
