@@ -1,7 +1,6 @@
 <template>
 <div>
-    {{ awspath}}
-    <img v-if="image" :src="env('AWS_URL') +'/image/' + image.filepath" :alt="adTitle" width="150px" />
+    <img v-if="image" :src="awspath +'/image/' + image.filepath" :alt="adTitle" width="150px" />
 </div>
 </template>
 
