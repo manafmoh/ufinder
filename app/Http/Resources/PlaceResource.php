@@ -16,6 +16,7 @@ class PlaceResource extends JsonResource
     {
         return [
             'name'  => $this->name,
+            'pincode'  => $this->pincode,
             'id'  => $this->id,
             'slug'  => $this->slug,
             'path'  => $this->path,

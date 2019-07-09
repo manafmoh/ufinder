@@ -45,7 +45,7 @@ class CategoryController extends Controller
        $cateoryArr = preg_split('/\r\n|\r|\n/', $request->name);
         foreach($cateoryArr as $singleCategory) {
             $category = new Category();
-            $category->name = $singleCategory;
+            $category->name = trim($singleCategory);
             $category->slug = str_slug($singleCategory);
             $category->save();
         }

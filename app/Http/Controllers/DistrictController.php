@@ -45,7 +45,7 @@ class DistrictController extends Controller
         $titleArr = preg_split('/\r\n|\r|\n/', $request->name);
         foreach($titleArr as $title) {
             $district = new District();
-            $district->name = $title;
+            $district->name = trim($title);
             $district->state_id = $state->id;
             $district->slug = str_slug($title);
             $district->save();

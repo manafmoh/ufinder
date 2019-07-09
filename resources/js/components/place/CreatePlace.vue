@@ -9,6 +9,11 @@
             label="Area Name"
             required
             ></v-textarea>
+            <v-textarea
+            v-model="form.pincode"
+            label="Area Pincode"
+            required
+            ></v-textarea>
             <span class="red--text" v-if="errors.name">{{errors.name[0]}}</span>
             <v-btn v-if="!editFlag"
             color="success"
@@ -42,7 +47,7 @@
                         {{place.name}}
                     </v-list-tile-title>
                     <v-list-tile-sub-title >
-
+                        {{place.pincode}}
                     </v-list-tile-sub-title>
                 </v-list-tile-content>
                 <v-list-tile-action>
@@ -67,6 +72,7 @@ export default {
         return {
             form: {
                 name: null,
+                pincode: null,
             },
             errors: {},
             places: {},
@@ -105,6 +111,7 @@ export default {
             .then(res => {
                 this.places.unshift(res.data);
                 this.form.name = null;
+                this.form.pincode = null;
             })
             .catch(error => console.log(error.data))
         },
@@ -113,6 +120,7 @@ export default {
             .then(res => {
                 this.places.unshift(res.data);
                 this.form.name = null;
+                this.form.pincode = null;
                 this.editFlag = null
             })
             .catch(error => console.log(error.data))
@@ -124,6 +132,7 @@ export default {
         },
         edit(index) {
            this.form.name = this.places[index].name;
+           this.form.pincode = this.places[index].pincode;
            this.editFlag = this.places[index].slug
            this.places.splice(index, 1)
         },

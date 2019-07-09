@@ -95,7 +95,7 @@ class SubcategoryController extends Controller
     public function update(Category $category,Request $request, Subcategory $subcategory)
     {
         $subcategory->update([
-            'name' => $request->name,
+            'name' => trim($request->name),
             'slug'  => str_slug($request->name)
         ]);
     return response(new SubcategoryResource($subcategory), Response::HTTP_ACCEPTED);

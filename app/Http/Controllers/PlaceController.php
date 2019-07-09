@@ -46,9 +46,13 @@ class PlaceController extends Controller
     public function store(State $state, District $district, Request $request)
     {
         $titleArr = preg_split('/\r\n|\r|\n/', $request->name);
+        $pincodeArr = preg_split('/\r\n|\r|\n/', $request->pincode);
+        if(count($titleArr) != count($pincodeArr)) return  response('Area and Pincode are not matching', Response::HTTP_NOT_FOUND);
+        $i = 0;
         foreach($titleArr as $title) {
             $place = new Place();
-            $place->name = $title;
+            $place->name = trim($title);
+            $place->pincode = trim($pincodeArr[$i++]);
         // $place->state_id = $state->id;
             $place->district_id = $district->id;
             $place->slug = str_slug($title);
@@ -90,6 +94,7 @@ class PlaceController extends Controller
     {
         $place->update([
             'name' => $request->name,
+            'pincode' => $request->pincode,
             'slug'  => str_slug($request->name)
         ]);
         return response(new PlaceResource($place), Response::HTTP_ACCEPTED);
@@ -117,7 +122,7 @@ class PlaceController extends Controller
         $places = DB::table('places')
             ->join('districts', 'districts.id', '=', 'places.district_id')
             ->join('states', 'states.id', '=', 'districts.state_id')
-            ->select('places.name as place', 'districts.name as district', 'states.name as state', 'places.slug as place_slug', 'districts.slug as district_slug', 'states.slug as state_slug')
+            ->select('places.name as place', 'places.pincode as pincode', 'districts.name as district', 'states.name as state', 'places.slug as place_slug', 'districts.slug as district_slug', 'states.slug as state_slug')
             ->where('places.name', 'like', '%' . $search . '%')
             ->offset(0)->limit(15)->get();
         return response($places , Response::HTTP_CREATED);

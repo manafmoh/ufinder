@@ -81,7 +81,7 @@ class AdController extends Controller
         $validatedData = $request->validated();
         //dd($validatedData);
         $ad =  new Ad;
-        $ad->title = $request->title;
+        $ad->title = trim($request->title);
         $ad->user_id = auth()->id();
         $ad->featured = $request->has('featured');
         $ad->amount = $request->amount;

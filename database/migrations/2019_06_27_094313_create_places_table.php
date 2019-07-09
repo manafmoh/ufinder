@@ -18,6 +18,7 @@ class CreatePlacesTable extends Migration
             $table->unsignedBigInteger('district_id')->nullable();
             $table->unsignedBigInteger('state_id')->nullable();
             $table->string('name');
+            $table->string('pincode');
             $table->string('slug');
             $table->boolean('active')->default(true);
             $table->timestamps();

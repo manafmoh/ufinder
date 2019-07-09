@@ -23,12 +23,12 @@ class AdResource extends JsonResource
             'messages_count' => $this->message->count(),
             'slug'  => $this->slug,
             'body'  => $this->body,
-            'category'  => $this->category->name,
+            'category'  => $this->category?$this->category->name:'',
             'user'  => $this->user->name,
-            'user_id'  => $this->user->id,
-            'state'  => $this->state->name,
-            'district'  => $this->district->name,
-            'place'  => $this->place->name,
+            'user_id'  => $this->user?$this->user->id:'',
+            'state'  => $this->state?$this->state->name:'',
+            'district'  => $this->district?$this->district->name:'',
+            'place'  => $this->place?$this->place->name:'',
             'uploads'   => UploadResource::collection($this->upload),
             'created_at' => $this->created_at->diffForHumans()
         ];

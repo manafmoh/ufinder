@@ -44,7 +44,7 @@ class StateController extends Controller
         $titleArr = preg_split('/\r\n|\r|\n/', $request->name);
         foreach($titleArr as $title) {
             $state = new State();
-            $state->name = $title;
+            $state->name = trim($title);
             $state->slug = str_slug( $title);
             $state->save();
         }
