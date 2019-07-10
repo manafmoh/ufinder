@@ -43,6 +43,7 @@ class DistrictController extends Controller
     public function store(State $state, Request $request)
     {
         $titleArr = preg_split('/\r\n|\r|\n/', $request->name);
+        if(count($titleArr) ==0) return  response('Error on submitting!!', Response::HTTP_NOT_FOUND);
         foreach($titleArr as $title) {
             $district = new District();
             $district->name = trim($title);

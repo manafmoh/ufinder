@@ -48,6 +48,8 @@ class PlaceController extends Controller
         $titleArr = preg_split('/\r\n|\r|\n/', $request->name);
         $pincodeArr = preg_split('/\r\n|\r|\n/', $request->pincode);
         if(count($titleArr) != count($pincodeArr)) return  response('Area and Pincode are not matching', Response::HTTP_NOT_FOUND);
+        if(count($titleArr) ==0) return  response('Error on submitting!!', Response::HTTP_NOT_FOUND);
+        $i = 0;
         $i = 0;
         foreach($titleArr as $title) {
             $place = new Place();
