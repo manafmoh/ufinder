@@ -1,4 +1,3 @@
-//https://www.ufindna.com/api/auth/facebooklogin
 class Token {
     getPayload(data) {
         const payload  = data.split('.')[1];
