@@ -1,7 +1,7 @@
 <template>
     <v-container flued grid-list-md class="mt-2" >
     <v-layout row wrap>
-      <v-flex xs12>
+      <v-flex >
           <v-card>
             <v-toolbar flat>
             <v-btn icon v-if="!homePage">
