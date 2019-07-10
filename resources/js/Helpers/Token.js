@@ -1,3 +1,4 @@
+alert("'"+process.env.MIX_APP_URL+"/api/auth/login'");
 class Token {
     getPayload(data) {
         const payload  = data.split('.')[1];
