@@ -1,5 +1,5 @@
 <template>
-    <v-flex (xs12 sm9 md6 lg3 xl1)>
+    <v-flex (xs12 sm4 md3 lg3 xl2)>
       <v-card>
         <v-card-title primary-title>
           <div>
