@@ -11,15 +11,15 @@ class Token {
     isValid(data) {
         const payload = this.getPayload(data);
         if(payload) {
-            return payload.iss == "http://127.0.0.1:8000/api/auth/login"
-            || "http://127.0.0.1:8000/api/auth/signup" ? true: false;
+            return payload.iss == "'"+process.env.MIX_APP_URL+"/api/auth/login'"
+            || "'"+process.env.MIX_APP_URL+"/api/auth/signup'" ? true: false;
         }
         return false;
     }
-    isValidFacebook(data) {
+    isValidFacebook(data) { alert("'"+process.env.MIX_APP_URL+"/api/auth/login'");
         const payload = this.getPayload(data);
         if(payload) {
-            return payload.iss == "http://localhost:8000/api/auth/facebooklogin"
+            return payload.iss == "'"+process.env.MIX_APP_URL+"/api/auth/facebooklogin'"
              ? true: false;
         }
         return false;
