@@ -131,7 +131,7 @@ export default {
          axios.get('/api/places',{params: {'place': val}}).then(response => {
           //this.results = response.data;
            //this.places = [];
-           response.data.data.forEach(element => {
+           response.data.forEach(element => {
                  this.places.push(
                      {
                          'place': element.place+","+element.district+","+element.state,
