@@ -31,6 +31,7 @@ window.Exception =  Exception;
 
 import Facebook from './Helpers/facebook';
 window.Facebook =  Facebook;
+window.LiveURL = 'http://ufindna.com';
 
 window.EventBus = new Vue();
 

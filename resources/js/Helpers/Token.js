@@ -1,4 +1,5 @@
 class Token {
+    //process.env.MIX_APP_URL
     getPayload(data) {
         const payload  = data.split('.')[1];
         return JSON.parse(this.decode(payload));;
@@ -11,15 +12,17 @@ class Token {
     isValid(data) {
         const payload = this.getPayload(data);
         if(payload) {
-            return payload.iss == process.env.MIX_APP_URL+"/api/auth/login"
-            || process.env.MIX_APP_URL+"/api/auth/signup" ? true: false;
+            return payload.iss == LiveURL+"/api/auth/login"
+            || LiveURL+"/api/auth/signup" ? true: false;
         }
         return false;
     }
-    isValidFacebook(data) {
+    isValidFacebook(data) { 
         const payload = this.getPayload(data);
         if(payload) {
-            return payload.iss == process.env.MIX_APP_URL+"/api/auth/facebooklogin"
+            
+            //return payload.iss == "http://localhost:8000/api/auth/facebooklogin"
+            return payload.iss == LiveURL+"/api/auth/facebooklogin"
              ? true: false;
         }
         return false;
