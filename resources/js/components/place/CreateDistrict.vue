@@ -51,7 +51,7 @@
                 </v-list-tile-content>
                 <v-list-tile-action>
                 <v-btn small color="primary" dark :href="district.frontplacepath">Area</v-btn>
-                <v-btn icon small @click="destroy(state.slug, index)">
+                <v-btn icon small @click="destroy(district.slug, index)">
                     <v-icon color="red">delete</v-icon>
                 </v-btn>
             </v-list-tile-action>
@@ -85,8 +85,6 @@ export default {
         axios.get(`/api/state/${this.$route.params.slug}/district`)
         .then(res => {
              this.districts = res.data.data;
-             //console.log(this.districts);
-             this.districtName = this.districts[0].district;
         })
         .catch(error => console.log(error.data))
         // Getting State Details

@@ -88,7 +88,6 @@ export default {
         axios.get(`/api/state/${this.$route.params.state}/${this.$route.params.district}/place`)
         .then(res => {
              this.places = res.data.data;
-             this.placeName = this.places[0].district;
         })
         .catch(error => console.log(error.data))
         // Getting District Details
