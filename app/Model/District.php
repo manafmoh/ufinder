@@ -6,6 +6,7 @@ use App\Model\Ad;
 use App\Model\Place;
 use App\Model\State;
 use Illuminate\Database\Eloquent\Model;
+//use Illuminate\Database\Eloquent\Builder;
 
 class District extends Model
 {
@@ -17,13 +18,16 @@ class District extends Model
         static::creating(function ($district){
             $district->slug = $district->setSlug($district->name);
         });
+        /*static::addGlobalScope('order', function (Builder $builder) {
+            $builder->orderBy('name', 'asc');
+        });*/
     }
     public function state() {
         return $this->belongsTo(State::class);
     }
 
     public function place() {
-        return $this->hasMany(Place::class);
+        return $this->hasMany(Place::class)->orderBy('name', 'asc');
     }
     public function ads() {
         return $this->hasMany(Ad::class);

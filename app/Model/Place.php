@@ -5,6 +5,7 @@ namespace App\Model;
 use App\Model\State;
 use App\Model\District;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Place extends Model
 {
@@ -16,8 +17,11 @@ class Place extends Model
         static::creating(function ($place){
             $place->slug = $place->setSlug($place->name);
         });
+        static::addGlobalScope('order', function (Builder $builder) {
+            $builder->orderBy('name', 'asc');
+        });
     }
- 
+
     public function district() {
         return $this->belongsTo(District::class);
     }

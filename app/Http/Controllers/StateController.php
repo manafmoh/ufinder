@@ -20,7 +20,8 @@ class StateController extends Controller
      */
     public function index()
     {
-        return StateResource::collection(State::latest()->get());
+        //return StateResource::collection(State::latest()->get());
+        return StateResource::collection(State::get());
     }
 
     /**

@@ -5,6 +5,7 @@ namespace App\Model;
 use App\Model\Ad;
 use App\Model\Place;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class State extends Model
 {
@@ -16,6 +17,10 @@ class State extends Model
         static::creating(function ($state){
             $state->slug = $state->setSlug($state->name);
         });
+        // Order by name ASC
+        static::addGlobalScope('order', function (Builder $builder) {
+            $builder->orderBy('name', 'asc');
+        });
     }
     public function getRouteKeyName()
     {
@@ -24,9 +29,9 @@ class State extends Model
     public function ads() {
         return $this->hasMany(Ad::class);
     }
-    
+
     public function district() {
-        return $this->hasMany(District::class);
+        return $this->hasMany(District::class)->orderBy('name', 'asc');
     }
     public function setSlug($value) {
         if (static::whereSlug($slug = str_slug($value))->exists()) {

@@ -26,10 +26,10 @@
         </v-form>
 
         <v-card>
-            <router-link to="/state" class="red--text subheading noline ">
-                <i class="material-icons">arrow_back</i> Back to State
-            </router-link>
         <v-toolbar color="indigo" dark dense>
+             <router-link to="/state" class="red--text subheading noline ">
+            <v-icon>arrow_back</v-icon>
+            </router-link>
           <v-toolbar-title >All District of <b v-html="districtName">{{districtName}}</b></v-toolbar-title>
         </v-toolbar>
 
