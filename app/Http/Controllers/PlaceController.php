@@ -116,9 +116,8 @@ class PlaceController extends Controller
 
     public function search(Request $request) {
      //select places.name from places join districts on (districts.id = places.district_id) join states on (states.id = districts.state_id)
-
         //$where = "'1','=','1'";
-        if($search= $request['search']) {
+        if($search= $request['place']) {
           //  $where = "'places.name', 'like', '%' . $search . '%'";
         }
         $places = DB::table('places')
@@ -126,6 +125,8 @@ class PlaceController extends Controller
             ->join('states', 'states.id', '=', 'districts.state_id')
             ->select('places.name as place', 'places.pincode as pincode', 'districts.name as district', 'states.name as state', 'places.slug as place_slug', 'districts.slug as district_slug', 'states.slug as state_slug')
             ->where('places.name', 'like', '%' . $search . '%')
+            ->orWhere('districts.name', 'like', '%' . $search . '%')
+            ->orWhere('states.name', 'like', '%' . $search . '%')
             ->offset(0)->limit(15)->get();
         return response($places , Response::HTTP_CREATED);
 
