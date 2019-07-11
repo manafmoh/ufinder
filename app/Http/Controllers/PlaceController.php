@@ -127,7 +127,7 @@ class PlaceController extends Controller
             ->where('places.name', 'like', '%' . $search . '%')
             ->orWhere('districts.name', 'like', '%' . $search . '%')
             ->orWhere('states.name', 'like', '%' . $search . '%')
-            ->offset(0)->limit(15)->get();
+            ->offset(0)->limit(1)->get();
         return response($places , Response::HTTP_CREATED);
 
 

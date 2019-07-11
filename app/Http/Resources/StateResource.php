@@ -23,6 +23,7 @@ class StateResource extends JsonResource
             'states' =>  DistrictResource::collection($this->district),
             'districtpath'  => $this->districtpath,
             'active'    =>$this->active,
+            'district_count' => $this->district->count(),
             'created_at'    => $this->created_at->diffForHumans(),
             'updated_at'    => $this->updated_at->diffForHumans(),
 

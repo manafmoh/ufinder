@@ -22,6 +22,7 @@ class DistrictResource extends JsonResource
             'frontplacepath'  => $this->frontplacepath,
             'placepath'  => $this->placepath,
             'state'  => $this->state->name,
+            'place_count' => $this->place->count(),
             'active'    =>$this->active,
             'created_at'    => $this->created_at->diffForHumans(),
             'updated_at'    => $this->updated_at->diffForHumans()

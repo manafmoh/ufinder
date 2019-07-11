@@ -39,7 +39,7 @@
                 </v-list-tile-action>
                 <v-list-tile-content>
                     <v-list-tile-title >
-                        {{state.name}}
+                        {{state.name}} ({{state.district_count}})
                     </v-list-tile-title>
                     <v-list-tile-sub-title >
 
@@ -78,7 +78,7 @@ export default {
         }
         axios.get('/api/state')
         .then(res => this.states = res.data.data)
-        .then(error => console.log(error.data))
+        .catch(error => console.log(error.data))
     },
     methods : {
         submit() {

@@ -39,7 +39,7 @@
                 </v-list-tile-action>
                 <v-list-tile-content>
                     <v-list-tile-title >
-                        {{district.name}}
+                        {{district.name}} ({{district.place_count}})
                     </v-list-tile-title>
                     <v-list-tile-sub-title >
 
