@@ -26,9 +26,13 @@
         </v-form>
 
         <v-card>
+            <router-link to="/state" class="red--text subheading noline ">
+                <i class="material-icons">arrow_back</i> Back to State
+            </router-link>
         <v-toolbar color="indigo" dark dense>
           <v-toolbar-title >All District of <b v-html="districtName">{{districtName}}</b></v-toolbar-title>
         </v-toolbar>
+
          <v-list three-line>
             <div v-for="(district,index) in districts" :key="district.id">
             <v-list-tile>
@@ -55,9 +59,7 @@
             <v-divider></v-divider>
             </div>
             </v-list>
-            <router-link to="/state">
-                    Back to State
-                </router-link>
+
       </v-card>
     </v-container>
 </template>

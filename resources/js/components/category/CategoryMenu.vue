@@ -8,7 +8,7 @@
             v-for="item in categories"
             :key="item.name"
         >
-         <v-card>
+         <v-sheet>
             <v-list row wrap>
             <v-list-group
               v-model="item.active"
@@ -31,7 +31,7 @@
               </v-list-tile>
             </v-list-group>
           </v-list>
-        </v-card>
+        </v-sheet>
         </v-flex>
         </v-layout>
       </v-menu>
