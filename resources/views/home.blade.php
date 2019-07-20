@@ -14,6 +14,6 @@
         <app-home></app-home>
     </v-app>
 </div>
-<script src="{{asset('js/app.js, true')}}"></script>
+<script src="{{asset('js/app.js', true)}}"></script>
 </body>
 </html>
