@@ -17,10 +17,10 @@ class Token {
         }
         return false;
     }
-    isValidFacebook(data) { 
+    isValidFacebook(data) {
         const payload = this.getPayload(data);
         if(payload) {
-            
+            console.log(payload);
             //return payload.iss == "http://localhost:8000/api/auth/facebooklogin"
             return payload.iss == LiveURL+"/api/auth/facebooklogin"
              ? true: false;
