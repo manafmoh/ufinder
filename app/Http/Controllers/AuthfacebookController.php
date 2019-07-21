@@ -18,7 +18,7 @@ class AuthfacebookController extends Controller
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
-        
+
 
         $prevResult = User::firstOrNew(['provider_id'=>$request->id, 'provider'=> 'facebook']);
         if($prevResult) {

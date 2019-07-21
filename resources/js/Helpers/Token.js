@@ -21,6 +21,7 @@ class Token {
         const payload = this.getPayload(data);
         if(payload) {
             console.log(payload);
+            console.log(LiveURL+"/api/auth/facebooklogin");
             //return payload.iss == "http://localhost:8000/api/auth/facebooklogin"
             return payload.iss == LiveURL+"/api/auth/facebooklogin"
              ? true: false;
