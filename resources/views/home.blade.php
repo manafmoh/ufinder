@@ -6,7 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>uFinder</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href="{{asset('css/app.css', true)}}">
+    <link rel="stylesheet" href="{{asset('css/app.css', false)}}">
+    <script src="https://apis.google.com/js/api:client.js"></script>
 </head>
 <body>
     <div id="app">
@@ -14,6 +15,6 @@
         <app-home></app-home>
     </v-app>
 </div>
-<script src="{{asset('js/app.js', true)}}"></script>
+<script src="{{asset('js/app.js', false)}}"></script>
 </body>
 </html>

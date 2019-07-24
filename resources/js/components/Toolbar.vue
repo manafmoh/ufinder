@@ -1,17 +1,28 @@
 <template>
 <div>
-    <v-toolbar >
+    <v-toolbar :class="{'toolbar-height-inc': $vuetify.breakpoint.xsOnly}">
     <!-- <v-toolbar-side-icon></v-toolbar-side-icon> -->
     <v-toolbar-title>
         <router-link to="/" class="toolbar-title"><v-img alt="uFinder" :src="`/images/logo.png`" width="138" height="53" /></router-link>
     </v-toolbar-title>
      <template v-slot:extension >
-      <v-toolbar-title class="flex white--text">
-          <v-layout row wrap>
-                <v-flex xs2 sm2 >
-                 <CategoryMenu class="text-sm-left" />
-                </v-flex>
-                <v-flex xs2 sm2 >
+      <v-toolbar-title class="flex white--text" :class="{'removemargin-left': $vuetify.breakpoint.xsOnly}">
+        <v-layout row wrap>
+        <v-expansion-panel
+        v-model="panel"
+        expand
+        xs12 sm12
+        class="panel"
+        >
+      <v-expansion-panel-content >
+        <template v-slot:header>
+          <!--<div>Item</div>-->
+        </template>
+        <v-layout  row wrap justify-left>
+             <v-flex class="text-xs-left" xs2 sm2  :class="{'toolbar-linebreak': $vuetify.breakpoint.xsOnly}">
+                <CategoryMenu  />
+            </v-flex>
+         <v-flex xs4 sm4 :class="{'toolbar-linebreak': $vuetify.breakpoint.xsOnly}">
                  <v-autocomplete
                 :items="places"
                 v-model="placesmodel"
@@ -22,7 +33,7 @@
                 @change="onPlaceClick">
                 </v-autocomplete>
           </v-flex>
-          <v-flex xs8 sm8 class="pl-5">
+          <v-flex xs6 sm6 class="pl-5" :class="{'toolbar-linebreak': $vuetify.breakpoint.xsOnly}">
                  <v-combobox
                  prepend-icon="search"
                  append-icon="cancel"
@@ -35,13 +46,16 @@
                 @change="onSearchClick">
                 </v-combobox>
           </v-flex>
+        </v-layout>
+      </v-expansion-panel-content>
+    </v-expansion-panel>
           </v-layout>
       </v-toolbar-title>
     </template>
 
     <v-spacer></v-spacer>
     <app-notification></app-notification>
-    <div class="hidden-sm-and-down">
+    <div class="___hidden-sm-and-down">
     <router-link color="white" class="noline"
         v-for="item in items.filter(item => item.show)"
         :key="item.title"
@@ -51,15 +65,8 @@
     <LoginPopup />
     </div>
     </v-toolbar>
-    <!--
-    <v-expansion-panel>
-        <v-expansion-panel-content >
-        <div slot='header'><h6>Headline</h6></div>
-        <div>
-            Coming soon
-        </div>
-        </v-expansion-panel-content>
-    </v-expansion-panel>-->
+
+
 </div>
 </template>
 
@@ -71,6 +78,7 @@ export default {
     components: {AppNotification, LoginPopup, CategoryMenu},
     data(){
         return {
+            panel: [true],
             search:'',
             model:'',
             placesmodel:'',
@@ -87,6 +95,11 @@ export default {
                 // {title: 'Logout', to: '/logout', show:User.loggedIn()}
             ]
         }
+    },
+    computed: {
+        is_screen_small() {
+            return this.$vuetify.breakpoint.xsOnly
+        },
     },
     created() {
         EventBus.$on('logout', ()=>{

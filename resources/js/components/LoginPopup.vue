@@ -7,6 +7,9 @@
                 <facebook-login v-if="!isFacebookLogin"></facebook-login>
                 <v-btn v-else @click="redirect" class="success">Login with facebook</v-btn>
             </v-card-title>
+            <v-card-title>
+                <GoogleLogin></GoogleLogin>
+            </v-card-title>
         </v-card>
         <v-card  >
             <v-card-title>
@@ -17,12 +20,12 @@
     <v-btn @click="dclose" >Close</v-btn>
     </v-dialog>
 </template>
-
 <script>
 import FacebookLogin from './social/FacebookLogin';
+import GoogleLogin from './social/GoogleLogin'
 import EmailLogin from './login/Login';
 export default {
-    components: {FacebookLogin, EmailLogin},
+    components: {FacebookLogin, EmailLogin, GoogleLogin},
     created() {
         if(User.loggedIn()) {
             this.isLogin= true;
@@ -34,6 +37,7 @@ export default {
            dialog: false,
            isLogin: false,
            isFacebookLogin: false,
+           isGoogleLogin: false,
            emailLogin:false,
            fbLogin: true,
         }

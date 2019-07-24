@@ -34,6 +34,9 @@ window.Facebook =  Facebook;
 window.LiveURL = 'http://ufindna.com';
 //window.LiveURL = 'http://localhost:8000';
 
+import GSignInButton from 'vue-google-signin-button'
+Vue.use(GSignInButton)
+
 window.EventBus = new Vue();
 
 import md from 'marked';

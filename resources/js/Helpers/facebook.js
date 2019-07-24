@@ -11,7 +11,6 @@ class Facebook {
     }
     responseAfterLogin(res) {
         const access_token = res.data.access_token;
-        console.log(access_token);
         const user = res.data.user;
         if(Token.isValidFacebook(access_token)){
             AppStorage.store(access_token, user);

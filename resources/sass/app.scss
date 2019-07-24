@@ -19,3 +19,23 @@
 }
 
 .noline {text-decoration: none}
+.removemargin-left {
+    margin-left:0 !important;
+    padding-top: 20px;
+}
+.border {
+    border:1px solid red;
+}
+.toolbar-linebreak {
+    flex-basis: auto !important;
+    -webkit-flex-basis: auto !important;
+    max-width: 100% !important;
+    width: 100% !important;
+}
+.toolbar-height-inc {
+    display: block;
+    height: 230px;
+}
+.toolbar-height-inc .panel{
+    padding-top: 90px;
+}
