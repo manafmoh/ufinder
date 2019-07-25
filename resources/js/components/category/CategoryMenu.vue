@@ -1,6 +1,6 @@
 <template>
 <div class="text-xs-center">
-    <v-menu  offset-y open-delay="500"
+    <v-menu  offset-y open-delay="500" :close-on-click="false" v-model="togglePopover"
     :close-on-content-click="closeOnContentClick" z-index=100    >
         <v-btn slot="activator" round color="primary" dark >All Categories</v-btn>
         <v-layout flex-child wrap>
@@ -44,6 +44,7 @@ export default {
     return {
       categories:[],
       closeOnContentClick: false,
+      togglePopover: false,
     }
   },
   created() {
@@ -58,8 +59,10 @@ export default {
       this.categories.forEach(item => {
         if (item.active) {
           _.delay(function () {
-            item.active = false
+            item.active = false;
           }, 300)
+          // Menu collapse and hide
+            this.togglePopover = false;
           return false
         }
       })

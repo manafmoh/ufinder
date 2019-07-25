@@ -20,7 +20,7 @@ class CategoryResource extends JsonResource
             'id'  => $this->id,
             'slug'  => $this->slug,
             'path'  => $this->path,
-            'icon'  =>'arrow_right_alt',
+            'icon'  => $this->icon,
             'catpath'  => $this->catpath,
             'subcategories' =>  SubcategoryResource::collection($this->subCategories),
             'subcatpath'  => $this->subcatpath,

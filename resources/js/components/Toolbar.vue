@@ -55,15 +55,27 @@
 
     <v-spacer></v-spacer>
     <app-notification></app-notification>
-    <div class="___hidden-sm-and-down">
+    <LoginPopup />
+    <div class="hidden-sm-and-down">
     <router-link color="white" class="noline"
         v-for="item in items.filter(item => item.show)"
         :key="item.title"
         :to="item.to" >
         <v-btn outline color="indigo">{{item.title}}</v-btn>
     </router-link>
-    <LoginPopup />
     </div>
+    <v-menu class="hidden-md-and-up">
+        <v-toolbar-side-icon slot="activator"></v-toolbar-side-icon>
+        <v-list>
+          <v-list-tile v-for="item in items.filter(item => item.show)"
+             :key="item.title"
+                :to="item.to">
+            <v-list-tile-content>
+              <v-list-tile-title>{{item.title}}</v-list-tile-title>
+             </v-list-tile-content>
+          </v-list-tile>
+        </v-list>
+      </v-menu>
     </v-toolbar>
 
 
