@@ -2,6 +2,13 @@
     <v-btn v-if="isLogin" flat class="indigo lighten-2" href="/logout">Logout</v-btn>
     <v-dialog v-else max-width="600px" v-model="dialog" >
         <v-btn  flat slot="activator" class="success">Login</v-btn>
+        <v-toolbar dark color="primary">
+          <v-toolbar-title>Login</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-toolbar-items>
+            <v-btn dark flat @click="dclose"> <v-icon>close</v-icon></v-btn>
+          </v-toolbar-items>
+        </v-toolbar>
         <v-card  v-if="fbLogin">
             <v-card-title>
                 <facebook-login v-if="!isFacebookLogin"></facebook-login>
@@ -13,11 +20,10 @@
         </v-card>
         <v-card  >
             <v-card-title>
-                <v-btn @click="showEmailLogin" class="success">Login with email</v-btn>
+                <v-btn style="width:210px" @click="showEmailLogin" class="success">Login with email</v-btn>
                 <EmailLogin v-if="emailLogin"/>
             </v-card-title>
         </v-card>
-    <v-btn @click="dclose" >Close</v-btn>
     </v-dialog>
 </template>
 <script>

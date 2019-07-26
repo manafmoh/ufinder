@@ -82,5 +82,9 @@ export default {
 </script>
 
 <style>
-
+.button {
+    margin: 0; padding:0;
+    border-radius: 0.2em;
+    width: 210px;
+}
 </style>

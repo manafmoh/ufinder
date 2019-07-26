@@ -1,6 +1,6 @@
 <template>
 <div class="text-xs-center">
-    <v-menu  offset-y open-delay="500" :close-on-click="false" v-model="togglePopover"
+    <v-menu  offset-y open-delay="500" :close-on-click="true" v-model="togglePopover"
     :close-on-content-click="closeOnContentClick" z-index=100    >
         <v-btn slot="activator" round color="primary" dark >All Categories</v-btn>
         <v-layout flex-child wrap>

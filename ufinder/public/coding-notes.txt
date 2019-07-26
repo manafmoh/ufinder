@@ -1,3 +1,0 @@
-For thumbnail
-composer require intervention/image
-http://image.intervention.io/getting_started/installation
