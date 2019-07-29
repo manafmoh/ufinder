@@ -6,7 +6,7 @@
         <v-list>
           <v-list-tile avatar>
             <v-list-tile-avatar>
-              <img src="/userimg.png" :alt="userName">
+              <img src="/public/userimg.png" :alt="userName">
             </v-list-tile-avatar>
 
             <v-list-tile-content>
