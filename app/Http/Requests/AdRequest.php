@@ -31,6 +31,8 @@ class AdRequest extends FormRequest
             'district_id' => 'required|integer',
             'place_id' => 'required|integer',
             'amount' => 'required|not_in:0',
+            'mobile' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|not_in:null',
+            'email' => 'required|email|not_in:null',
         ];
     }
     public function messages()
@@ -44,6 +46,8 @@ class AdRequest extends FormRequest
             'district_id.integer' => 'District Required',
             'place_id.integer' => 'City Required',
             'amount.not_in' => 'Amount is required',
+            'mobile.required' => 'Mobile No. is required',
+            'mobile.regex' => 'Mobile No. not valid',
         ];
     }
 }

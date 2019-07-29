@@ -10,8 +10,9 @@ class User {
     responseAfterLogin(res) {
         const access_token = res.data.access_token;
         const user = res.data.user;
+        const email = res.data.email;
         if(Token.isValid(access_token)){
-            AppStorage.store(access_token, user);
+            AppStorage.store(access_token, user, email);
             window.location = "/";
         }
     }
@@ -36,6 +37,11 @@ class User {
     name() {
         if(this.hasToken()) {
             return AppStorage.getUser();
+        }
+    }
+    email() {
+        if(this.hasToken()) {
+            return AppStorage.getEmail();
         }
     }
 

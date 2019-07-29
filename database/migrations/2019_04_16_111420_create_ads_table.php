@@ -32,6 +32,8 @@ class CreateAdsTable extends Migration
             $table->integer('subcategory_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->string('uploads')->nullable();
+            $table->string('mobile')->nullable();
+            $table->string('email')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

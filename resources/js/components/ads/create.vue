@@ -1,6 +1,18 @@
 <template>
     <v-container>
         <v-form ref="form" @submit.prevent="createAd" id="formAd" >
+             <v-radio-group v-model="post_type" row>
+                <v-radio
+                    label="Sell"
+                    color="red"
+                    value="sell"
+                ></v-radio>
+                <v-radio
+                    label="Buy"
+                    color="green"
+                    value="buy"
+                ></v-radio>
+            </v-radio-group>
             <v-text-field
                 v-model="title"
                 label="Title"
@@ -101,7 +113,7 @@
                     :on-exceed="handleExceed"
                     :file-list="fileList">
                 <el-button size="small" type="primary">Click to upload</el-button>
-                <div slot="tip" class="el-upload__tip">jpg/png files with a size less than 500kb</div>
+                <div slot="tip" class="el-upload__tip">JPG/PNG/GIF files with a size less than 2MB</div>
             </el-upload>
                     <!--<input
 						type="file"
@@ -114,24 +126,32 @@
                 v-model="featured"
                 :label="`Featured`"
             ></v-checkbox>
-            <v-radio-group v-model="post_type">
-                <v-radio
-                    label="Sell"
-                    color="red"
-                    value="sell"
-                ></v-radio>
-                <v-radio
-                    label="Buy"
-                    color="green"
-                    value="buy"
-                ></v-radio>
-            </v-radio-group>
+             <v-flex xs12 sm3>
             <v-text-field
                 v-model="amount"
                 label="Amount"
                 required
             ></v-text-field>
+             </v-flex>
             <span class="red--text" v-if="errors.amount">{{errors.amount[0]}}</span>
+            <h2 class="subtitle-2">User Information</h2>
+            <v-flex xs12 sm3>
+                <v-text-field
+                v-model="mobile"
+                label="Mobile"
+                required
+            ></v-text-field>
+            <span class="red--text" v-if="errors.mobile">{{errors.mobile[0]}}</span>
+            </v-flex>
+            <v-flex xs12 sm3>
+                <v-text-field
+                v-model="email"
+                label="Email"
+                :value="getUserEmail"
+                required
+            ></v-text-field>
+             <span class="red--text" v-if="errors.email">{{errors.email[0]}}</span>
+            </v-flex>
             <v-btn
                 color="success"
                 type="submit"
@@ -152,16 +172,18 @@ export default {
     data(){
         return {
 
-                title: null,
-                category_id: null,
-                subcategory_id:null,
-                state_id:null,
-                district_id:null,
-                place_id:null,
+                title: '',
+                category_id: '',
+                subcategory_id:'',
+                state_id:'',
+                district_id:'',
+                place_id:'',
                 body: '',
                 amount: 0,
                 featured: true,
                 post_type: 'sell',
+                mobile:null,
+                email:this.getUserEmail(),
 
 
             categories: [],
@@ -186,9 +208,9 @@ export default {
 
     methods: {
         createAd() {
-            let CatId=null;
-            let StateId=null;
-            let DistrictId=null;
+            let CatId;
+            let StateId;
+            let DistrictId;
             if (this.category_id != null || typeof this.category_id != "undefined" ) {
                 if(this.category_id['id']){
                     CatId = this.category_id['id'];
@@ -217,6 +239,8 @@ export default {
             form.append('body', this.body);
             form.append('amount', this.amount);
             form.append('featured', this.featured);
+            form.append('mobile', this.mobile);
+            form.append('email', this.email);
             //this.form =  form;
             const filesRaw = this.fileList.map(f => f.raw);
             for (const file of filesRaw) {
@@ -297,7 +321,7 @@ export default {
         },
         onBeforeUpload(file)  {
             const isIMAGE = file.type === 'image/jpeg'||'image/gif'||'image/png';
-            const isLt1M = file.size / 1024 / 1024 < 1;
+            const isLt1M = file.size / 1024 / 1024 < 2;
             if (!isIMAGE) {
                 this.$message.error('Upload file must be JPG format!');
             }
@@ -315,7 +339,7 @@ export default {
         onChange(file, fileList, name){
             //console.log('File',fileList);
             const isIMAGE = file.type === 'image/jpeg'||'image/gif'||'image/png';
-            const isLt1M = file.size / 1024 / 1024 < 1;
+            const isLt1M = file.size / 1024 / 1024 < 2;
             if (!isIMAGE) {
                 this.$message.error('Upload file must be JPG format!');
             }
@@ -350,6 +374,11 @@ export default {
                 .then( res => this.places = res.data.data)
                 .catch(error => console.log(error));
         },
+        getUserEmail() {
+             if(User.loggedIn()) {
+                 return User.email();
+             }
+        }
     },
     created() {
             axios.get('/api/category')
@@ -359,7 +388,8 @@ export default {
              axios.get('/api/state')
             .then( res => this.states = res.data.data)
             .catch(error => console.log(error));
-        }
+        },
+
 }
 
 </script>
