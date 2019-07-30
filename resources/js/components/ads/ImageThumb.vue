@@ -1,7 +1,7 @@
 <template>
-<div>
-    <img v-if="image" :src="awspath +'/image/' + image.filepath" :alt="adTitle" width="150px" />
-</div>
+    <router-link class="noline" :to="ad.path">
+    <v-img v-if="image" :src="awspath +'/image/' + image.filepath" :alt="adTitle" width="150px" />
+    </router-link>
 </template>
 
 <script>

@@ -29,6 +29,9 @@ class AdResource extends JsonResource
             'state'  => $this->state?$this->state->name:'',
             'district'  => $this->district?$this->district->name:'',
             'place'  => $this->place?$this->place->name:'',
+            'amount'  => $this->amount,
+            'email'  => $this->email,
+            'mobile'  => $this->mobile,
             'uploads'   => UploadResource::collection($this->upload),
             'created_at' => $this->created_at->diffForHumans()
         ];

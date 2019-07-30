@@ -1,33 +1,29 @@
 <template>
     <v-flex (xs12 sm4 md3 lg3 xl2)>
       <v-card>
-        <v-card-title primary-title>
-          <div>
+        <v-card-title class="primary-title pb-0">
             <h3 class="headline mb-0">
-                <router-link :to="ad.path">
+                <router-link class="noline black--text" :to="ad.path">
                     {{ad.title}}
                 </router-link>
-
                 </h3>
-            <ImageThumb  :ad="ad"></ImageThumb>
-            <div class="grey--text">{{ad.user}} Said {{ad.created_at}} </div>
-          </div>
         </v-card-title>
-        <v-card-text>
+        <v-card-title class="align-center justify-center">
+            <ImageThumb :ad="ad"></ImageThumb>
+        </v-card-title>
+        <v-card-text class="pt-0  pb-0">
+            <h4 class="black--text headline">Rs. {{ad.amount}}</h4>
             {{ad.body | truncate(101, '...')}}
         </v-card-text>
         <v-card-actions class="white justify-center">
-              <v-btn
-                v-for="(social, i) in socials"
-                :key="i"
-                :color="social.color"
-                class="white--text"
-                fab
-                icon
-                small
-              >
-                <v-icon>{{ social.icon }}</v-icon>
-              </v-btn>
+            <div style="line-height:10px" class="grey--text">{{ad.user}} Posted {{ad.created_at}} </div>
+              <v-spacer></v-spacer>
+                <v-btn icon>
+                    <v-icon>favorite</v-icon>
+                </v-btn>
+                <v-btn icon>
+                     <v-icon>share</v-icon>
+                </v-btn>
             </v-card-actions>
       </v-card>
     </v-flex>
