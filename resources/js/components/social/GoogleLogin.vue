@@ -9,6 +9,7 @@
   </g-signin-button>
 </div>
 </template>
+<script src="https://apis.google.com/js/api:client.js"></script>
 <script>
 export default {
   data () {
