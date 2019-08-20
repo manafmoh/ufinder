@@ -33,7 +33,7 @@ Route::group([
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
-    Route::post('facebooklogin', 'AuthfacebookController@login');
-    Route::post('mygooglelogin', 'AuthgoogleController@login');
+    //Route::post('facebooklogin', 'AuthfacebookController@login');
+    Route::post('facebooklogin', 'AuthgoogleController@login');
 
 });
