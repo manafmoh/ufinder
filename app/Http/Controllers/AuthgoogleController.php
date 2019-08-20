@@ -2,18 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
 use Illuminate\Http\Request;
 
 class AuthgoogleController extends Controller
 {
-    public function __construct()
-    {
-       // $this->middleware('auth:api', ['except' => ['login']]);
-    }
-
+    //
     public function login()
-    { $request = request(['email', 'id']);
+    { $request = request(['email', 'password']);
         dd( $request);
         if (! $request) {
             return response()->json(['error' => 'Unauthorized'], 401);
