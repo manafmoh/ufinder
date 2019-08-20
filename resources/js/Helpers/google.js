@@ -1,8 +1,8 @@
 import Token from './Token';
 import AppStorage from './AppStorage';
 class Google {
-    login(data){
-        axios.post('/api/auth/googlelogin', null,{ params: { 'id':data.id , 'name':data.name, 'firstname':data.firstname, 'lastname':data.lastname,'email':data.email} })
+    login(data){ console.log(data);
+        axios.post('/api/auth/googlelogin', data)
            .then(res => this.responseAfterLogin(res))
            .catch(error => {
                console.log(error.response.data);
