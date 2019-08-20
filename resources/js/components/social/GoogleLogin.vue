@@ -46,13 +46,13 @@ export default {
         this.email = userInformation.getEmail();
         this.firstname = userInformation.getGivenName();
         this.lastname = userInformation.getFamilyName();
-        const userInfo= {
+        /*const userInfo= {
             'id':this.personalID,
             'name':this.name,
             'email':this.email,
             'firstname':this.firstname,
             'lastname':this.lastname
-        }
+        }*/
         const userInfo= {
             'id':13123,
             'name':'Masnaf',
