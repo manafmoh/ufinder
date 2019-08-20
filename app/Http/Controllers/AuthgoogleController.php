@@ -9,7 +9,7 @@ class AuthgoogleController extends Controller
 {
     public function __construct()
     {
-       // $this->middleware('auth:api', ['except' => ['googlelogin']]);
+        $this->middleware('auth:api', ['except' => ['login']]);
     }
 
     public function login(Request $request)
