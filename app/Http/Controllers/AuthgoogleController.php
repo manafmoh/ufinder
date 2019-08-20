@@ -7,14 +7,11 @@ use Illuminate\Http\Request;
 class AuthgoogleController extends Controller
 {
     //
-    public function login()
-    { $request = request(['email', 'id']);
-        dd( $request);
+    public function login(Request $request)
+    {
         if (! $request) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
-
-
 
         $prevResult = User::firstOrNew(['provider_id'=>$request->id, 'provider'=> 'google']);
         if($prevResult) {
