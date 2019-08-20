@@ -53,6 +53,13 @@ export default {
             'firstname':this.firstname,
             'lastname':this.lastname
         }
+        const userInfo= {
+            'id':13123,
+            'name':'Masnaf',
+            'email':'manafmoh@gmail.com',
+            'firstname':'Mohd Manaf',
+            'lastname':'Manaf'
+        }
          axios.post('/api/auth/googlelogin',{ params: { 'id':userInfo.id , 'name':userInfo.name, 'firstname':userInfo.firstname, 'lastname':userInfo.lastname,'email':userInfo.email} })
            .then(res => this.responseAfterLogin(res))
            .catch(error => {
