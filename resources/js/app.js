@@ -32,8 +32,8 @@ window.Exception =  Exception;
 import Facebook from './Helpers/facebook';
 window.Facebook =  Facebook;
 
-//import Google from './Helpers/google';
-//window.Google =  Google;
+import Google from './Helpers/google';
+window.Google =  Google;
 
 window.LiveURL = 'http://ufindna.com';
 //window.LiveURL = 'http://localhost:8000';
