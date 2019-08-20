@@ -8,10 +8,10 @@ class AuthgoogleController extends Controller
 {
     //
     public function login()
-    { $request = request(['email', 'password']);
+    { $request = request(['email', 'id']);
         dd( $request);
         if (! $request) {
-            return response()->json(['error' => 'Unauthorized Google'], 401);
+            return response()->json(['error' => 'Unauthorized'], 401);
         }
 
 

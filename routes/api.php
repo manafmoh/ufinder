@@ -23,7 +23,7 @@ Route::apiResource('/state/{state}/district', 'DistrictController');
 Route::apiResource('/state/{state}/{district}/place', 'PlaceController');
 
 Route::get('/places', 'PlaceController@search');
-Route::post('mygooglelogin', 'AuthgoogleController@login');
+
 Route::group([
     'middleware' => 'api',
     'prefix' => 'auth'
@@ -33,7 +33,7 @@ Route::group([
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
-    //Route::post('facebooklogin', 'AuthfacebookController@login');
-    Route::post('facebooklogin', 'AuthgoogleController@login');
+    Route::post('facebooklogin', 'AuthfacebookController@login');
+    Route::post('googlelogin', 'AuthgoogleController@login');
 
 });
