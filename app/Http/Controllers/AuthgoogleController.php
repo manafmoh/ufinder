@@ -9,11 +9,12 @@ class AuthgoogleController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login']]);
+       // $this->middleware('auth:api', ['except' => ['login']]);
     }
 
-    public function login(Request $request)
-    { dd( $request);
+    public function login()
+    { $request = request(['email', 'id']);
+        dd( $request);
         if (! $request) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
