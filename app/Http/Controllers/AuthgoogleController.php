@@ -9,11 +9,11 @@ class AuthgoogleController extends Controller
 {
     public function __construct()
     {
-        //$this->middleware('auth:api', ['except' => ['facebooklogin']]);
+       // $this->middleware('auth:api', ['except' => ['googlelogin']]);
     }
 
     public function login(Request $request)
-    {
+    { dd( $request);
         if (! $request) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
