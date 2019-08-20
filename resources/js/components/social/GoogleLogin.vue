@@ -12,6 +12,9 @@
 <script src="https://apis.google.com/js/api:client.js"></script>
 <script>
 export default {
+    created() {
+      //this.listen();
+  },
   data () {
     return {
       /**
@@ -22,19 +25,48 @@ export default {
        */
       googleSignInParams: {
         client_id: '551719641555-fmr9poub2tr84lp0qelv8ne3rmvqboc9.apps.googleusercontent.com'
-      }
+      },
+      isConnected: false,
+      name: '',
+      firstname: '',
+      lastname: '',
+      email: '',
+      personalID: '',
     }
   },
   methods: {
     onSignInSuccess (googleUser) {
       // `googleUser` is the GoogleUser object that represents the just-signed-in user.
       // See https://developers.google.com/identity/sign-in/web/reference#users
-      const profile = googleUser.getBasicProfile() // etc etc
+      const userInformation = googleUser.getBasicProfile() // etc etc
+        this.personalID = userInformation.getId();
+        this.name = userInformation.getName();
+        this.email = userInformation.getEmail();
+        this.firstname = userInformation.getGivenName();
+        this.lastname = userInformation.getFamilyName();
+        const userInfo= {
+            'id':this.personalID,
+            'name':this.name,
+            'email':this.email,
+            'firstname':this.firstname,
+            'lastname':this.lastname
+        }
+        console.log(userInfo);
+        Google.login(userInfo);
+
+
     },
     onSignInError (error) {
       // `error` contains any error occurred.
       console.log('OH NOES', error)
-    }
+    },
+    listen() {
+        EventBus.$on('FacebookContinue', ()=> {
+            this.isConnected = true
+            this.onLogin();
+            EventBus.$emit('CloseDialog');
+        });
+      }
   }
 }
 </script>

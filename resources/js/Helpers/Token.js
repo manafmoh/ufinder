@@ -26,6 +26,15 @@ class Token {
         }
         return false;
     }
+    isValidGoogle(data) {
+        const payload = this.getPayload(data);
+        if(payload) {
+            //return payload.iss == "http://localhost:8000/api/auth/facebooklogin"
+            return payload.iss == LiveURL+"/api/auth/googlelogin"
+             ? true: false;
+        }
+        return false;
+    }
 
 }
 
