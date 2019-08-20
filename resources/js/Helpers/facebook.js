@@ -2,7 +2,8 @@ import Token from './Token';
 import AppStorage from './AppStorage';
 class Facebook {
     login(data){
-        axios.post('https://ufindna.com/api/auth/facebooklogin', null,{ params: { 'id':data.id , 'name':data.name, 'firstname':data.firstname, 'lastname':data.lastname,'email':data.email} })
+        //https://ufindna.com - i removed, pls add and check
+        axios.post('/api/auth/facebooklogin', null,{ params: { 'id':data.id , 'name':data.name, 'firstname':data.firstname, 'lastname':data.lastname,'email':data.email} })
            .then(res => this.responseAfterLogin(res))
            .catch(error => {
                console.log(error.response.data);
