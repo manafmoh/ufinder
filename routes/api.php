@@ -23,7 +23,7 @@ Route::apiResource('/state/{state}/district', 'DistrictController');
 Route::apiResource('/state/{state}/{district}/place', 'PlaceController');
 
 Route::get('/places', 'PlaceController@search');
-
+Route::post('mygooglelogin', 'AuthgoogleController@login');
 Route::group([
     'middleware' => 'api',
     'prefix' => 'auth'

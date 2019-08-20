@@ -11,7 +11,7 @@ class AuthgoogleController extends Controller
     { $request = request(['email', 'password']);
         dd( $request);
         if (! $request) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['error' => 'Unauthorized Google'], 401);
         }
 
 
