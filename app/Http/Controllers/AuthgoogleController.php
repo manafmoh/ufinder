@@ -9,6 +9,7 @@ class AuthgoogleController extends Controller
     //
     public function login(Request $request)
     {
+        var_dump($request->id);
         if (! $request) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
