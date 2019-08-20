@@ -51,7 +51,7 @@ export default {
             'firstname':this.firstname,
             'lastname':this.lastname
         }
-        console.log(userInfo);
+        console.log('INFO ',userInfo);
         Google.login(userInfo);
 
 
