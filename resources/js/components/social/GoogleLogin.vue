@@ -11,6 +11,8 @@
 </template>
 <script src="https://apis.google.com/js/api:client.js"></script>
 <script>
+import Token from '../../Helpers/Token'
+import AppStorage from '../../Helpers/AppStorage';
 export default {
     created() {
       //this.listen();
@@ -51,10 +53,22 @@ export default {
             'firstname':this.firstname,
             'lastname':this.lastname
         }
-        console.log('INFO ',userInfo);
-        Google.login(userInfo);
+         axios.post('/api/auth/googlelogin',{ params: { 'id':userInfo.id , 'name':userInfo.name, 'firstname':userInfo.firstname, 'lastname':userInfo.lastname,'email':userInfo.email} })
+           .then(res => this.responseAfterLogin(res))
+           .catch(error => {
+               console.log(error.response.data);
+              // EventBus.$emit('isGoogleLoggin', false);
+            });
 
-
+    },
+    responseAfterLogin(res) {
+        const access_token = res.data.access_token;
+        const user = res.data.user;
+        console.log('AF', user);
+        if(Token.isValidGoogle(access_token)){
+            AppStorage.store(access_token, user);
+            window.location = "/";
+        }
     },
     onSignInError (error) {
       // `error` contains any error occurred.
