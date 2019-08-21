@@ -21,14 +21,14 @@ class AuthfacebookController extends Controller
 
 
         $prevResult = User::firstOrNew(['provider_id'=>$request->id, 'provider'=> 'facebook']);
-        if($prevResult) {
+        if($prevResult->exists) {
             $prevResult->update([
                 'name' => $request->name,
                 'email' => $request->email,
             ]);
         } else {
             if(User::where(['email'=>$request->email])->first()) {
-                return response()->json(['error' => `$request->email is already exist, please try with another email address`], 401);
+                return response()->json(['error' => $request->email.' is already exist, please try with another email address'], 401);
             }
             $user = new User();
             $user->name = $request->name;

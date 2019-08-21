@@ -9,20 +9,19 @@ class AuthgoogleController extends Controller
     //
     public function login(Request $request)
     {
-        var_dump($request->id);
         if (! $request) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
         $prevResult = User::firstOrNew(['provider_id'=>$request->id, 'provider'=> 'google']);
-        if($prevResult) {
+        if($prevResult->exists) {
             $prevResult->update([
                 'name' => $request->name,
                 'email' => $request->email,
             ]);
         } else {
             if(User::where(['email'=>$request->email])->first()) {
-                return response()->json(['error' => `$request->email is already exist, please try with another email address`], 401);
+                return response()->json(['error' => $request->email.' is already exist, please try with another email address'], 401);
             }
             $user = new User();
             $user->name = $request->name;
