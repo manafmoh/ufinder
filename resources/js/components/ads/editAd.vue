@@ -5,13 +5,13 @@
         @submit.prevent="updateAd"
     >
         <v-text-field
-        v-model="form.title"
+        v-model="title"
         label="Title"
         required
         ></v-text-field>
         <span class="red--text" v-if="errors.title">{{errors.title[0]}}</span>
 
-        <markdown-editor v-model="form.body"></markdown-editor>
+        <markdown-editor v-model="body"></markdown-editor>
 
         <el-dialog  :visible.sync="isShowPic" size="small">
             <span>
@@ -39,7 +39,30 @@
                 <el-button size="small" type="primary">Click to upload</el-button>
                 <div slot="tip" class="el-upload__tip">jpg/png files with a size less than 500kb</div>
             </el-upload>
-
+             <v-flex xs12 sm3>
+            <v-text-field
+                v-model="amount"
+                label="Amount"
+                required
+            ></v-text-field>
+             </v-flex>
+        <h2 class="subtitle-2">User Information</h2>
+            <v-flex xs12 sm3>
+                <v-text-field
+                v-model="mobile"
+                label="Mobile"
+                required
+            ></v-text-field>
+            <span class="red--text" v-if="errors.mobile">{{errors.mobile[0]}}</span>
+            </v-flex>
+            <v-flex xs12 sm3>
+                <v-text-field
+                v-model="email"
+                label="Email"
+                required
+            ></v-text-field>
+             <span class="red--text" v-if="errors.email">{{errors.email[0]}}</span>
+            </v-flex>
         <v-card-actions >
             <v-btn icon small type="submit" >
                 <v-icon color="green">save</v-icon>
@@ -48,6 +71,7 @@
                 <v-icon color="black">cancel</v-icon>
             </v-btn>
         </v-card-actions>
+
     </v-form>
     </v-container>
 </template>
@@ -57,48 +81,59 @@ export default {
     props: ['ad'],
     data(){
         return {
-            form: {
+
                 title: null,
                 category_id: null,
                 body: null,
                 amount: 0,
                 featured: 0,
-            },
+                mobile:null,
+                email:null,
+
             errors: {},
-            fileList: [            ],
+            fileList: [],
             upload: {
                 name:'',url:''
             },
-            isShowPic: false
+            isShowPic: false,
         }
     },
     methods: {
         updateAd() {
+            EventBus.$emit('ShowLoading');
             let form = new FormData();
-            form.append('title', this.form.title);
-            form.append('category_id', this.form.category_id);
-            form.append('body', this.form.body);
-            form.append('amount', this.form.amount);
-            form.append('featured', this.form.featured);
-            this.form =  form;
+            form.append('title', this.title);
+            //form.append('category_id', this.form.category_id);
+            form.append('body', this.body);
+            form.append('amount', this.amount);
+            //form.append('featured', this.form.featured);
+            form.append('email', this.email);
+            form.append('mobile', this.mobile);
+            form.append('_method', 'PATCH');
+            //this.form =  form;
             const filesRaw = this.fileList.map(f => f.raw);
-            console.log(filesRaw); return;
+            //console.log(filesRaw); return;
             for (const file of filesRaw) {
-                    this.form.append('files[]', file, file.name)
+                    //form.append('files[]', file, file.name)
                 }
+           axios({
+                method: 'post',
+                url: `/api/ad/${this.ad.slug}` ,
+                data: form,
+                config: { headers: {'Content-Type': 'application/x-www-form-urlencoded' }}
+            })
 
-            axios.patch(`/api/ad/${this.ad.slug}`, this.form)
-            .then(res => this.cancel())
+            .then(res => { this.cancel();  EventBus.$emit('CloseLoading');})
             .catch(error => error.response.data);
         },
         cancel() {
-            EventBus.$emit('cancelEditing');
+            //EventBus.$emit('cancelEditing');
         },
         handleRemove(file, fileList) {
             var filename = file.url.replace('/storage/image/','');
             if(!file.uid) return;
             let vm = this
-            axios.delete('/api/upload/' + filename)
+            axios.delete('/api/upload/' + file.uid)
                 .then(function () {
                     let index = _.findIndex(vm.fileList, ['uid', file.uid])
                     vm.$delete(vm.fileList, index)
@@ -164,13 +199,18 @@ export default {
         }
     },
     mounted() {
-        this.form = this.ad;
+        this.title = this.ad.title;
+        this.body = this.ad.body;
+        this.amount = this.ad.amount;
+        this.email = this.ad.email;
+        this.mobile = this.ad.mobile;
     },
     created() {
         this.ad.uploads.forEach(item => {
             //this.fileList.push(a);
             var title = '';
-            var link = "/storage/image/"+item.filepath;
+            var link = "http://ufinderin.s3.ap-south-1.amazonaws.com/image/"+item.filepath;
+            //this.fileList.push({'name' : title, 'url' : link });
             this.fileList.push({'name' : title, 'url' : link });
             });
     }

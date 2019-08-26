@@ -12,7 +12,7 @@ class Google {
     responseAfterLogin(res) {
         const access_token = res.data.access_token;
         const user = res.data.user;
-        console.log('AF', user);
+        //console.log('AF', user);
         if(Token.isValidGoogle(access_token)){
             AppStorage.store(access_token, user);
             window.location = "/";

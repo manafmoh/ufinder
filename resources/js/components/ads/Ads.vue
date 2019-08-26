@@ -69,13 +69,16 @@ export default {
             .catch(error => console.log(error.response.data));
             break;
         default:
-             axios.get('/api/ad')
-            .then(res => {this.ads = res.data.data; })
+            EventBus.$emit('ShowLoading');
+            axios.get('/api/ad')
+            .then(res => {
+                this.ads = res.data.data;
+                EventBus.$emit('CloseLoading');
+            })
             .catch(error => console.log(error.response.data));
         }
 
     },
-
     methods:{
         homePage() {
             if(this.$route.path =="/" || this.$route.path =="/home") {

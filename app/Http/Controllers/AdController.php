@@ -95,6 +95,8 @@ class AdController extends Controller
         $ad->state_id = $request->state_id;
         $ad->district_id = $request->district_id;
         $ad->place_id = $request->place_id;
+        $ad->email = $request->email;
+        $ad->mobile = $request->mobile;
         //Saving image on a location and save to DB
        // $ad->image = $request->image;
         /*if($request->hasFile('image')) {
@@ -194,6 +196,7 @@ class AdController extends Controller
      */
     public function update(Request $request, Ad $ad)
     {
+
         $request->merge(['slug' => str_slug($request->title)]);
         $ad->update($request->all());
         return response('Updated', Response::HTTP_ACCEPTED);

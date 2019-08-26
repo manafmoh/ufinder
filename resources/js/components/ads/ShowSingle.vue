@@ -11,8 +11,10 @@
           </div>
           <v-spacer></v-spacer>
           <v-btn color="teal" dark>{{ad.messages_count}} Replies</v-btn>
+           <h4>Con{{ad.mobile}} </h4>
         </v-card-title>
         <v-card-text v-html="body"></v-card-text>
+
         <ImageGallery  :ad="ad"></ImageGallery>
 
         <v-card-actions v-if="ownad">

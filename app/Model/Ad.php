@@ -47,7 +47,7 @@ class Ad extends Model
     {
         return 'slug';
     }
-    protected $fillable = ['title','featured','amount','image','body','post_type','type','country','city','area','category_id', 'uploads'];
+    protected $fillable = ['title','slug','featured','amount','image','body','post_type','type','country','city','area','category_id', 'uploads','mobile','email'];
     //protected $guarded = [];
     public function user() {
         return $this->belongsTo(User::class);

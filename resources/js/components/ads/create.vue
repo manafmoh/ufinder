@@ -208,6 +208,7 @@ export default {
 
     methods: {
         createAd() {
+            EventBus.$emit('ShowLoading');
             let CatId;
             let StateId;
             let DistrictId;
@@ -253,6 +254,7 @@ export default {
                     data: form,
                     config: { headers: {'Content-Type': 'multipart/form-data' }}
                 }).then( res => {
+                EventBus.$emit('CloseLoading');
                 //Redirecting the url
                 this.$router.push(res.data.path)
             })

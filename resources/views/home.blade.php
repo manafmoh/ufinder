@@ -21,7 +21,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="language" content="English">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href="{{asset('css/app.css', true)}}">
+    <link rel="stylesheet" href="{{asset('css/app.css', false)}}">
     <script src="https://apis.google.com/js/api:client.js"></script>
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
     <meta name="google-site-verification" content="889_NHTy0IyxEBLD0XxCwzn0Wq80NTQrXdqWOZTWtRk" />
@@ -32,6 +32,6 @@
         <app-home></app-home>
     </v-app>
 </div>
-<script src="{{asset('js/app.js', true)}}"></script>
+<script src="{{asset('js/app.js', false)}}"></script>
 </body>
 </html>
