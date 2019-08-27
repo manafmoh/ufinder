@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
 use App\Model\Category;
 use App\Model\Subcategory;
+use Mail;
 
 class AdController extends Controller
 {
@@ -196,6 +197,19 @@ class AdController extends Controller
      */
     public function update(Request $request, Ad $ad)
     {
+        $data['title'] = "This is Test Mail Tuts Make";
+        Mail::send('email', $data, function($message) {
+
+            $message->to('manafmoh@gmail.com', 'Receiver Name')
+
+                    ->subject('Tuts Make Mail');
+        });
+
+        if (Mail::failures()) {
+           return response('Sorry! Please try again latter', Response::HTTP_NOT_FOUND);
+         }else{
+            return response('Great! Successfully send in your mail', Response::HTTP_ACCEPTED);
+         }
 
         $request->merge(['slug' => str_slug($request->title)]);
         $ad->update($request->all());

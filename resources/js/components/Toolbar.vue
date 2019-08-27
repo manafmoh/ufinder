@@ -143,9 +143,9 @@ export default {
 
         // Lazily load input items
         if(val == null || val.length < 3) return;
-         EventBus.$emit('ShowLoading');
+         //EventBus.$emit('ShowLoading');
          axios.get('/api/search',{params: {'search': val}}).then(response => {
-              EventBus.$emit('CloseLoading');
+              //EventBus.$emit('CloseLoading');
           this.results = response.data; //console.log(this.results);
          })
         .catch(err => {
@@ -155,11 +155,11 @@ export default {
       },
       placessearch (val) {
         if(val == null || val.length < 3) return;
-         EventBus.$emit('ShowLoading');
+         //EventBus.$emit('ShowLoading');
          axios.get('/api/places',{params: {'place': val}}).then(response => {
           //this.results = response.data;
            //this.places = [];
-            EventBus.$emit('CloseLoading');
+            //EventBus.$emit('CloseLoading');
            response.data.forEach(element => {
                  this.places.push(
                      {
