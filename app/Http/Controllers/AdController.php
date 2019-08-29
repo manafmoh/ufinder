@@ -162,7 +162,23 @@ class AdController extends Controller
             //return response()->json($uploadId, 200);
             }
         }
+        // Sending Mail
+        $data['title']  = $request->title;
+        $data['username'] = auth()->user()->name;
+        $data['email'] = auth()->user()->email;
+        $data['url'] = $ad->path;
 
+        Mail::send('emails.adcreate', $data, function($message) use ($request) {
+            $message->from('noreply@ufindna.com', 'uFindna');
+            $message->to(auth()->user()->email, auth()->user()->name)
+                    ->subject('Ad "'.$request->title.'" is created');
+        });
+
+        if (Mail::failures()) {
+           return response('Sorry! Please try again latter', Response::HTTP_NOT_FOUND);
+         }else{
+            return response('Great! Successfully send in your mail', Response::HTTP_ACCEPTED);
+         }
         return response(new AdResource($ad), Response::HTTP_CREATED);
     }
 
@@ -196,13 +212,17 @@ class AdController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Ad $ad)
-    {
-        $data['title'] = "This is Test Mail Tuts Make";
-        Mail::send('email', $data, function($message) {
+    { //dd(env("MAIL_PASSWORD"));
+        $request->merge(['slug' => str_slug($request->title)]);
+        $data['title']  = $request->title;
+        $data['username'] = auth()->user()->name;
+        $data['email'] = auth()->user()->email;
+        $data['url'] = $request->slug;
 
-            $message->to('manafmoh@gmail.com', 'Receiver Name')
-
-                    ->subject('Tuts Make Mail');
+        Mail::send('emails.adedit', $data, function($message) use ($request) {
+            $message->from('noreply@ufindna.com', 'uFindna');
+            $message->to(auth()->user()->email, auth()->user()->name)
+                    ->subject('Ad "'.$request->title.'" is updated');
         });
 
         if (Mail::failures()) {
@@ -211,7 +231,7 @@ class AdController extends Controller
             return response('Great! Successfully send in your mail', Response::HTTP_ACCEPTED);
          }
 
-        $request->merge(['slug' => str_slug($request->title)]);
+
         $ad->update($request->all());
         return response('Updated', Response::HTTP_ACCEPTED);
     }

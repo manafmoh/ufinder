@@ -10,8 +10,12 @@
             <div class="grey--text">{{ad.user}} Said {{ad.created_at}} </div>
           </div>
           <v-spacer></v-spacer>
+          <div class="right-side">
+          <v-btn flat icon color="blue lighten-2" style="display:block">
+            <v-icon>phone</v-icon> {{ad.mobile}}
+             </v-btn>
           <v-btn color="teal" dark>{{ad.messages_count}} Replies</v-btn>
-           <h4>Con{{ad.mobile}} </h4>
+          </div>
         </v-card-title>
         <v-card-text v-html="body"></v-card-text>
 
