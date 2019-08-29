@@ -175,9 +175,9 @@ class AdController extends Controller
         });
 
         if (Mail::failures()) {
-           return response('Sorry! Please try again latter', Response::HTTP_NOT_FOUND);
+           //return response('Sorry! Please try again latter', Response::HTTP_NOT_FOUND);
          }else{
-            return response('Great! Successfully send in your mail', Response::HTTP_ACCEPTED);
+            //return response('Great! Successfully send in your mail', Response::HTTP_ACCEPTED);
          }
         return response(new AdResource($ad), Response::HTTP_CREATED);
     }
@@ -214,6 +214,8 @@ class AdController extends Controller
     public function update(Request $request, Ad $ad)
     { //dd(env("MAIL_PASSWORD"));
         $request->merge(['slug' => str_slug($request->title)]);
+        $ad->update($request->all());
+
         $data['title']  = $request->title;
         $data['username'] = auth()->user()->name;
         $data['email'] = auth()->user()->email;
@@ -226,14 +228,12 @@ class AdController extends Controller
         });
 
         if (Mail::failures()) {
-           return response('Sorry! Please try again latter', Response::HTTP_NOT_FOUND);
+           //return response('Sorry! Please try again latter', Response::HTTP_NOT_FOUND);
          }else{
-            return response('Great! Successfully send in your mail', Response::HTTP_ACCEPTED);
+            //
          }
+         return response('Updated', Response::HTTP_ACCEPTED);
 
-
-        $ad->update($request->all());
-        return response('Updated', Response::HTTP_ACCEPTED);
     }
 
     /**
