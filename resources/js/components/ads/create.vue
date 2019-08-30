@@ -165,6 +165,7 @@
 
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 <script>
+import swal from 'sweetalert';
 export default {
     components: {
 
@@ -201,7 +202,7 @@ export default {
             subCatName:null,
             states:[],
             districts:[],
-            places:[]
+            places:[],
         }
 
     },
@@ -254,9 +255,10 @@ export default {
                     data: form,
                     config: { headers: {'Content-Type': 'multipart/form-data' }}
                 }).then( res => {
-                EventBus.$emit('CloseLoading');
                 //Redirecting the url
-                this.$router.push(res.data.path)
+                swal("Good job!", "Your Ad is successfully created", "success");
+                EventBus.$emit('CloseLoading');
+                this.$router.push(res.data.path);
             })
             .catch(error => {
                 this.errors =  error.response.data.errors;
@@ -395,7 +397,6 @@ export default {
 }
 
 </script>
-
 <style>
 @import "https://unpkg.com/element-ui/lib/theme-chalk/index.css";
 </style>

@@ -77,6 +77,7 @@
 </template>
 
 <script>
+import swal from 'sweetalert';
 export default {
     props: ['ad'],
     data(){
@@ -123,7 +124,10 @@ export default {
                 config: { headers: {'Content-Type': 'application/x-www-form-urlencoded' }}
             })
 
-            .then(res => { this.cancel();  EventBus.$emit('CloseLoading');})
+            .then(res => { this.cancel();
+             swal("Good job!", "Your Ad is successfully updated", "success");
+             EventBus.$emit('CloseLoading');
+            })
             .catch(error => error.response.data);
         },
         cancel() {
