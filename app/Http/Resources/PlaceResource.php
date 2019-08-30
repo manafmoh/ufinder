@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\AdResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class PlaceResource extends JsonResource
@@ -21,7 +22,7 @@ class PlaceResource extends JsonResource
             'slug'  => $this->slug,
             'path'  => $this->path,
             'statepath'  => $this->statepath,
-            'ads'  => $this->ads,
+            'ads'  => AdResource::collection($this->ads),
           //  'state'  => $this->state->name,
           //  'district'  => $this->district->name,
             'active'    =>$this->active,

@@ -83,7 +83,7 @@ class Ad extends Model
 
     public function getPathAttribute() {
         //return asset("api/ad/$this->slug");
-        return "ad/$this->slug";
+        return "/ad/$this->slug";
     }
 }
 
