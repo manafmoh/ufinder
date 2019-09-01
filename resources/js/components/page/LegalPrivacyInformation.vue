@@ -1,5 +1,5 @@
 <template>
-    <article class="post less-spacing-posts">
+<article class="post less-spacing-posts">
 <h1>Terms and Conditions</h1>
 <ol>
     <li>
@@ -108,6 +108,3 @@ export default {
 }
 </script>
 
-<style>
-
-</style>
