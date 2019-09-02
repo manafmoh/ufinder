@@ -54,7 +54,7 @@ class Ad extends Model
     }
 
     public function message() {
-        return $this->hasMany(Message::class)->latest();
+        return $this->hasMany(Message::class)->where('user_id', '=', auth()->id())->latest();
     }
 
     public function upload() {

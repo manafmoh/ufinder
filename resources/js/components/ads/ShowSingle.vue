@@ -29,8 +29,13 @@
                 <v-icon color="red">delete</v-icon>
             </v-btn>
         </v-card-actions>
+        <div v-if="isLoggedIn">
         <Messages :ad="ad"></Messages>
         <NewMessage :adSlug="ad.slug"></NewMessage>
+        </div>
+        <div v-else class="title red--text">
+            Login to Message <LoginPopup />
+        </div>
      </v-container>
     </v-layout>
 </template>
@@ -39,9 +44,10 @@
 import Messages from '../message/messages'
 import NewMessage from '../message/newMessage'
 import ImageGallery from './ImageGallery'
+import LoginPopup from '../LoginPopup';
 export default {
     props:['ad'],
-    components: {Messages, NewMessage, ImageGallery},
+    components: {Messages, NewMessage, ImageGallery, LoginPopup},
     computed: {
         body() {
             return md.parse(this.ad.body)
@@ -49,7 +55,8 @@ export default {
     },
     data() {
         return {
-            ownad: User.ownAd(this.ad.user_id)
+            ownad: User.ownAd(this.ad.user_id),
+            isLoggedIn: User.loggedIn()
         }
     },
     methods: {
