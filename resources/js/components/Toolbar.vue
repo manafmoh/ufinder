@@ -55,6 +55,11 @@
 
     <v-spacer></v-spacer>
     <app-notification></app-notification>
+    <router-link color="white" class="noline"
+        key="addpost"
+        :to="postlink" >
+        <v-btn color="error" dark large  >Place Your Ad</v-btn>
+    </router-link>
     <LoginPopup />
     <div class="hidden-sm-and-down">
     <router-link color="white" class="noline"
@@ -63,6 +68,7 @@
         :to="item.to" >
         <v-btn outline color="indigo">{{item.title}}</v-btn>
     </router-link>
+
     </div>
     <v-menu class="hidden-md-and-up">
         <v-toolbar-side-icon slot="activator"></v-toolbar-side-icon>
@@ -100,12 +106,14 @@ export default {
             places:[{'place':'Choose Location'}],
             items: [
                 {title: 'All Ads', to: '/ads', show:true},
-                {title: 'Free Post', to: '/post', show:User.loggedIn()},
+                //{title: 'Free Post', to: '/post', show:User.loggedIn()},
                 {title: 'Category', to: '/category', show:User.isAdmin()},
                 {title: 'State', to: '/state', show:User.loggedIn()},
                 // {title: 'Login', to: '/login', show:!User.loggedIn()},
                 // {title: 'Logout', to: '/logout', show:User.loggedIn()}
-            ]
+            ],
+
+            postlink: User.loggedIn()?'/post':'/login',
         }
     },
     computed: {
