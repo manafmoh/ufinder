@@ -29,15 +29,18 @@
             >
             Sign Up
             </v-btn>
+            <a @click="doForgotPass" class="black--text">Forgot Password?</a>
         </v-form>
         <Signup v-if="signupFlag" />
+        <Forgotpass v-if="showForgotPass" />
     </v-container>
 </template>
 
 <script>
 import Signup from './Signup';
+import Forgotpass from './Forgotpass';
 export default {
-    components: { Signup},
+    components: { Signup, Forgotpass},
     data() {
         return {
             form: {
@@ -45,7 +48,8 @@ export default {
                 password: null
             },
             loginFlag: true,
-            signupFlag:false
+            signupFlag:false,
+            showForgotPass:false
         }
     },
     created() {
@@ -62,10 +66,17 @@ export default {
         showSignUp() {
             this.signupFlag = true;
             this.loginFlag = false;
+            this.showForgotPass = false;
         },
         showLogin() {
             this.signupFlag = false;
             this.loginFlag = true;
+            this.showForgotPass = false;
+        },
+        doForgotPass() {
+            this.showForgotPass = true;
+            this.signupFlag = false;
+            this.loginFlag = false;
         },
         listen() {
             EventBus.$on('ShowLogin', ()=> {

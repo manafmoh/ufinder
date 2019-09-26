@@ -37,8 +37,8 @@
                 <v-btn v-for="subitem in subcategories" :key="subitem.slug" @click="setSubcategory(subitem)">
                     {{subitem.name}}</v-btn>
             </v-dialog>-->
-            <v-flex xs12 sm6 d-flex>
-                <v-select
+            <v-flex xs12 sm6 d-flex >
+                <v-select v-show="showSubcategory"
                 v-model="subcategory_id"
                 :items="subcategories"
                 label="Sub Category"
@@ -64,6 +64,7 @@
             </v-flex>
             <v-flex xs12 sm6 d-flex>
                 <v-autocomplete
+                v-show="showDistricts"
                 :items="districts"
                 v-model="district_id"
                 item-text="name"
@@ -77,6 +78,7 @@
             </v-flex>
             <v-flex xs12 sm6 d-flex>
                 <v-autocomplete
+                v-show="showPlaces"
                 :items="places"
                 v-model="place_id"
                 item-text="name"
@@ -203,6 +205,10 @@ export default {
             states:[],
             districts:[],
             places:[],
+            showSubcategory:false,
+            showDistricts:false,
+            showPlaces:false
+
         }
 
     },
@@ -330,7 +336,7 @@ export default {
                 this.$message.error('Upload file must be JPG format!');
             }
             if (!isLt1M) {
-                this.$message.error('Upload file size can not exceed 1MB!');
+                this.$message.error('Upload file size can not exceed 2MB!');
             }
             return isIMAGE && isLt1M;
         },
@@ -348,7 +354,7 @@ export default {
                 this.$message.error('Upload file must be JPG format!');
             }
             if (!isLt1M) {
-                this.$message.error('Upload file size can not exceed 1MB!');
+                this.$message.error('Upload file size can not exceed 2MB!');
             }
             if(isIMAGE && isLt1M) {
                 this.fileList = fileList;
@@ -360,7 +366,7 @@ export default {
         onSubCategoryClick(categoryArr) {
             //this.subcategoryDialog=true;
              axios.get(`/api/category/${categoryArr['slug']}/subcategory`)
-                .then( res => this.subcategories = res.data.data)
+                .then( res => {this.subcategories = res.data.data; this.showSubcategory = true})
                 .catch(error => console.log(error));
         },
         setSubcategory(subcat) {
@@ -370,12 +376,12 @@ export default {
         },
         onDistrictClick(stateArr) {
              axios.get(`/api/state/${stateArr['slug']}/district`)
-                .then( res => this.districts = res.data.data)
+                .then( res => {this.districts = res.data.data; this.showDistricts=true})
                 .catch(error => console.log(error));
         },
         onPlaceClick(districtArr) { //console.log(districtArr);
              axios.get(`${districtArr['placepath']}`)
-                .then( res => this.places = res.data.data)
+                .then( res => {this.places = res.data.data; this.showPlaces=true})
                 .catch(error => console.log(error));
         },
         getUserEmail() {
