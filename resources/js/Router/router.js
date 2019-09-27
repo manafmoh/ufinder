@@ -14,6 +14,7 @@ import CreateState from '../components/place/CreateState.vue';
 import CreateDistrict from '../components/place/CreateDistrict.vue';
 import CreatePlace from '../components/place/CreatePlace.vue';
 import LegalInformation from '../components/page/LegalPrivacyInformation.vue';
+import RestPassword from '../components/login/PasswordReset.vue';
 
 const routes = [
     { path: '/', component: Ads, name:'ads' },
@@ -31,6 +32,7 @@ const routes = [
     { path: '/state/:slug/district', component: CreateDistrict},
     { path: '/place/:state/:district', component: CreatePlace},
     { path: '/page/legal-privacy-information', component: LegalInformation},
+    { path: '/resetpassword/:token', component: RestPassword},
   ]
 
 const router = new VueRouter({

@@ -8,6 +8,7 @@ use App\Notifications\PasswordResetRequest;
 use App\Notifications\PasswordResetSuccess;
 use App\User;
 use App\Model\PasswordReset;
+use Symfony\Component\HttpFoundation\Response;
 class PasswordResetController extends Controller
 {
     /**
@@ -62,7 +63,7 @@ class PasswordResetController extends Controller
                 'message' => 'This password reset token is invalid.'
             ], 404);
         }
-        return response()->json($passwordReset);
+        return response($passwordReset, Response::HTTP_CREATED);
     }
      /**
      * Reset password
