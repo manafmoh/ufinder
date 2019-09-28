@@ -1,5 +1,6 @@
 <template>
     <v-container>
+        <LoginPopup />
         <v-form ref="form" @submit.prevent="createAd" id="formAd" >
              <v-radio-group v-model="post_type" row>
                 <v-radio
@@ -167,10 +168,11 @@
 
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 <script>
+import LoginPopup from '../LoginPopup';
 import swal from 'sweetalert';
 export default {
     components: {
-
+        LoginPopup
     },
     data(){
         return {

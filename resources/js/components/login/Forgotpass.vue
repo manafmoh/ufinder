@@ -40,13 +40,19 @@ export default {
     },
     methods: {
         forgot() {
+            EventBus.$emit('ShowLoading');
            //User.signup(this.form);
             axios.post('/api/password/create', this.form)
                 .then(res => {
+                    EventBus.$emit('CloseLoading');
                     swal("Forgot Password!", "Your Password has sent to your email address", "success");
                 })
                 //.catch(error => console.log(error.response.data));
-                .catch(error => this.errors =  error.response.data.errors);
+                .catch(error => {
+                    //this.errors =  error.response.data.errors
+                     EventBus.$emit('CloseLoading');
+                     swal("Error!", error.response.data, "error");
+                    });
         },
         showLogin() {
             EventBus.$emit('ShowLogin', true);

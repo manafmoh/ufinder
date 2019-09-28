@@ -6,8 +6,8 @@ class User {
         axios.post('/api/auth/login', data)
            .then(res => this.responseAfterLogin(res))
            .catch(error => {
-               console.log(error.response.data.error)
-               swal("Error!", error.response.data.error, "error");
+               //console.log(error.response.data.error)
+               swal(error.response.data.error, "The email address or password you entered is not valid. Please try again.", "error");
             });
     }
 
@@ -17,7 +17,7 @@ class User {
         const email = res.data.email;
         if(Token.isValid(access_token)){
             AppStorage.store(access_token, user, email);
-            window.location = "/";
+            window.location = "/post";
         }
     }
 

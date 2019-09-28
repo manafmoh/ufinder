@@ -68,16 +68,20 @@ export default {
     },
     methods: {
         resetPassword() {
+            EventBus.$emit('ShowLoading');
            //User.signup(this.form);
             axios.post('/api/password/reset', this.form)
                 .then(res => {
+                    EventBus.$emit('CloseLoading');
                      swal("Reset Password!", "Your Password successfully reset, please try to login!", "success");
-                    this.$router.push({name: 'login'})
+                    //this.$router.push({name: 'login'})
+                     window.location = "/login";
                 })
                 //.catch(error => console.log(error.response.data));
                 .catch(error => {
                     //if (error.response.status == 422){
-                    this.errors = error.response.data
+                    //this.errors = error.response.data
+                    EventBus.$emit('CloseLoading');
                      swal("Error!", error.response.data, "error");
                    // }
                 });

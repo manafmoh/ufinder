@@ -98,7 +98,8 @@ class PasswordResetController extends Controller
         $user = User::where('email', $passwordReset->email)->first();
         if (!$user)
             return response('We can\'t find a user with that e-mail address.', Response::HTTP_BAD_REQUEST);
-        $user->password = Hash::make($request->password);
+
+        $user->password = $request->password;
         $user->save();
         $passwordReset->delete();
         $user->notify(new PasswordResetSuccess($passwordReset));
