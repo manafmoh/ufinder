@@ -1,10 +1,14 @@
 import Token from './Token';
 import AppStorage from './AppStorage';
+import swal from 'sweetalert';
 class User {
     login(data){
         axios.post('/api/auth/login', data)
            .then(res => this.responseAfterLogin(res))
-           .catch(error => console.log(error.response.data));
+           .catch(error => {
+               console.log(error.response.data.error)
+               swal("Error!", error.response.data.error, "error");
+            });
     }
 
     responseAfterLogin(res) {

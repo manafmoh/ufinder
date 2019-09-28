@@ -1,5 +1,10 @@
 <template>
     <v-container>
+        <div v-if="errors">
+                  <ul class="alert alert-danger">
+                     <li> {{errors}}</li>
+                  </ul>
+              </div>
         <v-form
             ref="form"
             @submit.prevent="resetPassword"
@@ -49,9 +54,8 @@ export default {
                 password: null,
                 password_confirmation: null,
             },
-            errors: {
-            },
-            userData: {}
+            errors: '',
+            userData: {},
         }
     },
     created() {
@@ -71,7 +75,12 @@ export default {
                     this.$router.push({name: 'login'})
                 })
                 //.catch(error => console.log(error.response.data));
-                .catch(error => this.errors =  error.response.data.errors);
+                .catch(error => {
+                    //if (error.response.status == 422){
+                    this.errors = error.response.data
+                     swal("Error!", error.response.data, "error");
+                   // }
+                });
         },
     }
 }
