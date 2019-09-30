@@ -58,7 +58,7 @@
     <router-link color="white" class="noline"
         key="addpost"
         :to="postlink" >
-        <v-btn color="error" dark large  >Place Your Ad</v-btn>
+        <v-btn color="error" dark >Place Your Ad</v-btn>
     </router-link>
     <LoginPopup />
     <div class="hidden-sm-and-down">
