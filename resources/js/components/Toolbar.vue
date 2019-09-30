@@ -57,8 +57,9 @@
     <app-notification></app-notification>
     <router-link color="white" class="noline"
         key="addpost"
-        :to="postlink" >
-        <v-btn color="error" dark >Place Your Ad</v-btn>
+        :to="postlink"  >
+        <v-btn color="error" class="hidden-xs-only" dark>Place Your Ad</v-btn>
+        <v-btn color="error" class="hidden-sm-and-up"  dark small flat>Place Your Ad</v-btn>
     </router-link>
     <LoginPopup />
     <div class="hidden-sm-and-down">

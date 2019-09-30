@@ -52,7 +52,8 @@
       </v-card>
       </v-menu>
     <v-dialog v-else max-width="600px" v-model="dialog" >
-        <v-btn  flat slot="activator" class="success">Login</v-btn>
+        <v-btn  flat slot="activator" class="success hidden-xs-only" >Login</v-btn>
+        <v-btn  flat slot="activator" class="success hidden-sm-and-up" small>Login</v-btn>
         <v-toolbar dark color="primary">
           <v-toolbar-title>Login</v-toolbar-title>
           <v-spacer></v-spacer>
