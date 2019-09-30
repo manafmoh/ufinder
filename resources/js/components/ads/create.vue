@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <LoginPopup />
+        <LoginPopup v-show="!isLogin" />
         <v-form ref="form" @submit.prevent="createAd" id="formAd" >
              <v-radio-group v-model="post_type" row>
                 <v-radio
@@ -137,6 +137,7 @@
             ></v-text-field>
              </v-flex>
             <span class="red--text" v-if="errors.amount">{{errors.amount[0]}}</span>
+            <div v-if="isLogin">
             <h2 class="subtitle-2">User Information</h2>
             <v-flex xs12 sm3>
                 <v-text-field
@@ -155,12 +156,14 @@
             ></v-text-field>
              <span class="red--text" v-if="errors.email">{{errors.email[0]}}</span>
             </v-flex>
-            <v-btn
+            </div>
+            <v-btn  v-show="isLogin"
                 color="success"
                 type="submit"
             >
             Create
             </v-btn>
+            <LoginPopup v-show="!isLogin"/>
         </v-form>
     </v-container>
 </template>
@@ -209,7 +212,8 @@ export default {
             places:[],
             showSubcategory:false,
             showDistricts:false,
-            showPlaces:false
+            showPlaces:false,
+            isLogin:false,
 
         }
 
@@ -270,6 +274,8 @@ export default {
             })
             .catch(error => {
                 this.errors =  error.response.data.errors;
+                console.log(JSON.stringify(this.errors));
+                swal("Sorry!!", JSON.stringify(this.errors), "error");
                 //console.log('ERROR ',this.errors)
                 });
         },
@@ -367,8 +373,9 @@ export default {
         },
         onSubCategoryClick(categoryArr) {
             //this.subcategoryDialog=true;
+            EventBus.$emit('ShowLoading');
              axios.get(`/api/category/${categoryArr['slug']}/subcategory`)
-                .then( res => {this.subcategories = res.data.data; this.showSubcategory = true})
+                .then( res => {this.subcategories = res.data.data; this.showSubcategory = true; EventBus.$emit('CloseLoading');})
                 .catch(error => console.log(error));
         },
         setSubcategory(subcat) {
@@ -377,13 +384,15 @@ export default {
             //this.subcategoryDialog=false;
         },
         onDistrictClick(stateArr) {
+            EventBus.$emit('ShowLoading');
              axios.get(`/api/state/${stateArr['slug']}/district`)
-                .then( res => {this.districts = res.data.data; this.showDistricts=true})
+                .then( res => {this.districts = res.data.data; this.showDistricts=true; EventBus.$emit('CloseLoading');})
                 .catch(error => console.log(error));
         },
         onPlaceClick(districtArr) { //console.log(districtArr);
+            EventBus.$emit('ShowLoading');
              axios.get(`${districtArr['placepath']}`)
-                .then( res => {this.places = res.data.data; this.showPlaces=true})
+                .then( res => {this.places = res.data.data; this.showPlaces=true; EventBus.$emit('CloseLoading');})
                 .catch(error => console.log(error));
         },
         getUserEmail() {
@@ -393,6 +402,11 @@ export default {
         }
     },
     created() {
+            if(User.loggedIn()) {
+                this.isLogin= true;
+            } else {
+                this.isLogin= false;
+            }
             axios.get('/api/category')
             .then( res => this.categories = res.data.data)
             .catch(error => console.log(error));

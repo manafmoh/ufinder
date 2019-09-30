@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
 use App\Model\Category;
 use App\Model\Subcategory;
+use Illuminate\Support\Facades\Auth;
 use Mail;
 
 class AdController extends Controller
@@ -71,6 +72,9 @@ class AdController extends Controller
      */
     public function store(AdRequest $request)
     {
+        if (!Auth::check()) {
+            return response('Sorry!, Your are not logged, please try again', Response::HTTP_BAD_REQUEST);
+        }
        // dd($request->all());
         //return  $request->image->getClientOriginalName();
         //$request['slug'] = str_slug($request->title); BOOT method used in Model/Ad.php
