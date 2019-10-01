@@ -339,12 +339,12 @@ export default {
         },
         onBeforeUpload(file)  {
             const isIMAGE = file.type === 'image/jpeg'||'image/gif'||'image/png';
-            const isLt1M = file.size / 1024 / 1024 < 2;
+            const isLt1M = file.size / 1024 / 1024 < 3;
             if (!isIMAGE) {
                 this.$message.error('Upload file must be JPG format!');
             }
             if (!isLt1M) {
-                this.$message.error('Upload file size can not exceed 2MB!');
+                this.$message.error('Upload file size can not exceed 3MB!');
             }
             return isIMAGE && isLt1M;
         },
@@ -357,12 +357,12 @@ export default {
         onChange(file, fileList, name){
             //console.log('File',fileList);
             const isIMAGE = file.type === 'image/jpeg'||'image/gif'||'image/png';
-            const isLt1M = file.size / 1024 / 1024 < 2;
+            const isLt1M = file.size / 1024 / 1024 < 3;
             if (!isIMAGE) {
                 this.$message.error('Upload file must be JPG format!');
             }
             if (!isLt1M) {
-                this.$message.error('Upload file size can not exceed 2MB!');
+                this.$message.error('Upload file size can not exceed 3MB!');
             }
             if(isIMAGE && isLt1M) {
                 this.fileList = fileList;
