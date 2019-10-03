@@ -55,12 +55,15 @@
 
     <v-spacer></v-spacer>
     <app-notification></app-notification>
-    <router-link color="white" class="noline"
+    <router-link  color="white" class="noline"
         key="addpost"
-        :to="postlink"  >
+        :to="postlink"
+         @click.native.prevent="openMyDialog()" >
         <v-btn color="error" class="hidden-xs-only" dark>Place Your Ad</v-btn>
         <v-btn color="error" class="hidden-sm-and-up"  dark small flat>Place Your Ad</v-btn>
+
     </router-link>
+
     <LoginPopup />
     <div class="hidden-sm-and-down">
     <router-link color="white" class="noline"
@@ -115,6 +118,7 @@ export default {
             ],
 
             postlink: User.loggedIn()?'/post':'/login',
+            isLogin: false,
         }
     },
     computed: {
@@ -123,6 +127,10 @@ export default {
         },
     },
     created() {
+        this.isLogin = false;
+        if(User.loggedIn()) {
+            this.isLogin= true;
+        }
         EventBus.$on('logout', ()=>{
             User.loggedOut();
         });
@@ -190,7 +198,15 @@ export default {
         },
         onPlaceClick(places) {
             EventBus.$emit('SearchPlaceAd', places);
-        }
+        },
+      openMyDialog () {
+          if(this.isLogin) {
+            this.$router.push(route)
+          } else {
+              EventBus.$emit('OpenDialog') // emit the event to the bus
+          }
+
+    }
       },
 }
 </script>

@@ -52,8 +52,8 @@
       </v-card>
       </v-menu>
     <v-dialog v-else max-width="600px" v-model="dialog" >
-        <v-btn  flat slot="activator" class="success hidden-xs-only" >Login</v-btn>
-        <v-btn  flat slot="activator" class="success hidden-sm-and-up" small>Login</v-btn>
+        <v-btn flat text icon color="primary" slot="activator" class="hidden-xs-only" ><v-icon dark center>account_box</v-icon></v-btn>
+        <v-btn  flat text icon color="primary" slot="activator" class="hidden-sm-and-up" small><v-icon dark center>account_box</v-icon></v-btn>
         <v-toolbar dark color="primary">
           <v-toolbar-title>Login</v-toolbar-title>
           <v-spacer></v-spacer>
@@ -122,9 +122,15 @@ export default {
             //this.$router.push({name: 'ads'});
             //this.$router.go(this.$router.currentRoute);
         },
+        dopen(){
+            this.dialog= true;
+        },
         listen() {
             EventBus.$on('CloseDialog', ()=> {
                 this.dclose();
+            }),
+            EventBus.$on('OpenDialog', ()=> {
+                this.dopen();
             }),
             EventBus.$on('isFacebookLoggin', (status)=> {
                 this.isFacebookLogin = status;
